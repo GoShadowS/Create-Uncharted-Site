@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create: Uncharted - Исследуй Неизведанное</title>
+    <meta name="description" content="Официальный сайт сборки Create: Uncharted (1.20.1). Индустриальная сборка с Create, квестами и приключениями. Версия 0.5 уже доступна для ознакомления!">
+    <meta name="keywords" content="Minecraft, Create Mod, Modpack, Uncharted, 1.20.1, Майнкрафт сборка, Индустриальная сборка">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, .brand-font {
+            font-family: 'Russo One', sans-serif;
+        }
+        .gear-spin {
+            animation: spin 10s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-amber-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <!-- Gear Icon -->
+                    <svg class="w-8 h-8 text-amber-500 gear-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span class="text-xl brand-font text-white tracking-wider">CREATE: UNCHARTED</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#about" class="text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition">О Сборке</a>
+                        <a href="#team" class="text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition">Команда Разработки</a>
+                        <a href="#socials" class="text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition">Официальные ресурсы сборки</a>
+                        <a href="#downloads" class="text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition">Скачать</a>
+                        <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" class="text-gray-300 hover:text-[#f16436] px-3 py-2 rounded-md text-sm font-medium transition flex items-center gap-1">
+                            CurseForge
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                        <a href="https://t.me/create_uncharted" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium transition flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.9 5.6c-.3-.1-.7-.1-1 .1l-14 6c-.3.1-.4.4-.3.7.1.3.4.4.7.3l3.6-1.5 2.9 6.7c.1.3.4.5.7.5h.1c.2 0 .4-.1.6-.2l2.3-1.9 4.1 3c.2.2.5.2.8.1.2-.1.4-.3.4-.6l2-12c0-.3-.2-.6-.5-.7l-.4-.2Z"/></svg>
+                            Telegram
+                        </a>
+                        <div class="flex items-center ml-4">
+                             <span class="text-[10px] font-mono text-gray-500 border border-white/10 rounded px-2 py-1 select-none">v0.1-2025.11.30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none transition">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 backdrop-blur-xl border-b border-white/10">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                 <a href="#about" class="text-gray-300 hover:text-amber-400 block px-3 py-2 rounded-md text-base font-medium transition" onclick="toggleMobileMenu()">О Сборке</a>
+                 <a href="#team" class="text-gray-300 hover:text-amber-400 block px-3 py-2 rounded-md text-base font-medium transition" onclick="toggleMobileMenu()">Команда Разработки</a>
+                 <a href="#socials" class="text-gray-300 hover:text-amber-400 block px-3 py-2 rounded-md text-base font-medium transition" onclick="toggleMobileMenu()">Официальные ресурсы сборки</a>
+                 <a href="#downloads" class="text-gray-300 hover:text-amber-400 block px-3 py-2 rounded-md text-base font-medium transition" onclick="toggleMobileMenu()">Скачать</a>
+                 <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" class="text-gray-300 hover:text-[#f16436] block px-3 py-2 rounded-md text-base font-medium transition flex items-center gap-2">
+                    CurseForge
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                 </a>
+                 <a href="https://t.me/create_uncharted" target="_blank" class="text-blue-400 hover:text-blue-300 block px-3 py-2 rounded-md text-base font-medium transition flex items-center gap-2">
+                    Telegram
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.9 5.6c-.3-.1-.7-.1-1 .1l-14 6c-.3.1-.4.4-.3.7.1.3.4.4.7.3l3.6-1.5 2.9 6.7c.1.3.4.5.7.5h.1c.2 0 .4-.1.6-.2l2.3-1.9 4.1 3c.2.2.5.2.8.1.2-.1.4-.3.4-.6l2-12c0-.3-.2-.6-.5-.7l-.4-.2Z"/></svg>
+                 </a>
+                 <div class="px-3 py-2 mt-2 border-t border-white/5">
+                    <span class="text-[10px] font-mono text-gray-500 block text-center">v0.1-2025.11.30</span>
+                 </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background decoration -->
+        <div class="absolute top-0 left-0 w-full h-full z-0">
+            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-amber-600/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-blue-600/20 rounded-full blur-3xl"></div>
+            <!-- Grid pattern -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-amber-500/10 text-amber-500 text-sm font-semibold mb-6 border border-amber-500/20">
+                Версия 0.5 (UNST)
+            </span>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+                Исследуй неизведанное, <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600">с Create: Uncharted всё возможно!</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">
+                Индустриальная революция встречается с дикой природой. Строй фабрики, покоряй новые биомы и выживай в мире, где технологии — твой единственный шанс на выживание!
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="#downloads" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 md:py-4 md:text-lg md:px-10 transition shadow-lg shadow-amber-600/20">
+                    Скачать Сборку
+                </a>
+                <a href="#about" class="px-8 py-3 border border-gray-600 text-base font-medium rounded-md text-gray-300 hover:bg-gray-800 md:py-4 md:text-lg md:px-10 transition">
+                    Узнать больше
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">О Сборке</h2>
+                <div class="w-24 h-1 bg-amber-500 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="glass-panel p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold text-amber-400 mb-4">Технологии и Приключения</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Create: Uncharted — это не просто сборка модов, это вызов. Мы объединили безграничные возможности механического мода <span class="text-white font-semibold">Create</span> с желанием открыть каждый уголок процедурно-генерируемого мира.
+                    </p>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Сложные механизмы и автоматизация
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Уникальная генерация мира и новые данжи
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Оптимизация для комфортной игры на 1.20.1
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-4">
+                        <a href="https://www.mediafire.com/file/xm2p0moipsoz327/Create+Uncharted+(1).txt/file" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-sm text-gray-300 hover:text-white transition border border-white/10 group">
+                            <svg class="w-4 h-4 opacity-70 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Список модов (TXT)
+                        </a>
+                        <a href="https://www.curseforge.com/minecraft/mc-mods/create" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-sm text-indigo-300 hover:text-indigo-200 transition border border-indigo-500/20 group">
+                            <svg class="w-4 h-4 opacity-70 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                            Дань уважения: Create Mod
+                        </a>
+                    </div>
+                </div>
+                <div class="relative h-full min-h-[300px] rounded-2xl overflow-hidden border border-white/10 flex items-center justify-center bg-slate-800">
+                   <!-- Placeholder for image -->
+                   <div class="text-center p-6">
+                       <svg class="w-20 h-20 mx-auto text-slate-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0121 18.382V7.618a1 1 0 01-1.447-.894L15 7m0 13V7m0 0L9.553 2.276A1 1 0 0110 1.118l.894.447m-9 4.472L2.382 5.618m0 0l4.553-2.276"></path></svg>
+                       <p class="text-slate-500 italic">Здесь должен быть ваш скриншот мира</p>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-16 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Команда Разработки</h2>
+                <p class="text-gray-400">Люди, стоящие за созданием Create: Uncharted</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                
+                <!-- SHAD11T -->
+                <div class="glass-panel p-8 rounded-2xl border-t-4 border-cyan-500 relative group hover:-translate-y-1 transition duration-300">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
+                        <!-- Water Droplet Icon -->
+                        <svg class="w-24 h-24 text-cyan-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.25c-5.385 5.965-8.25 9.67-8.25 13.005 0 4.554 3.696 8.25 8.25 8.25s8.25-3.696 8.25-8.25C20.25 11.92 17.385 8.215 12 2.25z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-1">SHAD11T</h3>
+                    <span class="inline-block bg-cyan-500/20 text-cyan-400 text-xs font-bold px-2 py-1 rounded mb-4">СОЗДАТЕЛЬ ПРОЕКТА</span>
+                    
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-cyan-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span>Сборка и настройка</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-blue-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                            <span>Кастомные крафты и предметы <br><span class="text-xs text-gray-500 font-mono">via KubeJS</span></span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-green-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+                            <span>Перевод модов <span class="text-xs text-gray-500">(с использованием Gemini)</span></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- AstroBlade -->
+                <div class="glass-panel p-8 rounded-2xl border-t-4 border-indigo-500 relative group hover:-translate-y-1 transition duration-300">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
+                         <!-- Planet Icon -->
+                         <svg class="w-24 h-24 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-1">AstroBlade</h3>
+                    <span class="inline-block bg-indigo-500/20 text-indigo-400 text-xs font-bold px-2 py-1 rounded mb-4">ИДЕЙНЫЙ ВДОХНОВИТЕЛЬ</span>
+                    
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-yellow-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                            <span>Автор идеи сборки</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                             <svg class="w-5 h-5 text-purple-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+                            <span>Автор музыки</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-green-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+                            <span>Перевод модов <span class="text-xs text-gray-500">(с использованием Gemini)</span></span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Status & Downloads -->
+    <section id="downloads" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Warning Banner -->
+            <div class="bg-orange-900/30 border border-orange-500/50 rounded-lg p-6 mb-12 flex flex-col md:flex-row items-center gap-4">
+                <div class="p-3 bg-orange-600/20 rounded-full shrink-0">
+                    <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-orange-200">Внимание: Ранний доступ (v0.5)</h3>
+                    <p class="text-orange-100/70 text-sm">
+                        Сборка в данный момент находится в активной разработке и считается нестабильной. Возможны баги, краши и изменения в балансе. 
+                        <span class="font-semibold text-white block mt-1">Скачивание временно приостановлено для технических работ.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">Выберите вашу платформу</h2>
+                <p class="text-gray-400 mt-2">Файлы загрузки для всех популярных лаунчеров</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Card 1: CurseForge -->
+                <div class="glass-panel p-6 rounded-xl hover:border-amber-500/50 transition duration-300 flex flex-col h-full">
+                    <div class="mb-4">
+                        <span class="bg-orange-600 text-xs font-bold px-2 py-1 rounded text-white">ZIP</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">CurseForge Format</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow">
+                        Оптимально для CurseForge Launcher, Prism Launcher и других совместимых лаунчеров.
+                    </p>
+                    <button onclick="downloadBlocked('Modpack.zip (CF)')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Скачать .zip
+                    </button>
+                </div>
+
+                <!-- Card 2: Modrinth -->
+                <div class="glass-panel p-6 rounded-xl hover:border-green-500/50 transition duration-300 flex flex-col h-full">
+                    <div class="mb-4">
+                        <span class="bg-green-600 text-xs font-bold px-2 py-1 rounded text-white">MCPACK</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Modrinth Format</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow">
+                        Формат для Modrinth Launcher, Prism Launcher, MultiMC. Удобная установка зависимостей.
+                    </p>
+                    <button onclick="downloadBlocked('Modpack.mcpack')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Скачать .mcpack
+                    </button>
+                </div>
+
+                <!-- Card 3: Manual/Pirate -->
+                <div class="glass-panel p-6 rounded-xl hover:border-blue-500/50 transition duration-300 flex flex-col h-full">
+                    <div class="mb-4">
+                        <span class="bg-blue-600 text-xs font-bold px-2 py-1 rounded text-white">FOLDER</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Manual Install</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow">
+                        Полная папка .minecraft в архиве. Просто распакуйте в директорию игры. Подходит для TLauncher и других.
+                    </p>
+                    <button onclick="downloadBlocked('Modpack.zip (Manual)')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Скачать Full .zip
+                    </button>
+                </div>
+
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Socials & Author Section -->
+    <section id="socials" class="py-16 bg-slate-900 border-t border-white/5 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
+            <div class="absolute bottom-0 left-10 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl"></div>
+            <div class="absolute top-10 right-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <!-- Section 1: Official Project Links -->
+            <div class="mb-16 text-center">
+                <h2 class="text-3xl font-bold text-white mb-2">Официальные ресурсы сборки</h2>
+                <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Скачивание, обновления, новости команды и вики</p>
+                
+                <div class="flex flex-wrap justify-center gap-6">
+                    <!-- CurseForge (Project) -->
+                    <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" class="flex flex-col items-center gap-3 p-6 bg-[#f16436]/5 border border-[#f16436]/20 rounded-xl hover:bg-[#f16436]/10 hover:border-[#f16436] hover:shadow-[0_0_20px_rgba(241,100,54,0.3)] text-[#f16436] transition-all duration-300 group min-w-[160px]">
+                        <div class="text-center">
+                            <span class="block font-bold text-lg">CurseForge</span>
+                            <span class="text-xs opacity-70">Страница проекта</span>
+                        </div>
+                    </a>
+
+                    <!-- Modpack TG (Team) -->
+                    <a href="https://t.me/create_uncharted" target="_blank" class="flex flex-col items-center gap-3 p-6 bg-blue-500/5 border border-blue-500/20 rounded-xl hover:bg-blue-500/10 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] text-blue-400 transition-all duration-300 group min-w-[160px]">
+                        <div class="text-center">
+                            <span class="block font-bold text-lg">Telegram</span>
+                            <span class="text-xs opacity-70">Официальный канал</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Section 2: Author (SHAD11T) -->
+            <div class="text-center border-t border-white/10 pt-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Автор: SHAD11T</h2>
+                <p class="text-gray-400 mb-8">Мой личный блог, стримы и поддержка</p>
+                
+                <div class="flex flex-wrap justify-center gap-4">
+                    <!-- YouTube (Personal) -->
+                    <a href="https://youtube.com/@shad11t_the_shadow?si=i6xQax1Ysf-hHzbI" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-red-600/10 border border-red-600/20 rounded-full hover:bg-red-600 hover:text-white text-red-500 transition-all duration-300 group">
+                        <span class="font-medium">YouTube</span>
+                    </a>
+
+                    <!-- Rutube (Personal) -->
+                    <a href="https://rutube.ru/channel/70698627" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-blue-600/10 border border-blue-600/20 rounded-full hover:bg-blue-700 hover:text-white text-blue-500 transition-all duration-300 group">
+                        <span class="font-medium">Rutube</span>
+                    </a>
+
+                    <!-- Boosty (Personal) -->
+                    <a href="https://boosty.to/shad11ttheshadow" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-orange-500/10 border border-orange-500/20 rounded-full hover:bg-orange-600 hover:text-white text-orange-500 transition-all duration-300 group">
+                        <span class="font-medium">Boosty</span>
+                    </a>
+
+                    <!-- Personal TG (Personal) -->
+                    <a href="https://t.me/SHAD11T" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-sky-500/10 border border-sky-500/20 rounded-full hover:bg-sky-500 hover:text-white text-sky-400 transition-all duration-300 group">
+                        <span class="font-medium">SHAD11T (Автор)</span>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="brand-font text-lg text-white opacity-80">CREATE: UNCHARTED</span>
+            </div>
+            <div class="text-gray-500 text-sm text-center md:text-right">
+                <p>&copy; 2025-2026 Все права защищены.</p>
+                <p class="text-xs mt-1 opacity-60">This project is not affiliated with Mojang Studios or the creators of the Create mod.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Modal for Blocked Downloads -->
+    <div id="download-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Background backdrop -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-100" onclick="closeModal()"></div>
+
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <!-- Modal panel -->
+                <div class="relative transform overflow-hidden rounded-2xl glass-panel border border-amber-500/30 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-amber-500/20 sm:mx-0 sm:h-10 sm:w-10">
+                                <svg class="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                                <h3 class="text-xl font-bold leading-6 text-white" id="modal-title">Загрузка временно недоступна</h3>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-300" id="modal-message">
+                                        <!-- Content injected via JS -->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-black/20 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-3">
+                        <a href="https://t.me/create_uncharted" target="_blank" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:w-auto transition">
+                            Перейти в Telegram
+                        </a>
+                        <button type="button" onclick="closeModal()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-300 shadow-sm ring-1 ring-inset ring-white/10 hover:bg-white/20 sm:mt-0 sm:w-auto transition">
+                            Понятно
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        function downloadBlocked(filename) {
+            const modal = document.getElementById('download-modal');
+            const messageEl = document.getElementById('modal-message');
+            
+            const text = `
+                Сборка <span class="font-bold text-amber-400">Create: Uncharted (v0.5)</span> находится в стадии нестабильной альфа-версии.
+                <br><br>
+                Скачивание файла <span class="font-mono bg-black/30 px-1 rounded text-orange-300">${filename}</span> временно отключено администратором во избежание критических ошибок.
+                <br><br>
+                Следите за новостями и выходом стабильной версии в нашем канале!
+            `;
+            
+            messageEl.innerHTML = text;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('download-modal').classList.add('hidden');
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
