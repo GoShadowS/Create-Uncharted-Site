@@ -163,7 +163,7 @@
                         <button type="button" onclick="setLanguage('en')" class="lang-btn px-2.5 py-1 rounded-full text-xs font-medium text-gray-400 hover:text-white" aria-label="Switch to English">EN</button>
                     </div>
 
-                    <span class="text-[10px] font-mono text-gray-500 border border-white/10 rounded px-2 py-1 select-none ml-2">v0.2.3</span>
+                    <span class="text-[10px] font-mono text-gray-500 border border-white/10 rounded px-2 py-1 select-none ml-2">v0.2.4.3</span>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -226,7 +226,7 @@
                     Telegram
                 </a>
                 <div class="px-3 py-2 mt-2 border-t border-white/5">
-                    <span class="text-[10px] font-mono text-gray-500 block text-center">v0.2.3</span>
+                    <span class="text-[10px] font-mono text-gray-500 block text-center">v0.2.4.3</span>
                 </div>
             </div>
         </div>
@@ -344,7 +344,7 @@
                         2) Set the src below to that path.
                         Example: src="assets/world-screenshot.jpg"
                     -->
-                    <img id="assets/world-screenshot.jpg" src="" alt="" class="absolute inset-0 w-full h-full object-cover" />
+                    <img id="world-shot-static" src="" alt="" class="absolute inset-0 w-full h-full object-cover" />
 
                     <!-- Fallback (shown if src is empty or image not found) -->
                     <div id="world-shot-static-fallback" class="absolute inset-0 hidden items-center justify-center">
@@ -1084,19 +1084,84 @@
             const fallback = document.getElementById('world-shot-static-fallback');
             if (!img || !fallback) return;
 
-            // If src is empty -> show fallback
-            const src = (img.getAttribute('src') || '').trim();
-            if (!src) {
-                showWorldShotFallback(true);
+            const initialSrc = (img.getAttribute('src') || '').trim();
+
+            // If src is provided, try to use it first.
+            if (initialSrc) {
+                const onLoad = () => {
+                    showWorldShotFallback(false);
+                    updateWorldShotStaticA11y();
+                };
+
+                const onError = () => {
+                    // If provided src fails, try common filenames from the repo.
+                    tryLoadWorldShotCandidates(img, getWorldShotCandidates(initialSrc));
+                };
+
+                img.addEventListener('load', onLoad, { once: true });
+                img.addEventListener('error', onError, { once: true });
+
+                // Handle cached images (load event may not fire)
+                if (img.complete) {
+                    if (img.naturalWidth > 0) onLoad();
+                    else onError();
+                }
+
                 updateWorldShotStaticA11y();
                 return;
             }
 
-            // Show fallback if the image fails to load
-            img.addEventListener('error', () => showWorldShotFallback(true), { once: true });
-            img.addEventListener('load', () => showWorldShotFallback(false), { once: true });
+            // If src is empty: auto-try common names (so you can just drop the file into /assets)
+            tryLoadWorldShotCandidates(img, getWorldShotCandidates(''));
+        }
 
-            updateWorldShotStaticA11y();
+        function getWorldShotCandidates(firstChoice) {
+            const list = [];
+            if (firstChoice) list.push(firstChoice);
+
+            // Most common choices (keep order):
+            list.push(
+                'assets/world-screenshot.jpg',
+                'assets/world-screenshot.png',
+                'assets/worldshot.jpg',
+                'assets/worldshot.png',
+                'assets/screenshot.jpg',
+                'assets/screenshot.png',
+                'assets/world.jpg',
+                'assets/world.png',
+                'world-screenshot.jpg',
+                'world-screenshot.png'
+            );
+
+            // De-duplicate while preserving order
+            return Array.from(new Set(list.map(s => (s || '').trim()).filter(Boolean)));
+        }
+
+        function tryLoadWorldShotCandidates(imgEl, candidates) {
+            showWorldShotFallback(true);
+
+            let idx = 0;
+            const tryNext = () => {
+                if (idx >= candidates.length) {
+                    showWorldShotFallback(true);
+                    updateWorldShotStaticA11y();
+                    return;
+                }
+
+                const candidate = candidates[idx++];
+
+                // Preload with a separate Image so we don't flash broken images in the UI
+                const probe = new Image();
+                probe.onload = () => {
+                    imgEl.setAttribute('src', candidate);
+                    showWorldShotFallback(false);
+                    updateWorldShotStaticA11y();
+                };
+                probe.onerror = () => tryNext();
+                probe.src = candidate;
+            };
+
+            tryNext();
         }
 
         function showWorldShotFallback(show) {
