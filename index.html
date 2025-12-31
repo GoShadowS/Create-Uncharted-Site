@@ -2,19 +2,18 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- Verification Tags MUST be at the top -->
     <meta name="yandex-verification" content="058bb34027b84532" />
     <meta name="google-site-verification" content="YJHR0gOTb7RhE2Qf0COo8tQcUzhhUKWTNIeHgxKOc3g" />
-    
-    <!-- Canonical Link (Helps bots understand the real URL) -->
     <link rel="canonical" href="https://goshadows.github.io/Create-Uncharted-Site/" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
     <title>Create: Uncharted - Исследуй Неизведанное</title>
-    <meta name="description" content="Официальный сайт сборки Create: Uncharted (1.20.1). Индустриальная сборка с Create, квестами и приключениями. Версия 0.5 уже доступна для ознакомления!">
+    <meta name="description" content="Официальный сайт сборки Create: Uncharted (1.20.1). Индустриальная сборка с Create, квестами и приключениями. Версия 0.1 (Beta-Test/UNST) уже доступна для ознакомления!">
     <meta name="keywords" content="Minecraft, Create Mod, Modpack, Uncharted, 1.20.1, Майнкрафт сборка, Индустриальная сборка">
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -37,49 +36,149 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        .nav-link.active {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+        .back-to-top {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        @media (max-width: 768px) {
+            .social-link {
+                min-height: 48px;
+            }
+        }
+
+        /* Language switcher */
+        .lang-btn {
+            transition: all 0.2s ease;
+        }
+        .lang-btn.active {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border-color: rgba(245, 158, 11, 0.5);
+        }
+
+        /* CurseForge icon smoothing */
+        .cf-icon {
+            shape-rendering: geometricPrecision;
+        }
+        .cf-icon path {
+            vector-effect: non-scaling-stroke;
+        }
+
+        /* Prevent background scroll when overlays opened */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            html:focus-within { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .gear-spin {
+                animation: none !important;
+            }
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-amber-500 selection:text-white">
 
+    <!-- Mobile Backdrop (for menu) -->
+    <div id="mobile-backdrop" class="fixed inset-0 z-40 hidden bg-black/60 backdrop-blur-sm lg:hidden" onclick="closeMobileMenu()" aria-hidden="true"></div>
+
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-panel border-b border-white/10">
+    <nav id="navbar" class="fixed w-full z-50 glass-panel border-b border-white/10 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-2">
+                <a href="#" class="flex items-center gap-2 group" aria-label="Create: Uncharted Home">
                     <!-- Gear Icon -->
-                    <svg class="w-8 h-8 text-amber-500 gear-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-8 h-8 text-amber-500 gear-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
-                    <span class="text-xl brand-font text-white tracking-wider">CREATE: UNCHARTED</span>
-                </div>
-                
+                    <span class="text-lg sm:text-xl brand-font text-white tracking-wider group-hover:text-amber-400 transition">CREATE: UNCHARTED</span>
+                </a>
+
                 <!-- Desktop Menu -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#about" class="text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition">О Сборке</a>
-                        <a href="#team" class="text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition">Команда Разработки</a>
-                        <a href="#socials" class="text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition">Официальные ресурсы сборки</a>
-                        <a href="#downloads" class="text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition">Скачать</a>
-                        <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" class="text-gray-300 hover:text-[#f16436] px-3 py-2 rounded-md text-sm font-medium transition flex items-center gap-1">
-                            CurseForge
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        </a>
-                        <a href="https://t.me/create_uncharted" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium transition flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.9 5.6c-.3-.1-.7-.1-1 .1l-14 6c-.3.1-.4.4-.3.7.1.3.4.4.7.3l3.6-1.5 2.9 6.7c.1.3.4.5.7.5h.1c.2 0 .4-.1.6-.2l2.3-1.9 4.1 3c.2.2.5.2.8.1.2-.1.4-.3.4-.6l2-12c0-.3-.2-.6-.5-.7l-.4-.2Z"/></svg>
-                            Telegram
-                        </a>
-                        <div class="flex items-center ml-4">
-                             <span class="text-[10px] font-mono text-gray-500 border border-white/10 rounded px-2 py-1 select-none">v0.1.2-2025.11.30</span>
-                        </div>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="#about" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="about">
+                        <span data-lang="ru">О Сборке</span>
+                        <span data-lang="en" class="hidden">About</span>
+                    </a>
+                    <a href="#team" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="team">
+                        <span data-lang="ru">Команда</span>
+                        <span data-lang="en" class="hidden">Team</span>
+                    </a>
+                    <a href="#socials" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="socials">
+                        <span data-lang="ru">Ресурсы</span>
+                        <span data-lang="en" class="hidden">Resources</span>
+                    </a>
+                    <a href="#development" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="development">
+                        <span data-lang="ru">Процесс</span>
+                        <span data-lang="en" class="hidden">Process</span>
+                    </a>
+                    <a href="#downloads" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="downloads">
+                        <span data-lang="ru">Скачать</span>
+                        <span data-lang="en" class="hidden">Download</span>
+                    </a>
+
+                    <div class="w-px h-6 bg-white/10 mx-2"></div>
+
+                    <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-[#f16436] px-3 py-2 rounded-md text-sm font-medium transition flex items-center gap-1.5">
+                        <!-- CurseForge Anvil + Flame Icon (refined) -->
+                        <svg class="cf-icon w-[22px] h-[22px]" viewBox="0 0 24 24" aria-hidden="true">
+                            <!-- Flame -->
+                            <path d="M12 2.25c1.55 1.9 2.35 3.35 2.35 4.6 0 1.55-1.14 2.7-2.35 2.7s-2.35-1.15-2.35-2.7c0-1.25.8-2.7 2.35-4.6Z" fill="currentColor" opacity=".9"/>
+                            <path d="M12 4c.9 1.2 1.35 2.15 1.35 3.05 0 .88-.62 1.55-1.35 1.55s-1.35-.67-1.35-1.55c0-.9.45-1.85 1.35-3.05Z" fill="white" opacity=".25"/>
+                            <!-- Anvil (fill + outline for crisp look) -->
+                            <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="currentColor" opacity=".18"/>
+                            <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.3 13h5.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
+                        </svg>
+                        CurseForge
+                    </a>
+
+                    <a href="https://t.me/create_uncharted" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium transition flex items-center gap-2">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                        Telegram
+                    </a>
+
+                    <!-- Language Switcher -->
+                    <div class="flex items-center ml-3 gap-1 border border-white/10 rounded-full p-0.5">
+                        <button type="button" onclick="setLanguage('ru')" class="lang-btn active px-2.5 py-1 rounded-full text-xs font-medium" aria-label="Switch to Russian">RU</button>
+                        <button type="button" onclick="setLanguage('en')" class="lang-btn px-2.5 py-1 rounded-full text-xs font-medium text-gray-400 hover:text-white" aria-label="Switch to English">EN</button>
                     </div>
+
+                    <span class="text-[10px] font-mono text-gray-500 border border-white/10 rounded px-2 py-1 select-none ml-2">v0.2.3</span>
                 </div>
 
                 <!-- Mobile menu button -->
-                <div class="-mr-2 flex md:hidden">
-                    <button type="button" onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none transition">
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <div class="flex items-center gap-2 lg:hidden">
+                    <!-- Mobile Language Switcher -->
+                    <div class="flex items-center gap-1 border border-white/10 rounded-full p-0.5">
+                        <button type="button" onclick="setLanguage('ru')" class="lang-btn active px-2 py-0.5 rounded-full text-xs font-medium">RU</button>
+                        <button type="button" onclick="setLanguage('en')" class="lang-btn px-2 py-0.5 rounded-full text-xs font-medium text-gray-400">EN</button>
+                    </div>
+                    <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none transition" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+                        <svg id="menu-icon-open" class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="menu-icon-close" class="h-6 w-6 hidden" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
@@ -87,166 +186,265 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 backdrop-blur-xl border-b border-white/10">
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-xl border-b border-white/10">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                 <a href="#about" class="text-gray-300 hover:text-amber-400 block px-3 py-2 rounded-md text-base font-medium transition" onclick="toggleMobileMenu()">О Сборке</a>
-                 <a href="#team" class="text-gray-300 hover:text-amber-400 block px-3 py-2 rounded-md text-base font-medium transition" onclick="toggleMobileMenu()">Команда Разработки</a>
-                 <a href="#socials" class="text-gray-300 hover:text-amber-400 block px-3 py-2 rounded-md text-base font-medium transition" onclick="toggleMobileMenu()">Официальные ресурсы сборки</a>
-                 <a href="#downloads" class="text-gray-300 hover:text-amber-400 block px-3 py-2 rounded-md text-base font-medium transition" onclick="toggleMobileMenu()">Скачать</a>
-                 <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" class="text-gray-300 hover:text-[#f16436] block px-3 py-2 rounded-md text-base font-medium transition flex items-center gap-2">
+                <a href="#about" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="about">
+                    <span data-lang="ru">О Сборке</span>
+                    <span data-lang="en" class="hidden">About</span>
+                </a>
+                <a href="#team" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="team">
+                    <span data-lang="ru">Команда Разработки</span>
+                    <span data-lang="en" class="hidden">Development Team</span>
+                </a>
+                <a href="#socials" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="socials">
+                    <span data-lang="ru">Официальные ресурсы</span>
+                    <span data-lang="en" class="hidden">Official Resources</span>
+                </a>
+                <a href="#development" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="development">
+                    <span data-lang="ru">Процесс разработки</span>
+                    <span data-lang="en" class="hidden">Development Process</span>
+                </a>
+                <a href="#downloads" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="downloads">
+                    <span data-lang="ru">Скачать</span>
+                    <span data-lang="en" class="hidden">Download</span>
+                </a>
+                <div class="border-t border-white/5 my-2"></div>
+                <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" rel="noopener noreferrer" class="text-[#f16436] hover:text-[#ff7b50] block px-3 py-3 rounded-md text-base font-medium transition flex items-center gap-2">
+                    <svg class="cf-icon w-[22px] h-[22px] shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2.25c1.55 1.9 2.35 3.35 2.35 4.6 0 1.55-1.14 2.7-2.35 2.7s-2.35-1.15-2.35-2.7c0-1.25.8-2.7 2.35-4.6Z" fill="currentColor" opacity=".9"/>
+                        <path d="M12 4c.9 1.2 1.35 2.15 1.35 3.05 0 .88-.62 1.55-1.35 1.55s-1.35-.67-1.35-1.55c0-.9.45-1.85 1.35-3.05Z" fill="white" opacity=".25"/>
+                        <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="currentColor" opacity=".18"/>
+                        <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.3 13h5.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
+                    </svg>
                     CurseForge
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                 </a>
-                 <a href="https://t.me/create_uncharted" target="_blank" class="text-blue-400 hover:text-blue-300 block px-3 py-2 rounded-md text-base font-medium transition flex items-center gap-2">
+                </a>
+                <a href="https://t.me/create_uncharted" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 block px-3 py-3 rounded-md text-base font-medium transition flex items-center gap-2">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                    </svg>
                     Telegram
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.9 5.6c-.3-.1-.7-.1-1 .1l-14 6c-.3.1-.4.4-.3.7.1.3.4.4.7.3l3.6-1.5 2.9 6.7c.1.3.4.5.7.5h.1c.2 0 .4-.1.6-.2l2.3-1.9 4.1 3c.2.2.5.2.8.1.2-.1.4-.3.4-.6l2-12c0-.3-.2-.6-.5-.7l-.4-.2Z"/></svg>
-                 </a>
-                 <div class="px-3 py-2 mt-2 border-t border-white/5">
-                    <span class="text-[10px] font-mono text-gray-500 block text-center">v0.1.2-2025.11.30</span>
-                 </div>
+                </a>
+                <div class="px-3 py-2 mt-2 border-t border-white/5">
+                    <span class="text-[10px] font-mono text-gray-500 block text-center">v0.2.3</span>
+                </div>
             </div>
         </div>
     </nav>
 
+    <!-- Back to Top Button -->
+    <button id="back-to-top" onclick="scrollToTop()" class="back-to-top fixed bottom-6 right-6 z-40 p-3 bg-amber-600 hover:bg-amber-700 text-white rounded-full shadow-lg shadow-amber-600/30 transition-all duration-300 hover:scale-110" aria-label="Back to top">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
     <!-- Hero Section -->
-    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <!-- Background decoration -->
+    <header id="hero" class="relative pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-full z-0">
             <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-amber-600/20 rounded-full blur-3xl"></div>
             <div class="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-blue-600/20 rounded-full blur-3xl"></div>
-            <!-- Grid pattern -->
             <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         </div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span class="inline-block py-1 px-3 rounded-full bg-amber-500/10 text-amber-500 text-sm font-semibold mb-6 border border-amber-500/20">
-                Версия 0.5 (UNST)
+                <span data-lang="ru">Версия 0.1 (Beta-Test/UNST)</span>
+                <span data-lang="en" class="hidden">Version 0.1 (Beta-Test/UNST)</span>
             </span>
-            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
-                Исследуй неизведанное, <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600">с Create: Uncharted всё возможно!</span>
+            <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+                <span data-lang="ru">Исследуй неизведанное,</span>
+                <span data-lang="en" class="hidden">Explore the Unknown,</span>
+                <br class="hidden sm:block">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600">
+                    <span data-lang="ru">с Create: Uncharted всё возможно!</span>
+                    <span data-lang="en" class="hidden">with Create: Uncharted everything is possible!</span>
+                </span>
             </h1>
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">
-                Индустриальная революция встречается с дикой природой. Строй фабрики, покоряй новые биомы и выживай в мире, где технологии — твой единственный шанс на выживание!
+            <p class="mt-4 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 px-4">
+                <span data-lang="ru">Индустриальная революция встречается с дикой природой. Строй фабрики, покоряй новые биомы и выживай в мире, где технологии — твой единственный шанс на выживание!</span>
+                <span data-lang="en" class="hidden">Industrial revolution meets wild nature. Build factories, conquer new biomes, and survive in a world where technology is your only chance of survival!</span>
             </p>
-            <div class="mt-10 flex justify-center gap-4">
-                <a href="#downloads" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 md:py-4 md:text-lg md:px-10 transition shadow-lg shadow-amber-600/20">
-                    Скачать Сборку
+            <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row justify-center gap-4 px-4">
+                <a href="#downloads" class="px-6 py-3 sm:px-8 border border-transparent text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 md:py-4 md:text-lg md:px-10 transition shadow-lg shadow-amber-600/20">
+                    <span data-lang="ru">Скачать Сборку</span>
+                    <span data-lang="en" class="hidden">Download Modpack</span>
                 </a>
-                <a href="#about" class="px-8 py-3 border border-gray-600 text-base font-medium rounded-md text-gray-300 hover:bg-gray-800 md:py-4 md:text-lg md:px-10 transition">
-                    Узнать больше
+                <a href="#about" class="px-6 py-3 sm:px-8 border border-gray-600 text-base font-medium rounded-md text-gray-300 hover:bg-gray-800 md:py-4 md:text-lg md:px-10 transition">
+                    <span data-lang="ru">Узнать больше</span>
+                    <span data-lang="en" class="hidden">Learn More</span>
                 </a>
             </div>
         </div>
     </header>
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-slate-900/50">
+    <section id="about" class="py-16 sm:py-20 bg-slate-900/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-white mb-4">О Сборке</h2>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
+                    <span data-lang="ru">О Сборке</span>
+                    <span data-lang="en" class="hidden">About the Modpack</span>
+                </h2>
                 <div class="w-24 h-1 bg-amber-500 mx-auto rounded-full"></div>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="glass-panel p-8 rounded-2xl">
-                    <h3 class="text-2xl font-bold text-amber-400 mb-4">Технологии и Приключения</h3>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        Create: Uncharted — это не просто сборка модов, это вызов. Мы объединили безграничные возможности механического мода <span class="text-white font-semibold">Create</span> с желанием открыть каждый уголок процедурно-генерируемого мира.
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div class="glass-panel p-6 sm:p-8 rounded-2xl">
+                    <h3 class="text-xl sm:text-2xl font-bold text-amber-400 mb-4">
+                        <span data-lang="ru">Технологии и Приключения</span>
+                        <span data-lang="en" class="hidden">Technology and Adventures</span>
+                    </h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed text-sm sm:text-base">
+                        <span data-lang="ru">Create: Uncharted — это не просто сборка модов, это вызов. Мы объединили безграничные возможности механического мода <span class="text-white font-semibold">Create</span> с желанием открыть каждый уголок процедурно-генерируемого мира.</span>
+                        <span data-lang="en" class="hidden">Create: Uncharted is not just a modpack, it's a challenge. We combined the limitless possibilities of the mechanical mod <span class="text-white font-semibold">Create</span> with the desire to explore every corner of a procedurally generated world.</span>
                     </p>
-                    <ul class="space-y-3 text-gray-400">
+                    <ul class="space-y-3 text-gray-400 text-sm sm:text-base">
                         <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Сложные механизмы и автоматизация
+                            <svg class="w-5 h-5 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span data-lang="ru">Сложные механизмы и автоматизация</span>
+                            <span data-lang="en" class="hidden">Complex mechanisms and automation</span>
                         </li>
                         <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Уникальная генерация мира и новые данжи
+                            <svg class="w-5 h-5 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span data-lang="ru">Сюжет и квесты (FTB Quests): продвигайся по веткам и открывай новые этапы</span>
+                            <span data-lang="en" class="hidden">Story & quests (FTB Quests): progress through chapters and unlock new stages</span>
                         </li>
                         <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Оптимизация для комфортной игры на 1.20.1
+                            <svg class="w-5 h-5 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span data-lang="ru">Уникальная генерация мира и новые данжи</span>
+                            <span data-lang="en" class="hidden">Unique world generation and new dungeons</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span data-lang="ru">Оптимизация для комфортной игры на 1.20.1</span>
+                            <span data-lang="en" class="hidden">Optimized for comfortable gameplay on 1.20.1</span>
                         </li>
                     </ul>
-                    
+
                     <div class="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-4">
-                        <a href="https://www.mediafire.com/file/xm2p0moipsoz327/Create+Uncharted+(1).txt/file" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-sm text-gray-300 hover:text-white transition border border-white/10 group">
-                            <svg class="w-4 h-4 opacity-70 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            Список модов (TXT)
+                        <a href="https://www.mediafire.com/file/xm2p0moipsoz327/Create+Uncharted+(1).txt/file" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-sm text-gray-300 hover:text-white transition border border-white/10 group">
+                            <svg class="w-4 h-4 opacity-70 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <span data-lang="ru">Список модов (TXT)</span>
+                            <span data-lang="en" class="hidden">Mod List (TXT)</span>
                         </a>
-                        <a href="https://www.curseforge.com/minecraft/mc-mods/create" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-sm text-indigo-300 hover:text-indigo-200 transition border border-indigo-500/20 group">
-                            <svg class="w-4 h-4 opacity-70 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                            Дань уважения: Create Mod
+                        <a href="https://www.curseforge.com/minecraft/mc-mods/create" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-sm text-indigo-300 hover:text-indigo-200 transition border border-indigo-500/20 group">
+                            <svg class="w-4 h-4 opacity-70 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                            <span data-lang="ru">Дань уважения: Create Mod</span>
+                            <span data-lang="en" class="hidden">Tribute: Create Mod</span>
                         </a>
                     </div>
                 </div>
-                <div class="relative h-full min-h-[300px] rounded-2xl overflow-hidden border border-white/10 flex items-center justify-center bg-slate-800">
-                   <!-- Placeholder for image -->
-                   <div class="text-center p-6">
-                       <svg class="w-20 h-20 mx-auto text-slate-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0121 18.382V7.618a1 1 0 01-1.447-.894L15 7m0 13V7m0 0L9.553 2.276A1 1 0 0110 1.118l.894.447m-9 4.472L2.382 5.618m0 0l4.553-2.276"></path></svg>
-                       <p class="text-slate-500 italic">Здесь должен быть ваш скриншот мира</p>
-                   </div>
-                </div>
+
+                <!-- World screenshot (static, set via code/repo) -->
+                <figure class="relative h-full min-h-[250px] sm:min-h-[300px] rounded-2xl overflow-hidden border border-white/10 bg-slate-800">
+                    <!--
+                        HOW TO SET YOUR SCREENSHOT:
+                        1) Add an image to the repo, for example: /assets/world-screenshot.jpg
+                        2) Set the src below to that path.
+                        Example: src="assets/world-screenshot.jpg"
+                    -->
+                    <img id="world-shot-static" src="" alt="" class="absolute inset-0 w-full h-full object-cover" />
+
+                    <!-- Fallback (shown if src is empty or image not found) -->
+                    <div id="world-shot-static-fallback" class="absolute inset-0 hidden items-center justify-center">
+                        <div class="text-center p-6">
+                            <svg class="w-16 h-16 sm:w-20 sm:h-20 mx-auto text-slate-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <p class="text-slate-400 italic text-sm sm:text-base">
+                                <span data-lang="ru">Скриншот мира появится здесь</span>
+                                <span data-lang="en" class="hidden">World screenshot will appear here</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="world-shot-static-overlay" class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent hidden"></div>
+                </figure>
+
             </div>
         </div>
     </section>
 
     <!-- Team Section -->
-    <section id="team" class="py-16 relative overflow-hidden">
+    <section id="team" class="py-12 sm:py-16 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white mb-4">Команда Разработки</h2>
-                <p class="text-gray-400">Люди, стоящие за созданием Create: Uncharted</p>
+            <div class="text-center mb-10 sm:mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
+                    <span data-lang="ru">Команда Разработки</span>
+                    <span data-lang="en" class="hidden">Development Team</span>
+                </h2>
+                <p class="text-gray-400">
+                    <span data-lang="ru">Люди, стоящие за созданием Create: Uncharted</span>
+                    <span data-lang="en" class="hidden">The people behind Create: Uncharted</span>
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
+
                 <!-- SHAD11T -->
-                <div class="glass-panel p-8 rounded-2xl border-t-4 border-cyan-500 relative group hover:-translate-y-1 transition duration-300">
+                <div class="glass-panel p-6 sm:p-8 rounded-2xl border-t-4 border-cyan-500 relative group hover:-translate-y-1 transition duration-300">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
-                        <!-- Water Droplet Icon -->
-                        <svg class="w-24 h-24 text-cyan-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.25c-5.385 5.965-8.25 9.67-8.25 13.005 0 4.554 3.696 8.25 8.25 8.25s8.25-3.696 8.25-8.25C20.25 11.92 17.385 8.215 12 2.25z"/></svg>
+                        <svg class="w-20 h-20 sm:w-24 sm:h-24 text-cyan-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.25c-5.385 5.965-8.25 9.67-8.25 13.005 0 4.554 3.696 8.25 8.25 8.25s8.25-3.696 8.25-8.25C20.25 11.92 17.385 8.215 12 2.25z"/></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-1">SHAD11T</h3>
-                    <span class="inline-block bg-cyan-500/20 text-cyan-400 text-xs font-bold px-2 py-1 rounded mb-4">СОЗДАТЕЛЬ ПРОЕКТА</span>
-                    
-                    <ul class="space-y-3 text-gray-300">
+                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-1">SHAD11T</h3>
+                    <span class="inline-block bg-cyan-500/20 text-cyan-400 text-xs font-bold px-2 py-1 rounded mb-4">
+                        <span data-lang="ru">СОЗДАТЕЛЬ ПРОЕКТА</span>
+                        <span data-lang="en" class="hidden">PROJECT CREATOR</span>
+                    </span>
+
+                    <ul class="space-y-3 text-gray-300 text-sm sm:text-base">
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-cyan-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span>Сборка и настройка</span>
+                            <svg class="w-5 h-5 text-cyan-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span data-lang="ru">Сборка и настройка</span>
+                            <span data-lang="en" class="hidden">Assembly and configuration</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-blue-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                            <span>Кастомные крафты и предметы <br><span class="text-xs text-gray-500 font-mono">via KubeJS</span></span>
+                            <svg class="w-5 h-5 text-blue-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                            <span>
+                                <span data-lang="ru">Кастомные крафты и предметы</span>
+                                <span data-lang="en" class="hidden">Custom crafts and items</span>
+                                <br><span class="text-xs text-gray-500 font-mono">via KubeJS</span>
+                            </span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
-                            <span>Перевод модов <span class="text-xs text-gray-500">(с использованием Gemini)</span></span>
+                            <svg class="w-5 h-5 text-green-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+                            <span>
+                                <span data-lang="ru">Перевод модов</span>
+                                <span data-lang="en" class="hidden">Mod translations</span>
+                                <span class="text-xs text-gray-500"> (Gemini)</span>
+                            </span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- AstroBlade -->
-                <div class="glass-panel p-8 rounded-2xl border-t-4 border-indigo-500 relative group hover:-translate-y-1 transition duration-300">
+                <div class="glass-panel p-6 sm:p-8 rounded-2xl border-t-4 border-indigo-500 relative group hover:-translate-y-1 transition duration-300">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
-                         <!-- Planet Icon -->
-                         <svg class="w-24 h-24 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        <svg class="w-20 h-20 sm:w-24 sm:h-24 text-indigo-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-1">AstroBlade</h3>
-                    <span class="inline-block bg-indigo-500/20 text-indigo-400 text-xs font-bold px-2 py-1 rounded mb-4">ИДЕЙНЫЙ ВДОХНОВИТЕЛЬ</span>
-                    
-                    <ul class="space-y-3 text-gray-300">
+                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-1">AstroBlade</h3>
+                    <span class="inline-block bg-indigo-500/20 text-indigo-400 text-xs font-bold px-2 py-1 rounded mb-4">
+                        <span data-lang="ru">ИДЕЙНЫЙ ВДОХНОВИТЕЛЬ</span>
+                        <span data-lang="en" class="hidden">CREATIVE VISIONARY</span>
+                    </span>
+
+                    <ul class="space-y-3 text-gray-300 text-sm sm:text-base">
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-yellow-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                            <span>Автор идеи сборки</span>
+                            <svg class="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                            <span data-lang="ru">Автор идеи сборки</span>
+                            <span data-lang="en" class="hidden">Modpack idea author</span>
                         </li>
                         <li class="flex items-start gap-3">
-                             <svg class="w-5 h-5 text-purple-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
-                            <span>Автор музыки</span>
+                            <svg class="w-5 h-5 text-purple-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+                            <span data-lang="ru">Автор музыки</span>
+                            <span data-lang="en" class="hidden">Music composer</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
-                            <span>Перевод модов <span class="text-xs text-gray-500">(с использованием Gemini)</span></span>
+                            <svg class="w-5 h-5 text-green-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+                            <span>
+                                <span data-lang="ru">Перевод модов</span>
+                                <span data-lang="en" class="hidden">Mod translations</span>
+                                <span class="text-xs text-gray-500"> (Gemini)</span>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -255,158 +453,324 @@
         </div>
     </section>
 
-    <!-- Status & Downloads -->
-    <section id="downloads" class="py-20 relative">
+    <!-- Development Process -->
+    <section id="development" class="py-16 sm:py-20 bg-slate-900/50 border-y border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <!-- Warning Banner -->
-            <div class="bg-orange-900/30 border border-orange-500/50 rounded-lg p-6 mb-12 flex flex-col md:flex-row items-center gap-4">
-                <div class="p-3 bg-orange-600/20 rounded-full shrink-0">
-                    <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
+                    <span data-lang="ru">Процесс разработки</span>
+                    <span data-lang="en" class="hidden">Development Process</span>
+                </h2>
+                <p class="text-gray-400 max-w-3xl mx-auto text-sm sm:text-base">
+                    <span data-lang="ru">Короткая цепочка этапов, через которые проходит сборка.</span>
+                    <span data-lang="en" class="hidden">A short chain of milestones the modpack goes through.</span>
+                </p>
+                <div class="w-24 h-1 bg-amber-500 mx-auto rounded-full mt-4"></div>
+            </div>
+
+            <div class="glass-panel rounded-2xl border border-white/10 p-6 sm:p-8">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m2 9H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <div class="leading-tight">
+                            <div class="text-white font-semibold">
+                                <span data-lang="ru">Собираем моды для сборки</span>
+                                <span data-lang="en" class="hidden">Collecting mods for the modpack</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hidden lg:flex items-center text-slate-500" aria-hidden="true">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                            <span class="text-xs font-mono text-slate-200">0.1</span>
+                        </div>
+                        <div class="leading-tight">
+                            <div class="text-white font-semibold">0.1 (Alpha/UNST)</div>
+                        </div>
+                    </div>
+
+                    <div class="hidden lg:flex items-center text-slate-500" aria-hidden="true">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                            <span class="text-xs font-mono text-slate-200">0.1</span>
+                        </div>
+                        <div class="leading-tight">
+                            <div class="text-white font-semibold">0.1 (Beta/UNST)</div>
+                        </div>
+                    </div>
+
+                    <div class="hidden lg:flex items-center text-slate-500" aria-hidden="true">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </div>
+                        <div class="leading-tight">
+                            <div class="text-white font-semibold">
+                                <span data-lang="ru">Добавляем новые моды</span>
+                                <span data-lang="en" class="hidden">Adding new mods</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hidden lg:flex items-center text-slate-500" aria-hidden="true">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                            <span class="text-xs font-mono text-amber-200">0.1</span>
+                        </div>
+                        <div class="leading-tight">
+                            <div class="text-amber-200 font-semibold">0.1 (Beta-Test/UNST)</div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="text-lg font-bold text-orange-200">Внимание: Ранний доступ (v0.5)</h3>
-                    <p class="text-orange-100/70 text-sm">
-                        Сборка в данный момент находится в активной разработке и считается нестабильной. Возможны баги, краши и изменения в балансе. 
-                        <span class="font-semibold text-white block mt-1">Скачивание временно приостановлено для технических работ.</span>
+
+                <div class="mt-6 pt-5 border-t border-white/10 text-xs sm:text-sm text-gray-400">
+                    <span data-lang="ru">«Собираем моды для сборки» —&gt; «0.1(Alpha/UNST)» —&gt; «0.1(Beta/UNST)» —&gt; «Добавляем новые моды» —&gt; «0.1(Beta-Test/UNST)»</span>
+                    <span data-lang="en" class="hidden">“Collecting mods for the modpack” → “0.1 (Alpha/UNST)” → “0.1 (Beta/UNST)” → “Adding new mods” → “0.1 (Beta-Test/UNST)”</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Status & Downloads -->
+    <section id="downloads" class="py-16 sm:py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Warning Banner -->
+            <div class="bg-orange-900/30 border border-orange-500/50 rounded-lg p-4 sm:p-6 mb-10 sm:mb-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="p-3 bg-orange-600/20 rounded-full shrink-0 self-center sm:self-auto">
+                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <div class="text-center sm:text-left">
+                    <h3 class="text-base sm:text-lg font-bold text-orange-200">
+                        <span data-lang="ru">Внимание: Beta-Test/UNST (v0.1)</span>
+                        <span data-lang="en" class="hidden">Warning: Beta-Test/UNST (v0.1)</span>
+                    </h3>
+                    <p class="text-orange-100/70 text-xs sm:text-sm">
+                        <span data-lang="ru">Сборка в данный момент находится в активной разработке и считается нестабильной. Возможны баги, краши и изменения в балансе.</span>
+                        <span data-lang="en" class="hidden">The modpack is currently in active development and is considered unstable. Bugs, crashes, and balance changes are possible.</span>
+                        <span class="font-semibold text-white block mt-1">
+                            <span data-lang="ru">Скачивание временно приостановлено для технических работ.</span>
+                            <span data-lang="en" class="hidden">Downloads are temporarily suspended for technical maintenance.</span>
+                        </span>
                     </p>
                 </div>
             </div>
 
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white">Выберите вашу платформу</h2>
-                <p class="text-gray-400 mt-2">Файлы загрузки для всех популярных лаунчеров</p>
+            <div class="text-center mb-10 sm:mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white">
+                    <span data-lang="ru">Выберите вашу платформу</span>
+                    <span data-lang="en" class="hidden">Choose Your Platform</span>
+                </h2>
+                <p class="text-gray-400 mt-2 text-sm sm:text-base">
+                    <span data-lang="ru">Файлы загрузки для всех популярных лаунчеров</span>
+                    <span data-lang="en" class="hidden">Download files for all popular launchers</span>
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
                 <!-- Card 1: CurseForge -->
                 <div class="glass-panel p-6 rounded-xl hover:border-amber-500/50 transition duration-300 flex flex-col h-full">
                     <div class="mb-4">
                         <span class="bg-orange-600 text-xs font-bold px-2 py-1 rounded text-white">ZIP</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">CurseForge Format</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">
+                        <span data-lang="ru">Формат CurseForge</span>
+                        <span data-lang="en" class="hidden">CurseForge Format</span>
+                    </h3>
                     <p class="text-sm text-gray-400 mb-6 flex-grow">
-                        Оптимально для CurseForge Launcher, Prism Launcher и других совместимых лаунчеров.
+                        <span data-lang="ru">Оптимально для CurseForge Launcher, Prism Launcher и других совместимых лаунчеров.</span>
+                        <span data-lang="en" class="hidden">Optimal for CurseForge Launcher, Prism Launcher, and other compatible launchers.</span>
                     </p>
-                    <button onclick="downloadBlocked('Modpack.zip (CF)')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        Скачать .zip
+                    <button type="button" onclick="downloadBlocked('Modpack.zip (CF)')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span data-lang="ru">Скачать .zip</span>
+                        <span data-lang="en" class="hidden">Download .zip</span>
                     </button>
                 </div>
 
                 <!-- Card 2: Modrinth -->
                 <div class="glass-panel p-6 rounded-xl hover:border-green-500/50 transition duration-300 flex flex-col h-full">
                     <div class="mb-4">
-                        <span class="bg-green-600 text-xs font-bold px-2 py-1 rounded text-white">MCPACK</span>
+                        <span class="bg-green-600 text-xs font-bold px-2 py-1 rounded text-white">MRPACK</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Modrinth Format</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">
+                        <span data-lang="ru">Формат Modrinth</span>
+                        <span data-lang="en" class="hidden">Modrinth Format</span>
+                    </h3>
                     <p class="text-sm text-gray-400 mb-6 flex-grow">
-                        Формат для Modrinth Launcher, Prism Launcher, MultiMC. Удобная установка зависимостей.
+                        <span data-lang="ru">Формат для Modrinth Launcher, Prism Launcher, MultiMC. Удобная установка зависимостей.</span>
+                        <span data-lang="en" class="hidden">Format for Modrinth Launcher, Prism Launcher, MultiMC. Easy dependency installation.</span>
                     </p>
-                    <button onclick="downloadBlocked('Modpack.mcpack')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        Скачать .mcpack
+                    <button type="button" onclick="downloadBlocked('Modpack.mrpack')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span data-lang="ru">Скачать .mrpack</span>
+                        <span data-lang="en" class="hidden">Download .mrpack</span>
                     </button>
                 </div>
 
                 <!-- Card 3: Manual/Pirate -->
-                <div class="glass-panel p-6 rounded-xl hover:border-blue-500/50 transition duration-300 flex flex-col h-full">
+                <div class="glass-panel p-6 rounded-xl hover:border-blue-500/50 transition duration-300 flex flex-col h-full sm:col-span-2 lg:col-span-1">
                     <div class="mb-4">
                         <span class="bg-blue-600 text-xs font-bold px-2 py-1 rounded text-white">FOLDER</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Manual Install</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">
+                        <span data-lang="ru">Ручная установка</span>
+                        <span data-lang="en" class="hidden">Manual Install</span>
+                    </h3>
                     <p class="text-sm text-gray-400 mb-6 flex-grow">
-                        Полная папка .minecraft в архиве. Просто распакуйте в директорию игры. Подходит для TLauncher и других.
+                        <span data-lang="ru">Полная папка .minecraft в архиве. Просто распакуйте в директорию игры. Подходит для TLauncher и других.</span>
+                        <span data-lang="en" class="hidden">Complete .minecraft folder in archive. Just extract to game directory. Suitable for TLauncher and others.</span>
                     </p>
-                    <button onclick="downloadBlocked('Modpack.zip (Manual)')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        Скачать Full .zip
+                    <button type="button" onclick="downloadBlocked('Modpack.zip (Manual)')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span data-lang="ru">Скачать Full .zip</span>
+                        <span data-lang="en" class="hidden">Download Full .zip</span>
                     </button>
                 </div>
 
             </div>
-            
+
         </div>
     </section>
 
     <!-- Socials & Author Section -->
-    <section id="socials" class="py-16 bg-slate-900 border-t border-white/5 relative overflow-hidden">
-        <!-- Decoration -->
+    <section id="socials" class="py-12 sm:py-16 bg-slate-900 border-t border-white/5 relative overflow-hidden">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
             <div class="absolute bottom-0 left-10 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl"></div>
             <div class="absolute top-10 right-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            
+
             <!-- Section 1: Official Project Links -->
-            <div class="mb-16 text-center">
-                <h2 class="text-3xl font-bold text-white mb-2">Официальные ресурсы сборки</h2>
-                <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Скачивание, обновления, новости команды и вики</p>
-                
-                <div class="flex flex-wrap justify-center gap-6">
+            <div class="mb-12 sm:mb-16 text-center">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">
+                    <span data-lang="ru">Официальные ресурсы сборки</span>
+                    <span data-lang="en" class="hidden">Official Modpack Resources</span>
+                </h2>
+                <p class="text-gray-400 mb-8 max-w-2xl mx-auto text-sm sm:text-base">
+                    <span data-lang="ru">Скачивание, обновления, новости команды и вики</span>
+                    <span data-lang="en" class="hidden">Downloads, updates, team news and wiki</span>
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                     <!-- CurseForge (Project) -->
-                    <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" class="flex flex-col items-center gap-3 p-6 bg-[#f16436]/5 border border-[#f16436]/20 rounded-xl hover:bg-[#f16436]/10 hover:border-[#f16436] hover:shadow-[0_0_20px_rgba(241,100,54,0.3)] text-[#f16436] transition-all duration-300 group min-w-[160px]">
+                    <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" rel="noopener noreferrer" class="social-link flex flex-col items-center gap-3 p-4 sm:p-6 bg-[#f16436]/5 border border-[#f16436]/20 rounded-xl hover:bg-[#f16436]/10 hover:border-[#f16436] hover:shadow-[0_0_20px_rgba(241,100,54,0.3)] text-[#f16436] transition-all duration-300 group min-w-[140px] sm:min-w-[160px]">
+                        <!-- CurseForge Anvil + Flame Icon (refined) -->
+                        <svg class="cf-icon w-10 h-10 sm:w-12 sm:h-12" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2.25c1.55 1.9 2.35 3.35 2.35 4.6 0 1.55-1.14 2.7-2.35 2.7s-2.35-1.15-2.35-2.7c0-1.25.8-2.7 2.35-4.6Z" fill="currentColor" opacity=".9"/>
+                            <path d="M12 4c.9 1.2 1.35 2.15 1.35 3.05 0 .88-.62 1.55-1.35 1.55s-1.35-.67-1.35-1.55c0-.9.45-1.85 1.35-3.05Z" fill="white" opacity=".25"/>
+                            <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="currentColor" opacity=".18"/>
+                            <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.3 13h5.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
+                        </svg>
                         <div class="text-center">
-                            <span class="block font-bold text-lg">CurseForge</span>
-                            <span class="text-xs opacity-70">Страница проекта</span>
+                            <span class="block font-bold text-base sm:text-lg">CurseForge</span>
+                            <span class="text-xs opacity-70">
+                                <span data-lang="ru">Страница проекта</span>
+                                <span data-lang="en" class="hidden">Project Page</span>
+                            </span>
                         </div>
                     </a>
 
                     <!-- Modpack TG (Team) -->
-                    <a href="https://t.me/create_uncharted" target="_blank" class="flex flex-col items-center gap-3 p-6 bg-blue-500/5 border border-blue-500/20 rounded-xl hover:bg-blue-500/10 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] text-blue-400 transition-all duration-300 group min-w-[160px]">
+                    <a href="https://t.me/create_uncharted" target="_blank" rel="noopener noreferrer" class="social-link flex flex-col items-center gap-3 p-4 sm:p-6 bg-blue-500/5 border border-blue-500/20 rounded-xl hover:bg-blue-500/10 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] text-blue-400 transition-all duration-300 group min-w-[140px] sm:min-w-[160px]">
+                        <svg class="w-10 h-10 sm:w-12 sm:h-12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
                         <div class="text-center">
-                            <span class="block font-bold text-lg">Telegram</span>
-                            <span class="text-xs opacity-70">Официальный канал</span>
+                            <span class="block font-bold text-base sm:text-lg">Telegram</span>
+                            <span class="text-xs opacity-70">
+                                <span data-lang="ru">Официальный канал</span>
+                                <span data-lang="en" class="hidden">Official Channel</span>
+                            </span>
                         </div>
                     </a>
                 </div>
             </div>
 
             <!-- Section 2: Author (SHAD11T) -->
-            <div class="text-center border-t border-white/10 pt-12">
-                <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Автор: SHAD11T</h2>
-                <p class="text-gray-400 mb-8">Мой личный блог, стримы и поддержка</p>
-                
-                <div class="flex flex-wrap justify-center gap-4">
-                    <!-- YouTube (Personal) -->
-                    <a href="https://youtube.com/@shad11t_the_shadow?si=i6xQax1Ysf-hHzbI" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-red-600/10 border border-red-600/20 rounded-full hover:bg-red-600 hover:text-white text-red-500 transition-all duration-300 group">
-                        <span class="font-medium">YouTube</span>
+            <div class="text-center border-t border-white/10 pt-10 sm:pt-12">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+                    <span data-lang="ru">Автор: SHAD11T</span>
+                    <span data-lang="en" class="hidden">Author: SHAD11T</span>
+                </h2>
+                <p class="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">
+                    <span data-lang="ru">Мой личный блог, стримы и поддержка</span>
+                    <span data-lang="en" class="hidden">My personal blog, streams and support</span>
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+                    <!-- YouTube -->
+                    <a href="https://youtube.com/@shad11t_the_shadow?si=i6xQax1Ysf-hHzbI" target="_blank" rel="noopener noreferrer" class="social-link flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-red-600/10 border border-red-600/20 rounded-full hover:bg-red-600 hover:text-white text-red-500 transition-all duration-300 group">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        <span class="font-medium text-sm sm:text-base">YouTube</span>
                     </a>
 
-                    <!-- Rutube (Personal) -->
-                    <a href="https://rutube.ru/channel/70698627" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-blue-600/10 border border-blue-600/20 rounded-full hover:bg-blue-700 hover:text-white text-blue-500 transition-all duration-300 group">
-                        <span class="font-medium">Rutube</span>
+                    <!-- Rutube -->
+                    <a href="https://rutube.ru/channel/70698627" target="_blank" rel="noopener noreferrer" class="social-link flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600/10 border border-blue-600/20 rounded-full hover:bg-blue-700 hover:text-white text-blue-500 transition-all duration-300 group">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-2 16.5v-9l7 4.5-7 4.5z"/>
+                        </svg>
+                        <span class="font-medium text-sm sm:text-base">Rutube</span>
                     </a>
 
-                    <!-- Boosty (Personal) -->
-                    <a href="https://boosty.to/shad11ttheshadow" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-orange-500/10 border border-orange-500/20 rounded-full hover:bg-orange-600 hover:text-white text-orange-500 transition-all duration-300 group">
-                        <span class="font-medium">Boosty</span>
+                    <!-- Boosty -->
+                    <a href="https://boosty.to/shad11ttheshadow" target="_blank" rel="noopener noreferrer" class="social-link flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-orange-500/10 border border-orange-500/20 rounded-full hover:bg-orange-600 hover:text-white text-orange-500 transition-all duration-300 group">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        <span class="font-medium text-sm sm:text-base">Boosty</span>
                     </a>
 
-                    <!-- Personal TG (Personal) -->
-                    <a href="https://t.me/SHAD11T" target="_blank" class="flex items-center gap-3 px-6 py-3 bg-sky-500/10 border border-sky-500/20 rounded-full hover:bg-sky-500 hover:text-white text-sky-400 transition-all duration-300 group">
-                        <span class="font-medium">SHAD11T (Автор)</span>
+                    <!-- Personal TG -->
+                    <a href="https://t.me/SHAD11T" target="_blank" rel="noopener noreferrer" class="social-link flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-sky-500/10 border border-sky-500/20 rounded-full hover:bg-sky-500 hover:text-white text-sky-400 transition-all duration-300 group">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                        <span class="font-medium text-sm sm:text-base">SHAD11T</span>
                     </a>
                 </div>
             </div>
-            
+
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 py-8 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-4 md:mb-0">
-                <span class="brand-font text-lg text-white opacity-80 block text-center md:text-left">CREATE: UNCHARTED</span>
-                <a href="https://goshadows.github.io" target="_blank" class="text-xs text-slate-500 hover:text-amber-500 transition mt-1 flex items-center gap-1 justify-center md:justify-start">
+    <footer class="bg-slate-950 py-6 sm:py-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <span class="brand-font text-lg text-white opacity-80 block">CREATE: UNCHARTED</span>
+                <a href="https://goshadows.github.io" target="_blank" rel="noopener noreferrer" class="text-xs text-slate-500 hover:text-amber-500 transition mt-1 flex items-center gap-1 justify-center md:justify-start">
                     <span>Site by</span>
                     <span class="font-bold">GoShadowS Team</span>
                 </a>
             </div>
-            <div class="text-gray-500 text-sm text-center md:text-right">
-                <p>&copy; 2025-2026 Все права защищены.</p>
+            <div class="text-gray-500 text-xs sm:text-sm text-center md:text-right">
+                <p>&copy; 2025-2026 <span data-lang="ru">Все права защищены.</span><span data-lang="en" class="hidden">All rights reserved.</span></p>
                 <p class="text-xs mt-1 opacity-60">This project is not affiliated with Mojang Studios or the creators of the Create mod.</p>
             </div>
         </div>
@@ -414,13 +778,11 @@
 
     <!-- Custom Modal for Blocked Downloads -->
     <div id="download-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <!-- Background backdrop -->
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-100" onclick="closeModal()"></div>
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-100" onclick="closeModal()" aria-hidden="true"></div>
 
-        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <!-- Modal panel -->
-                <div class="relative transform overflow-hidden rounded-2xl glass-panel border border-amber-500/30 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto p-4">
+            <div class="flex min-h-full items-center justify-center">
+                <div class="relative transform overflow-hidden rounded-2xl glass-panel border border-amber-500/30 text-left shadow-2xl transition-all w-full max-w-lg">
                     <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                         <div class="sm:flex sm:items-start">
                             <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-amber-500/20 sm:mx-0 sm:h-10 sm:w-10">
@@ -429,22 +791,25 @@
                                 </svg>
                             </div>
                             <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
-                                <h3 class="text-xl font-bold leading-6 text-white" id="modal-title">Загрузка временно недоступна</h3>
+                                <h3 class="text-lg sm:text-xl font-bold leading-6 text-white" id="modal-title">
+                                    <span data-lang="ru">Загрузка временно недоступна</span>
+                                    <span data-lang="en" class="hidden">Download Temporarily Unavailable</span>
+                                </h3>
                                 <div class="mt-4">
-                                    <p class="text-sm text-gray-300" id="modal-message">
-                                        <!-- Content injected via JS -->
-                                    </p>
+                                    <p class="text-sm text-gray-300" id="modal-message"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-black/20 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-3">
-                        <a href="https://t.me/create_uncharted" target="_blank" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:w-auto transition">
-                            Перейти в Telegram
-                        </a>
-                        <button type="button" onclick="closeModal()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-300 shadow-sm ring-1 ring-inset ring-white/10 hover:bg-white/20 sm:mt-0 sm:w-auto transition">
-                            Понятно
+                    <div class="bg-black/20 px-4 py-3 flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:px-6">
+                        <button type="button" onclick="closeModal()" class="w-full sm:w-auto inline-flex justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-300 shadow-sm ring-1 ring-inset ring-white/10 hover:bg-white/20 transition">
+                            <span data-lang="ru">Понятно</span>
+                            <span data-lang="en" class="hidden">Got it</span>
                         </button>
+                        <a href="https://t.me/create_uncharted" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition">
+                            <span data-lang="ru">Перейти в Telegram</span>
+                            <span data-lang="en" class="hidden">Go to Telegram</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -453,41 +818,316 @@
 
     <!-- Script Logic -->
     <script>
-        function downloadBlocked(filename) {
-            const modal = document.getElementById('download-modal');
+        // Current language
+        let currentLang = localStorage.getItem('lang') || 'ru';
+
+        // Overlay states
+        let isMobileMenuOpen = false;
+        let isModalOpen = false;
+
+        // For modal re-render on language switch
+        let lastBlockedFilename = '';
+
+        function applyScrollLock() {
+            if (isMobileMenuOpen || isModalOpen) {
+                document.body.classList.add('no-scroll');
+            } else {
+                document.body.classList.remove('no-scroll');
+            }
+        }
+
+        // Initialize language + ui on load
+        document.addEventListener('DOMContentLoaded', function() {
+            setLanguage(currentLang, false);
+            updateActiveNavLink();
+            handleScroll();
+            initWorldShotStatic();
+            normalizeExternalLinks();
+        });
+
+        // Ensure external links are safe even if new ones appear later
+        function normalizeExternalLinks() {
+            document.querySelectorAll('a[target="_blank"]').forEach(a => {
+                const rel = (a.getAttribute('rel') || '').toLowerCase();
+                if (!rel.includes('noopener')) {
+                    a.setAttribute('rel', (rel ? rel + ' ' : '') + 'noopener noreferrer');
+                }
+            });
+        }
+
+        // Language switcher
+        function setLanguage(lang, save = true) {
+            currentLang = lang;
+            if (save) localStorage.setItem('lang', lang);
+
+            // Update all text elements
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                if (el.getAttribute('data-lang') === lang) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.textContent.trim() === lang.toUpperCase()) {
+                    btn.classList.add('active');
+                    btn.classList.remove('text-gray-400');
+                } else {
+                    btn.classList.remove('active');
+                    btn.classList.add('text-gray-400');
+                }
+            });
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+
+            // Update page title
+            if (lang === 'en') {
+                document.title = 'Create: Uncharted - Explore the Unknown';
+            } else {
+                document.title = 'Create: Uncharted - Исследуй Неизведанное';
+            }
+
+            // Update static screenshot alt + fallback
+            updateWorldShotStaticA11y();
+
+            // If modal is open, re-render message to match language
+            if (isModalOpen && lastBlockedFilename) {
+                renderBlockedMessage(lastBlockedFilename);
+            }
+        }
+
+        // Mobile menu
+        function openMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('mobile-backdrop');
+            const iconOpen = document.getElementById('menu-icon-open');
+            const iconClose = document.getElementById('menu-icon-close');
+            const btn = document.getElementById('mobile-menu-btn');
+
+            menu.classList.remove('hidden');
+            backdrop.classList.remove('hidden');
+            iconOpen.classList.add('hidden');
+            iconClose.classList.remove('hidden');
+            btn?.setAttribute('aria-expanded', 'true');
+
+            isMobileMenuOpen = true;
+            applyScrollLock();
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('mobile-backdrop');
+            const iconOpen = document.getElementById('menu-icon-open');
+            const iconClose = document.getElementById('menu-icon-close');
+            const btn = document.getElementById('mobile-menu-btn');
+
+            menu.classList.add('hidden');
+            backdrop.classList.add('hidden');
+            iconOpen.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+            btn?.setAttribute('aria-expanded', 'false');
+
+            isMobileMenuOpen = false;
+            applyScrollLock();
+        }
+
+        function toggleMobileMenu() {
+            if (isMobileMenuOpen) closeMobileMenu();
+            else openMobileMenu();
+        }
+
+        // Download blocked modal
+        function renderBlockedMessage(filename) {
             const messageEl = document.getElementById('modal-message');
-            
-            const text = `
-                Сборка <span class="font-bold text-amber-400">Create: Uncharted (v0.5)</span> находится в стадии нестабильной альфа-версии.
+
+            const textRu = `
+                Сборка <span class="font-bold text-amber-400">Create: Uncharted (v0.1)</span> находится в стадии <span class="font-semibold">Beta-Test/UNST</span>.
                 <br><br>
                 Скачивание файла <span class="font-mono bg-black/30 px-1 rounded text-orange-300">${filename}</span> временно отключено администратором во избежание критических ошибок.
                 <br><br>
                 Следите за новостями и выходом стабильной версии в нашем канале!
                 <br><br>
                 <span class="text-sm text-gray-400 block border-t border-white/10 pt-3 mt-2">
-                    Если вы прям желаете скачать данную сборку, перейдите на сайт CurseForge и скачайте там сборку, но там нету формата для пиратских лаунчеров и «.mcpack»
+                    Если вы прям желаете скачать данную сборку, перейдите на сайт CurseForge и скачайте там сборку, но там нету формата для пиратских лаунчеров и ".mrpack".
                 </span>
             `;
-            
-            messageEl.innerHTML = text;
+
+            const textEn = `
+                Modpack <span class="font-bold text-amber-400">Create: Uncharted (v0.1)</span> is in <span class="font-semibold">Beta-Test/UNST</span> stage.
+                <br><br>
+                Downloading file <span class="font-mono bg-black/30 px-1 rounded text-orange-300">${filename}</span> is temporarily disabled by the administrator to avoid critical errors.
+                <br><br>
+                Follow our channel for news and stable version release!
+                <br><br>
+                <span class="text-sm text-gray-400 block border-t border-white/10 pt-3 mt-2">
+                    If you really want to download this modpack, go to CurseForge and download it there. There is no format for pirate launchers and no ".mrpack" yet.
+                </span>
+            `;
+
+            messageEl.innerHTML = currentLang === 'en' ? textEn : textRu;
+        }
+
+        function downloadBlocked(filename) {
+            const modal = document.getElementById('download-modal');
+
+            lastBlockedFilename = filename;
+            renderBlockedMessage(filename);
+
             modal.classList.remove('hidden');
+            isModalOpen = true;
+            applyScrollLock();
         }
 
         function closeModal() {
             document.getElementById('download-modal').classList.add('hidden');
+            isModalOpen = false;
+            applyScrollLock();
         }
 
-        // Close modal on ESC key
+        // Close overlays on ESC key
         document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
+            if (event.key !== 'Escape') return;
+
+            if (isModalOpen) {
                 closeModal();
+                return;
+            }
+            if (isMobileMenuOpen) {
+                closeMobileMenu();
             }
         });
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+        // Back to top button
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Active navigation link highlighting
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section[id], header[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let currentSection = '';
+            const scrollPos = window.scrollY + 100;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href && href.substring(1) === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Handle scroll events
+        function handleScroll() {
+            const backToTop = document.getElementById('back-to-top');
+
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+
+            updateActiveNavLink();
+        }
+
+        // Throttle scroll events
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') {
+                    e.preventDefault();
+                    scrollToTop();
+                    return;
+                }
+
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // World screenshot (static, set via repo/code)
+        function initWorldShotStatic() {
+            const img = document.getElementById('world-shot-static');
+            const fallback = document.getElementById('world-shot-static-fallback');
+            if (!img || !fallback) return;
+
+            // If src is empty -> show fallback
+            const src = (img.getAttribute('src') || '').trim();
+            if (!src) {
+                showWorldShotFallback(true);
+                updateWorldShotStaticA11y();
+                return;
+            }
+
+            // Show fallback if the image fails to load
+            img.addEventListener('error', () => showWorldShotFallback(true), { once: true });
+            img.addEventListener('load', () => showWorldShotFallback(false), { once: true });
+
+            updateWorldShotStaticA11y();
+        }
+
+        function showWorldShotFallback(show) {
+            const img = document.getElementById('world-shot-static');
+            const fallback = document.getElementById('world-shot-static-fallback');
+            const overlay = document.getElementById('world-shot-static-overlay');
+            if (!img || !fallback) return;
+
+            if (show) {
+                fallback.classList.remove('hidden');
+                fallback.classList.add('flex');
+                img.classList.add('hidden');
+                overlay?.classList.add('hidden');
+            } else {
+                fallback.classList.add('hidden');
+                fallback.classList.remove('flex');
+                img.classList.remove('hidden');
+                overlay?.classList.remove('hidden');
+            }
+        }
+
+        function updateWorldShotStaticA11y() {
+            const img = document.getElementById('world-shot-static');
+            if (!img) return;
+            const src = (img.getAttribute('src') || '').trim();
+            if (!src) {
+                img.alt = '';
+                return;
+            }
+            img.alt = currentLang === 'en' ? 'World screenshot' : 'Скриншот мира';
         }
     </script>
 </body>
-</html>
+    </html>
