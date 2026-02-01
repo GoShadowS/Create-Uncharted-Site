@@ -12,432 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Russo+One&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --bg-primary: #070514;
-            --bg-secondary: #0b0a1e;
-            --panel-bg: rgba(11, 10, 30, 0.8);
-            --panel-border: rgba(255, 255, 255, 0.1);
-            --accent-purple: #a855f7;
-            --accent-cyan: #22d3ee;
-            --accent-pink: #fb7185;
-            --text-base: #eef2ff;
-            --text-secondary: #c7d2fe;
-            --text-muted: #9aa4c7;
-            --curseforge: #f16436;
-            --telegram: #0088cc;
-            --youtube: #ff0000;
-            --rutube: #1a1a1a;
-            --boosty: #f97316;
-        }
-
-        @theme {
-            --color-primary: #070514;
-            --color-secondary: #0b0a1e;
-            --color-accent-purple: #a855f7;
-            --color-accent-cyan: #22d3ee;
-            --color-accent-pink: #fb7185;
-            --color-text-base: #eef2ff;
-            --color-text-secondary: #c7d2fe;
-            --color-text-muted: #9aa4c7;
-            --color-curseforge: #f16436;
-            --color-telegram: #0088cc;
-            --color-youtube: #ff0000;
-            --font-russo: 'Russo One', sans-serif;
-            --font-inter: 'Inter', sans-serif;
-        }
-
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-base);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        body.menu-open { overflow: hidden; }
-        .font-russo { font-family: 'Russo One', sans-serif; }
-
-        .glass-panel {
-            background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--panel-border);
-        }
-
-        .grid-bg {
-            background-image:
-                linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        .noise-bg {
-            position: fixed;
-            inset: 0;
-            opacity: 0.03;
-            pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            z-index: 0;
-        }
-
-        .particles-bg {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(168, 85, 247, 0.4);
-            border-radius: 50%;
-            animation: float-particle 20s infinite linear;
-        }
-
-        .particle:nth-child(odd) { background: rgba(34, 211, 238, 0.3); }
-        .particle:nth-child(3n) {
-            background: rgba(251, 113, 133, 0.3);
-            width: 3px;
-            height: 3px;
-        }
-
-        @keyframes float-particle {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
-        }
-
-        .vignette-bg {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(7, 5, 20, 0.4) 100%);
-            z-index: 0;
-        }
-
-        .glow-spot {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            animation: glow-pulse 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow-pulse {
-            0% { opacity: 0.1; transform: scale(1); }
-            100% { opacity: 0.2; transform: scale(1.1); }
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan), var(--accent-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* ========== GEAR ANIMATION - BULLETPROOF ========== */
-        @keyframes gear-rotate-anim {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .gear-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-        }
-
-        .gear-icon {
-            width: 40px;
-            height: 40px;
-            animation: gear-rotate-anim 4s linear infinite;
-            will-change: transform;
-        }
-        /* ================================================== */
-
-        .nav-link {
-            position: relative;
-            padding: 0.5rem 0;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover, .nav-link.active { color: var(--text-base); }
-        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-
-        .mobile-nav-link {
-            display: block;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-nav-link:hover, .mobile-nav-link.active {
-            color: var(--text-base);
-            background: rgba(168, 85, 247, 0.1);
-            border-left: 3px solid var(--accent-purple);
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.875rem 1.75rem;
-            font-size: 1rem;
-            font-weight: 600;
-            color: white;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-            border-radius: 0.75rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(168, 85, 247, 0.4);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.875rem 1.75rem;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-base);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.75rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(168, 85, 247, 0.5);
-        }
-
-        .btn-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-curseforge { background: rgba(241, 100, 54, 0.1); color: var(--curseforge); }
-        .btn-curseforge:hover { background: rgba(241, 100, 54, 0.2); transform: translateY(-2px); }
-
-        .btn-telegram { background: rgba(0, 136, 204, 0.1); color: var(--telegram); }
-        .btn-telegram:hover { background: rgba(0, 136, 204, 0.2); transform: translateY(-2px); }
-
-        .team-card {
-            padding: 1.5rem;
-            border-radius: 1rem;
-            background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--panel-border);
-            transition: all 0.3s ease;
-        }
-
-        .team-card:hover { transform: translateY(-4px); }
-        .team-card-purple { border-color: rgba(168, 85, 247, 0.2); }
-        .team-card-purple:hover {
-            border-color: rgba(168, 85, 247, 0.5);
-            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2);
-        }
-
-        .team-card-cyan { border-color: rgba(34, 211, 238, 0.2); }
-        .team-card-cyan:hover {
-            border-color: rgba(34, 211, 238, 0.5);
-            box-shadow: 0 8px 32px rgba(34, 211, 238, 0.2);
-        }
-
-        .process-timeline {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .process-timeline { flex-direction: row; justify-content: center; gap: 1.5rem; }
-        }
-
-        .process-step {
-            text-align: center;
-            padding: 1.5rem;
-            background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--panel-border);
-            border-radius: 1rem;
-            min-width: 160px;
-            transition: all 0.3s ease;
-        }
-
-        .process-step:hover { transform: translateY(-4px); border-color: rgba(168, 85, 247, 0.3); }
-
-        .process-icon-img { margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; }
-        .process-icon-img img { border-radius: 0.75rem; }
-
-        .process-arrow { display: flex; align-items: center; justify-content: center; transform: rotate(90deg); }
-        @media (min-width: 768px) { .process-arrow { transform: rotate(0deg); } }
-
-        .beta-warning {
-            padding: 1.5rem;
-            background: rgba(250, 204, 21, 0.05);
-            border: 1px solid rgba(250, 204, 21, 0.2);
-            border-radius: 1rem;
-        }
-
-        .download-card {
-            text-align: center;
-            padding: 2rem 1.5rem;
-            background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--panel-border);
-            border-radius: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .download-card:hover { transform: translateY(-4px); border-color: rgba(168, 85, 247, 0.3); }
-
-        .download-card-icon-img { margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; }
-        .download-card-icon-img img { border-radius: 0.75rem; }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .download-btn:hover { color: var(--text-base); background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); }
-
-        .social-card {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--panel-border);
-            border-radius: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-card:hover { transform: translateY(-4px); }
-
-        .social-card-curseforge { border-color: rgba(241, 100, 54, 0.2); }
-        .social-card-curseforge:hover { border-color: rgba(241, 100, 54, 0.5); box-shadow: 0 8px 32px rgba(241, 100, 54, 0.2); }
-
-        .social-card-telegram { border-color: rgba(0, 136, 204, 0.2); }
-        .social-card-telegram:hover { border-color: rgba(0, 136, 204, 0.5); box-shadow: 0 8px 32px rgba(0, 136, 204, 0.2); }
-
-        .social-icon { border-radius: 0.75rem; flex-shrink: 0; }
-
-        .author-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1.25rem;
-            background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--panel-border);
-            border-radius: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .author-link:hover { transform: translateY(-4px); }
-
-        .author-link-youtube { border-color: rgba(255, 0, 0, 0.2); }
-        .author-link-youtube:hover { border-color: rgba(255, 0, 0, 0.5); box-shadow: 0 8px 32px rgba(255, 0, 0, 0.2); }
-
-        .author-link-rutube { border-color: rgba(0, 136, 204, 0.2); }
-        .author-link-rutube:hover { border-color: rgba(0, 136, 204, 0.5); box-shadow: 0 8px 32px rgba(0, 136, 204, 0.2); }
-
-        .author-link-boosty { border-color: rgba(249, 115, 22, 0.2); }
-        .author-link-boosty:hover { border-color: rgba(249, 115, 22, 0.5); box-shadow: 0 8px 32px rgba(249, 115, 22, 0.2); }
-
-        .author-link-telegram { border-color: rgba(0, 136, 204, 0.2); }
-        .author-link-telegram:hover { border-color: rgba(0, 136, 204, 0.5); box-shadow: 0 8px 32px rgba(0, 136, 204, 0.2); }
-
-        #back-to-top.visible { opacity: 1; visibility: visible; }
-
-        #download-modal.active { display: block; }
-        .modal-overlay { opacity: 0; transition: opacity 0.3s ease; }
-        .modal-content { opacity: 0; transform: scale(0.9) translateY(20px); transition: all 0.3s ease; }
-        #download-modal.active .modal-overlay { opacity: 1; }
-        #download-modal.active .modal-content { opacity: 1; transform: scale(1) translateY(0); }
-
-        a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-purple); outline-offset: 2px; }
-        ::selection { background: rgba(168, 85, 247, 0.3); color: white; }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.3); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(168, 85, 247, 0.5); }
-
-        #mobile-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        #mobile-menu.active {
-            display: block;
-            max-height: 520px;
-        }
-
-        @media (max-width: 640px) {
-            .btn-primary, .btn-secondary { padding: 0.75rem 1.5rem; font-size: 0.875rem; }
-            .team-card, .download-card, .social-card { padding: 1.25rem; }
-            .process-step { min-width: 100%; max-width: 280px; }
-        }
-
-        img.error { display: none; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-primary text-text-base antialiased">
 
@@ -462,7 +37,6 @@
                 <a href="#hero" class="flex items-center gap-3 group" aria-label="Create: Uncharted Home">
                     <div class="gear-container" aria-hidden="true">
                         <svg class="gear-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Gear body with teeth -->
                             <path fill="#ffffff" d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/>
                         </svg>
                     </div>
@@ -499,11 +73,11 @@
                 <div class="hidden lg:flex items-center gap-3">
                     <a href="https://curseforge.com" target="_blank" rel="noopener" class="btn-icon btn-curseforge" aria-label="CurseForge">
                         <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                        <span class="text-[color:var(--curseforge)] font-bold text-xs hidden">CF</span>
+                        <span class="text-curseforge font-bold text-xs hidden">CF</span>
                     </a>
                     <a href="https://t.me/createuncharted" target="_blank" rel="noopener" class="btn-icon btn-telegram" aria-label="Telegram">
                         <img src="assets/icon-telegram.png" alt="Telegram" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                        <span class="text-[color:var(--telegram)] font-bold text-xs hidden">TG</span>
+                        <span class="text-telegram font-bold text-xs hidden">TG</span>
                     </a>
                     <button id="lang-switcher" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-sm font-medium" aria-label="Switch language">
                         <span class="text-accent-cyan">RU</span>
@@ -514,7 +88,15 @@
 
                 <!-- Mobile Menu Button -->
                 <button id="mobile-menu-btn" class="lg:hidden p-2 text-text-base hover:text-accent-purple transition-colors" aria-label="Открыть меню" aria-expanded="false">
-                    <img id="mobile-menu-icon" src="assets/icon-burger.svg" alt="" class="w-6 h-6" aria-hidden="true">
+                    <svg id="mobile-menu-icon-open" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 6h16"/>
+                        <path d="M4 12h16"/>
+                        <path d="M4 18h16"/>
+                    </svg>
+                    <svg id="mobile-menu-icon-close" class="w-6 h-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6L6 18"/>
+                        <path d="M6 6l12 12"/>
+                    </svg>
                 </button>
             </div>
         </nav>
@@ -547,11 +129,11 @@
                     <div class="flex items-center gap-3 pt-3 border-t border-white/10">
                         <a href="https://curseforge.com" target="_blank" rel="noopener" class="btn-icon btn-curseforge" aria-label="CurseForge">
                             <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                            <span class="text-[color:var(--curseforge)] font-bold text-xs hidden">CF</span>
+                            <span class="text-curseforge font-bold text-xs hidden">CF</span>
                         </a>
                         <a href="https://t.me/createuncharted" target="_blank" rel="noopener" class="btn-icon btn-telegram" aria-label="Telegram">
                             <img src="assets/icon-telegram.png" alt="Telegram" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                            <span class="text-[color:var(--telegram)] font-bold text-xs hidden">TG</span>
+                            <span class="text-telegram font-bold text-xs hidden">TG</span>
                         </a>
                         <button id="lang-switcher-mobile" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-sm font-medium" aria-label="Switch language">
                             <span class="text-accent-cyan">RU</span>
@@ -570,7 +152,7 @@
         <!-- HERO -->
         <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 pb-16 overflow-hidden">
             <div class="container mx-auto px-4 text-center relative z-10">
-                <h1 class="font-russo text-4xl md:text-5xl lg:text-7xl mb-6 leading-tight" tabindex="-1" data-page-heading>
+                <h1 class="font-russo text-4xl md:text-5xl lg:text-7xl mb-6 leading-tight">
                     <span class="gradient-text" data-lang="ru">Узнай о себе то, что никогда...</span>
                     <span class="gradient-text hidden" data-lang="en">Discover what you never...</span>
                     <br>
@@ -586,14 +168,14 @@
                     Dive into a mysterious world of mechanisms, quests, and unsolved mysteries.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#download" class="btn-primary" data-section="download">
+                    <a href="#download" class="btn-primary">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                         </svg>
                         <span data-lang="ru">Скачать Сборку</span>
                         <span data-lang="en" class="hidden">Download Modpack</span>
                     </a>
-                    <a href="#about" class="btn-secondary" data-section="about">
+                    <a href="#about" class="btn-secondary">
                         <span data-lang="ru">Узнать больше</span>
                         <span data-lang="en" class="hidden">Learn More</span>
                     </a>
@@ -605,7 +187,7 @@
         <section id="about" class="py-20 relative">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
-                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4">
                         <span data-lang="ru">О Сборке</span>
                         <span data-lang="en" class="hidden">About the Modpack</span>
                     </h2>
@@ -695,7 +277,7 @@
         <section id="team" class="py-20 relative">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
-                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4">
                         <span data-lang="ru">Команда</span>
                         <span data-lang="en" class="hidden">Team</span>
                     </h2>
@@ -776,7 +358,7 @@
         <section id="resources" class="py-20 relative">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
-                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4">
                         <span data-lang="ru">Ресурсы и автор</span>
                         <span data-lang="en" class="hidden">Resources & Author</span>
                     </h2>
@@ -790,7 +372,7 @@
                     </h3>
                     <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                         <a href="https://curseforge.com" target="_blank" rel="noopener" class="social-card social-card-curseforge">
-                            <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-12 h-12 object-contain social-icon" onerror="this.outerHTML='<div class=\'w-12 h-12 rounded-xl bg-[color:var(--curseforge)]/20 flex items-center justify-center text-[color:var(--curseforge)] font-russo\'>CF</div>'">
+                            <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-12 h-12 object-contain social-icon" onerror="this.outerHTML='<div class=\'w-12 h-12 rounded-xl bg-curseforge/20 flex items-center justify-center text-curseforge font-russo\'>CF</div>'">
                             <div>
                                 <h4 class="font-russo text-lg text-white">CurseForge</h4>
                                 <p class="text-text-muted text-sm" data-lang="ru">Страница модпака</p>
@@ -800,7 +382,7 @@
                         </a>
 
                         <a href="https://t.me/createuncharted" target="_blank" rel="noopener" class="social-card social-card-telegram">
-                            <img src="assets/icon-telegram.png" alt="Telegram" class="w-12 h-12 object-contain social-icon" onerror="this.outerHTML='<div class=\'w-12 h-12 rounded-xl bg-[color:var(--telegram)]/20 flex items-center justify-center text-[color:var(--telegram)] font-russo\'>TG</div>'">
+                            <img src="assets/icon-telegram.png" alt="Telegram" class="w-12 h-12 object-contain social-icon" onerror="this.outerHTML='<div class=\'w-12 h-12 rounded-xl bg-telegram/20 flex items-center justify-center text-telegram font-russo\'>TG</div>'">
                             <div>
                                 <h4 class="font-russo text-lg text-white">Telegram</h4>
                                 <p class="text-text-muted text-sm" data-lang="ru">Новости и обновления</p>
@@ -823,7 +405,7 @@
                         </a>
 
                         <a href="https://rutube.ru" target="_blank" rel="noopener" class="author-link author-link-rutube">
-                            <img src="assets/icon-rutube.png" alt="Rutube" class="w-8 h-8 object-contain" onerror="this.outerHTML='<div class=\'w-8 h-8 rounded bg-[color:var(--telegram)]/20 flex items-center justify-center text-[color:var(--telegram)] text-xs font-bold\'>RT</div>'">
+                            <img src="assets/icon-rutube.png" alt="Rutube" class="w-8 h-8 object-contain" onerror="this.outerHTML='<div class=\'w-8 h-8 rounded bg-telegram/20 flex items-center justify-center text-telegram text-xs font-bold\'>RT</div>'">
                             <span class="text-sm font-medium">Rutube</span>
                         </a>
 
@@ -833,7 +415,7 @@
                         </a>
 
                         <a href="https://t.me/shad11t" target="_blank" rel="noopener" class="author-link author-link-telegram">
-                            <img src="assets/icon-telegram.png" alt="Telegram" class="w-8 h-8 object-contain" onerror="this.outerHTML='<div class=\'w-8 h-8 rounded bg-[color:var(--telegram)]/20 flex items-center justify-center text-[color:var(--telegram)] text-xs font-bold\'>TG</div>'">
+                            <img src="assets/icon-telegram.png" alt="Telegram" class="w-8 h-8 object-contain" onerror="this.outerHTML='<div class=\'w-8 h-8 rounded bg-telegram/20 flex items-center justify-center text-telegram text-xs font-bold\'>TG</div>'">
                             <span class="text-sm font-medium">Telegram</span>
                         </a>
                     </div>
@@ -845,7 +427,7 @@
         <section id="process" class="py-20 relative overflow-hidden">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
-                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4">
                         <span data-lang="ru">Процесс разработки</span>
                         <span data-lang="en" class="hidden">Development Process</span>
                     </h2>
@@ -886,7 +468,7 @@
         <section id="download" class="py-20 relative">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
-                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4">
                         <span data-lang="ru">Скачать</span>
                         <span data-lang="en" class="hidden">Download</span>
                     </h2>
@@ -920,7 +502,7 @@
                 <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                     <div class="download-card">
                         <div class="download-card-icon-img">
-                            <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-14 h-14 object-contain" onerror="this.parentElement.innerHTML='<div class=\'w-14 h-14 rounded-xl bg-[color:var(--curseforge)]/20 flex items-center justify-center text-[color:var(--curseforge)] font-russo text-xl\'>CF</div>'">
+                            <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-14 h-14 object-contain" onerror="this.parentElement.innerHTML='<div class=\'w-14 h-14 rounded-xl bg-curseforge/20 flex items-center justify-center text-curseforge font-russo text-xl\'>CF</div>'">
                         </div>
                         <h3 class="font-russo text-xl text-white mb-2">CurseForge</h3>
                         <p class="text-text-muted text-sm mb-4" data-lang="ru">Формат .zip для CurseForge App</p>
@@ -988,12 +570,14 @@
         </div>
     </footer>
 
+    <!-- Back to Top Button -->
     <button id="back-to-top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-accent-purple text-white shadow-lg shadow-accent-purple/30 opacity-0 invisible transition-all duration-300 hover:bg-accent-purple/80 hover:scale-110 z-40" aria-label="Back to top">
         <svg class="w-6 h-6 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M18 15l-6-6-6 6"/>
         </svg>
     </button>
 
+    <!-- Download Modal -->
     <div id="download-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-overlay absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
         <div class="modal-container flex items-center justify-center min-h-screen p-4">
@@ -1005,7 +589,7 @@
                 </button>
 
                 <div class="text-center">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[color:var(--curseforge)]/15 flex items-center justify-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-curseforge/15 flex items-center justify-center">
                         <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-8 h-8 object-contain" onerror="this.style.display='none'">
                     </div>
                     <h3 id="modal-title" class="font-russo text-xl text-white mb-3">
@@ -1034,396 +618,6 @@
         </div>
     </div>
 
-    <script>
-        (function() {
-            'use strict';
-
-            const elements = {
-                html: document.documentElement,
-                body: document.body,
-                navbar: document.getElementById('navbar'),
-                mobileMenuBtn: document.getElementById('mobile-menu-btn'),
-                mobileMenuIcon: document.getElementById('mobile-menu-icon'),
-                mobileMenu: document.getElementById('mobile-menu'),
-                mobileMenuOverlay: document.getElementById('mobile-menu-overlay'),
-                langSwitcher: document.getElementById('lang-switcher'),
-                langSwitcherMobile: document.getElementById('lang-switcher-mobile'),
-                backToTop: document.getElementById('back-to-top'),
-                downloadModal: document.getElementById('download-modal'),
-                worldScreenshot: document.getElementById('world-screenshot'),
-                screenshotFallback: document.getElementById('screenshot-fallback'),
-                downloadModlist: document.getElementById('download-modlist')
-            };
-
-            const state = {
-                currentLang: localStorage.getItem('preferred-lang') || 'ru',
-                menuOpen: false,
-                modalOpen: false
-            };
-
-            const LanguageSystem = {
-                init() {
-                    this.setLanguage(state.currentLang);
-                    this.bindEvents();
-                },
-
-                bindEvents() {
-                    elements.langSwitcher?.addEventListener('click', () => this.toggle());
-                    elements.langSwitcherMobile?.addEventListener('click', () => this.toggle());
-                },
-
-                toggle() {
-                    this.setLanguage(state.currentLang === 'ru' ? 'en' : 'ru');
-                },
-
-                setLanguage(lang) {
-                    state.currentLang = lang;
-                    localStorage.setItem('preferred-lang', lang);
-                    elements.html.setAttribute('lang', lang);
-
-                    document.title = lang === 'ru'
-                        ? 'Create: Uncharted — Сюжетная сборка Minecraft'
-                        : 'Create: Uncharted — Story-driven Minecraft Modpack';
-
-                    document.querySelectorAll('[data-lang]').forEach(el => {
-                        el.classList.toggle('hidden', el.getAttribute('data-lang') !== lang);
-                    });
-
-                    this.updateSwitcherUI();
-
-                    if (elements.worldScreenshot) {
-                        elements.worldScreenshot.alt = lang === 'ru'
-                            ? 'Скриншот мира Create: Uncharted'
-                            : 'Create: Uncharted world screenshot';
-                    }
-                },
-
-                updateSwitcherUI() {
-                    const paint = (switcher) => {
-                        if (!switcher) return;
-                        const spans = switcher.querySelectorAll('span');
-                        if (spans.length < 3) return;
-
-                        const ru = spans[0];
-                        const en = spans[2];
-
-                        if (state.currentLang === 'ru') {
-                            ru.classList.add('text-accent-cyan');
-                            ru.classList.remove('text-text-muted');
-                            en.classList.remove('text-accent-cyan');
-                            en.classList.add('text-text-muted');
-                        } else {
-                            en.classList.add('text-accent-cyan');
-                            en.classList.remove('text-text-muted');
-                            ru.classList.remove('text-accent-cyan');
-                            ru.classList.add('text-text-muted');
-                        }
-                    };
-
-                    paint(elements.langSwitcher);
-                    paint(elements.langSwitcherMobile);
-                }
-            };
-
-            const MobileMenu = {
-                init() {
-                    this.bindEvents();
-                },
-
-                bindEvents() {
-                    elements.mobileMenuBtn?.addEventListener('click', () => this.toggle());
-                    elements.mobileMenuOverlay?.addEventListener('click', () => this.close());
-
-                    document.querySelectorAll('.mobile-nav-link').forEach(link => {
-                        link.addEventListener('click', () => this.close());
-                    });
-                },
-
-                toggle() {
-                    state.menuOpen ? this.close() : this.open();
-                },
-
-                open() {
-                    state.menuOpen = true;
-                    elements.mobileMenu?.classList.remove('hidden');
-                    elements.mobileMenu?.classList.add('active');
-                    elements.mobileMenuOverlay?.classList.remove('hidden');
-                    elements.body.classList.add('menu-open');
-                    elements.mobileMenuBtn?.setAttribute('aria-expanded', 'true');
-                    elements.mobileMenuBtn?.setAttribute('aria-label', 'Закрыть меню');
-                    if (elements.mobileMenuIcon) elements.mobileMenuIcon.src = 'assets/icon-close.svg';
-                },
-
-                close() {
-                    state.menuOpen = false;
-                    elements.mobileMenu?.classList.add('hidden');
-                    elements.mobileMenu?.classList.remove('active');
-                    elements.mobileMenuOverlay?.classList.add('hidden');
-                    elements.body.classList.remove('menu-open');
-                    elements.mobileMenuBtn?.setAttribute('aria-expanded', 'false');
-                    elements.mobileMenuBtn?.setAttribute('aria-label', 'Открыть меню');
-                    if (elements.mobileMenuIcon) elements.mobileMenuIcon.src = 'assets/icon-burger.svg';
-                }
-            };
-
-            const Navigation = {
-                sections: [],
-                navLinks: [],
-                mobileNavLinks: [],
-
-                init() {
-                    this.sections = Array.from(document.querySelectorAll('section[id]'));
-                    this.navLinks = Array.from(document.querySelectorAll('.nav-link[data-section]'));
-                    this.mobileNavLinks = Array.from(document.querySelectorAll('.mobile-nav-link[data-section]'));
-
-                    this.bindEvents();
-                    this.updateActiveSection();
-                },
-
-                bindEvents() {
-                    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                        anchor.addEventListener('click', (e) => this.handleClick(e, anchor));
-                    });
-
-                    let ticking = false;
-                    window.addEventListener('scroll', () => {
-                        if (ticking) return;
-                        ticking = true;
-                        window.requestAnimationFrame(() => {
-                            this.updateActiveSection();
-                            ticking = false;
-                        });
-                    }, { passive: true });
-                },
-
-                handleClick(e, anchor) {
-                    const href = anchor.getAttribute('href');
-                    if (!href || href === '#') {
-                        e.preventDefault();
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                        return;
-                    }
-
-                    const target = document.querySelector(href);
-                    if (!target) return;
-
-                    e.preventDefault();
-                    const navbarHeight = elements.navbar?.offsetHeight || 80;
-                    const y = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
-
-                    window.scrollTo({ top: y, behavior: 'smooth' });
-                },
-
-                updateActiveSection() {
-                    const scrollPos = window.scrollY + 120;
-                    let current = '';
-
-                    for (const section of this.sections) {
-                        const top = section.offsetTop;
-                        const height = section.offsetHeight;
-                        if (scrollPos >= top && scrollPos < top + height) {
-                            current = section.id;
-                            break;
-                        }
-                    }
-
-                    const paint = (links) => {
-                        links.forEach(link => {
-                            link.classList.toggle('active', link.getAttribute('data-section') === current);
-                        });
-                    };
-
-                    paint(this.navLinks);
-                    paint(this.mobileNavLinks);
-                }
-            };
-
-            const BackToTop = {
-                init() {
-                    elements.backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-                    let ticking = false;
-                    window.addEventListener('scroll', () => {
-                        if (ticking) return;
-                        ticking = true;
-                        window.requestAnimationFrame(() => {
-                            this.check();
-                            ticking = false;
-                        });
-                    }, { passive: true });
-
-                    this.check();
-                },
-
-                check() {
-                    if (!elements.backToTop) return;
-                    elements.backToTop.classList.toggle('visible', window.scrollY > 300);
-                }
-            };
-
-            const DownloadModal = {
-                init() {
-                    document.querySelectorAll('[data-download]').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            this.open();
-                        });
-                    });
-
-                    elements.downloadModal?.querySelectorAll('.modal-close, .modal-close-btn').forEach(btn => {
-                        btn.addEventListener('click', () => this.close());
-                    });
-
-                    elements.downloadModal?.querySelector('.modal-overlay')?.addEventListener('click', () => this.close());
-
-                    document.addEventListener('keydown', (e) => {
-                        if (e.key === 'Escape') {
-                            if (state.modalOpen) this.close();
-                            if (state.menuOpen) MobileMenu.close();
-                        }
-                    });
-                },
-
-                open() {
-                    if (!elements.downloadModal) return;
-                    state.modalOpen = true;
-                    elements.downloadModal.classList.add('active');
-                    elements.body.style.overflow = 'hidden';
-
-                    const focusable = elements.downloadModal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
-                    focusable[0]?.focus();
-                },
-
-                close() {
-                    if (!elements.downloadModal) return;
-                    state.modalOpen = false;
-                    elements.downloadModal.classList.remove('active');
-                    elements.body.style.overflow = '';
-                }
-            };
-
-            const ScreenshotLoader = {
-                paths: [
-                    'assets/world-screenshot.jpg',
-                    'assets/world-screenshot.png',
-                    'assets/world-screenshot.webp',
-                    'assets/screenshot.jpg',
-                    'assets/screenshot.png'
-                ],
-                idx: 0,
-
-                init() {
-                    if (!elements.worldScreenshot) return;
-                    elements.worldScreenshot.addEventListener('error', () => this.tryNext());
-                    elements.worldScreenshot.addEventListener('load', () => this.onLoad());
-
-                    if (elements.worldScreenshot.complete && elements.worldScreenshot.naturalHeight === 0) {
-                        this.tryNext();
-                    }
-                },
-
-                tryNext() {
-                    if (this.idx < this.paths.length) {
-                        elements.worldScreenshot.src = this.paths[this.idx++];
-                    } else {
-                        this.fallback();
-                    }
-                },
-
-                onLoad() {
-                    elements.worldScreenshot.classList.remove('hidden');
-                    elements.screenshotFallback?.classList.add('hidden');
-                },
-
-                fallback() {
-                    elements.worldScreenshot.classList.add('hidden');
-                    elements.screenshotFallback?.classList.remove('hidden');
-                }
-            };
-
-            const ModListDownload = {
-                init() {
-                    elements.downloadModlist?.addEventListener('click', () => this.download());
-                },
-
-                download() {
-                    const link = document.createElement('a');
-                    link.href = 'assets/mod-list.txt';
-                    link.download = 'mod-list.txt';
-
-                    fetch(link.href, { method: 'HEAD' })
-                        .then(res => res.ok ? link.click() : DownloadModal.open())
-                        .catch(() => DownloadModal.open());
-                }
-            };
-
-            const NavbarEffect = {
-                init() {
-                    let ticking = false;
-                    window.addEventListener('scroll', () => {
-                        if (ticking) return;
-                        ticking = true;
-                        window.requestAnimationFrame(() => {
-                            this.update();
-                            ticking = false;
-                        });
-                    }, { passive: true });
-
-                    this.update();
-                },
-
-                update() {
-                    if (!elements.navbar) return;
-                    elements.navbar.style.background = window.scrollY > 50
-                        ? 'rgba(7, 5, 20, 0.95)'
-                        : 'rgba(11, 10, 30, 0.8)';
-                }
-            };
-
-            const ParticlesBackground = {
-                init() {
-                    const container = document.getElementById('particles-container');
-                    if (!container) return;
-
-                    const count = 30;
-
-                    for (let i = 0; i < count; i++) {
-                        const p = document.createElement('div');
-                        p.className = 'particle';
-                        p.style.left = Math.random() * 100 + '%';
-
-                        const delay = Math.random() * 20;
-                        const duration = 15 + Math.random() * 20;
-                        p.style.animationDelay = `-${delay}s`;
-                        p.style.animationDuration = `${duration}s`;
-
-                        const size = 1 + Math.random() * 3;
-                        p.style.width = `${size}px`;
-                        p.style.height = `${size}px`;
-
-                        container.appendChild(p);
-                    }
-                }
-            };
-
-            function init() {
-                LanguageSystem.init();
-                MobileMenu.init();
-                Navigation.init();
-                BackToTop.init();
-                DownloadModal.init();
-                ScreenshotLoader.init();
-                ModListDownload.init();
-                NavbarEffect.init();
-                ParticlesBackground.init();
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
-            } else {
-                init();
-            }
-        })();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

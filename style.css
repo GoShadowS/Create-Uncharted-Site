@@ -1,1 +1,673 @@
-/* Legacy file kept for compatibility. Styles are now inlined in index.html for GitHub Pages-friendly single-file deployment. */
+/* ============================================
+   CREATE: UNCHARTED - Main Stylesheet
+   ============================================ */
+
+/* CSS Variables */
+:root {
+    --bg-primary: #070514;
+    --bg-secondary: #0b0a1e;
+    --panel-bg: rgba(11, 10, 30, 0.8);
+    --panel-border: rgba(255, 255, 255, 0.1);
+    --accent-purple: #a855f7;
+    --accent-cyan: #22d3ee;
+    --accent-pink: #fb7185;
+    --text-base: #eef2ff;
+    --text-secondary: #c7d2fe;
+    --text-muted: #9aa4c7;
+    --curseforge: #f16436;
+    --telegram: #0088cc;
+    --youtube: #ff0000;
+    --rutube: #1a1a1a;
+    --boosty: #f97316;
+}
+
+/* Tailwind Theme Extension */
+@theme {
+    --color-primary: #070514;
+    --color-secondary: #0b0a1e;
+    --color-accent-purple: #a855f7;
+    --color-accent-cyan: #22d3ee;
+    --color-accent-pink: #fb7185;
+    --color-text-base: #eef2ff;
+    --color-text-secondary: #c7d2fe;
+    --color-text-muted: #9aa4c7;
+    --color-curseforge: #f16436;
+    --color-telegram: #0088cc;
+    --color-youtube: #ff0000;
+    --font-russo: 'Russo One', sans-serif;
+    --font-inter: 'Inter', sans-serif;
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-base);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+.font-russo {
+    font-family: 'Russo One', sans-serif;
+}
+
+/* Glass Panel Effect */
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+}
+
+/* Background Effects */
+.grid-bg {
+    background-image:
+        linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+.noise-bg {
+    position: fixed;
+    inset: 0;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    z-index: 0;
+}
+
+.particles-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(168, 85, 247, 0.4);
+    border-radius: 50%;
+    animation: float-particle 20s infinite linear;
+}
+
+.particle:nth-child(odd) {
+    background: rgba(34, 211, 238, 0.3);
+}
+
+.particle:nth-child(3n) {
+    background: rgba(251, 113, 133, 0.3);
+    width: 3px;
+    height: 3px;
+}
+
+@keyframes float-particle {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.vignette-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(7, 5, 20, 0.4) 100%);
+    z-index: 0;
+}
+
+.glow-spot {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: glow-pulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes glow-pulse {
+    0% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0.2;
+        transform: scale(1.1);
+    }
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan), var(--accent-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   GEAR ANIMATION - Spinning Logo
+   ============================================ */
+@keyframes gear-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.gear-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+}
+
+.gear-icon {
+    width: 40px;
+    height: 40px;
+    animation: gear-rotate 4s linear infinite;
+    will-change: transform;
+}
+
+/* ============================================
+   Navigation Styles
+   ============================================ */
+.nav-link {
+    position: relative;
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--text-base);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Mobile Navigation */
+.mobile-nav-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+    color: var(--text-base);
+    background: rgba(168, 85, 247, 0.1);
+    border-left: 3px solid var(--accent-purple);
+}
+
+#mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+#mobile-menu.active {
+    display: block;
+    max-height: 520px;
+}
+
+/* ============================================
+   Button Styles
+   ============================================ */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(168, 85, 247, 0.4);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-base);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(168, 85, 247, 0.5);
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-curseforge {
+    background: rgba(241, 100, 54, 0.1);
+    color: var(--curseforge);
+}
+
+.btn-curseforge:hover {
+    background: rgba(241, 100, 54, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-telegram {
+    background: rgba(0, 136, 204, 0.1);
+    color: var(--telegram);
+}
+
+.btn-telegram:hover {
+    background: rgba(0, 136, 204, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   Card Styles
+   ============================================ */
+.team-card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    transition: all 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-4px);
+}
+
+.team-card-purple {
+    border-color: rgba(168, 85, 247, 0.2);
+}
+
+.team-card-purple:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2);
+}
+
+.team-card-cyan {
+    border-color: rgba(34, 211, 238, 0.2);
+}
+
+.team-card-cyan:hover {
+    border-color: rgba(34, 211, 238, 0.5);
+    box-shadow: 0 8px 32px rgba(34, 211, 238, 0.2);
+}
+
+/* Download Cards */
+.download-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+}
+
+.download-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.download-card-icon-img {
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.download-card-icon-img img {
+    border-radius: 0.75rem;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    color: var(--text-base);
+    background: rgba(168, 85, 247, 0.1);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+/* Social Cards */
+.social-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+}
+
+.social-card:hover {
+    transform: translateY(-4px);
+}
+
+.social-card-curseforge {
+    border-color: rgba(241, 100, 54, 0.2);
+}
+
+.social-card-curseforge:hover {
+    border-color: rgba(241, 100, 54, 0.5);
+    box-shadow: 0 8px 32px rgba(241, 100, 54, 0.2);
+}
+
+.social-card-telegram {
+    border-color: rgba(0, 136, 204, 0.2);
+}
+
+.social-card-telegram:hover {
+    border-color: rgba(0, 136, 204, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 136, 204, 0.2);
+}
+
+.social-icon {
+    border-radius: 0.75rem;
+    flex-shrink: 0;
+}
+
+/* Author Links */
+.author-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+}
+
+.author-link:hover {
+    transform: translateY(-4px);
+}
+
+.author-link-youtube {
+    border-color: rgba(255, 0, 0, 0.2);
+}
+
+.author-link-youtube:hover {
+    border-color: rgba(255, 0, 0, 0.5);
+    box-shadow: 0 8px 32px rgba(255, 0, 0, 0.2);
+}
+
+.author-link-rutube {
+    border-color: rgba(0, 136, 204, 0.2);
+}
+
+.author-link-rutube:hover {
+    border-color: rgba(0, 136, 204, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 136, 204, 0.2);
+}
+
+.author-link-boosty {
+    border-color: rgba(249, 115, 22, 0.2);
+}
+
+.author-link-boosty:hover {
+    border-color: rgba(249, 115, 22, 0.5);
+    box-shadow: 0 8px 32px rgba(249, 115, 22, 0.2);
+}
+
+.author-link-telegram {
+    border-color: rgba(0, 136, 204, 0.2);
+}
+
+.author-link-telegram:hover {
+    border-color: rgba(0, 136, 204, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 136, 204, 0.2);
+}
+
+/* ============================================
+   Process Timeline
+   ============================================ */
+.process-timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .process-timeline {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+}
+
+.process-step {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    border-radius: 1rem;
+    min-width: 160px;
+    transition: all 0.3s ease;
+}
+
+.process-step:hover {
+    transform: translateY(-4px);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.process-icon-img {
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.process-icon-img img {
+    border-radius: 0.75rem;
+}
+
+.process-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(90deg);
+}
+
+@media (min-width: 768px) {
+    .process-arrow {
+        transform: rotate(0deg);
+    }
+}
+
+/* ============================================
+   Beta Warning
+   ============================================ */
+.beta-warning {
+    padding: 1.5rem;
+    background: rgba(250, 204, 21, 0.05);
+    border: 1px solid rgba(250, 204, 21, 0.2);
+    border-radius: 1rem;
+}
+
+/* ============================================
+   Modal Styles
+   ============================================ */
+#download-modal.active {
+    display: block;
+}
+
+.modal-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.3s ease;
+}
+
+#download-modal.active .modal-overlay {
+    opacity: 1;
+}
+
+#download-modal.active .modal-content {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* ============================================
+   Back to Top Button
+   ============================================ */
+#back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ============================================
+   Accessibility & Focus States
+   ============================================ */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 2px;
+}
+
+::selection {
+    background: rgba(168, 85, 247, 0.3);
+    color: white;
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 85, 247, 0.5);
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+@media (max-width: 640px) {
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.875rem;
+    }
+
+    .team-card,
+    .download-card,
+    .social-card {
+        padding: 1.25rem;
+    }
+
+    .process-step {
+        min-width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* Image Error Fallback */
+img.error {
+    display: none;
+}
