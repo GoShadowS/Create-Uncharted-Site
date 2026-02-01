@@ -2,1331 +2,1428 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="yandex-verification" content="058bb34027b84532" />
-    <meta name="google-site-verification" content="YJHR0gOTb7RhE2Qf0COo8tQcUzhhUKWTNIeHgxKOc3g" />
-    <link rel="canonical" href="https://goshadows.github.io/Create-Uncharted-Site/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#070514">
-    <title>Create: Uncharted — Узнай о себе то, что никогда... и не знал?</title>
-    <meta name="description" content="Официальный сайт сборки Create: Uncharted (1.20.1). Сюжетный модпак вокруг Create с квестами (FTB Quests). Версия 0.2 (Beta | Without Cosmetic, Customs & Quests) уже доступна для ознакомления!">
-    <meta name="keywords" content="Minecraft, Create Mod, Modpack, Uncharted, 1.20.1, Майнкрафт сборка, Индустриальная сборка">
+    <title>Create: Uncharted — Сюжетная сборка Minecraft</title>
+    <meta name="description" content="Create: Uncharted — загадочная сюжетная сборка Minecraft на основе мода Create для версии 1.21.1">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Russo+One&display=swap" rel="stylesheet">
 
     <style>
-        :root{
-            /* Mysterious palette */
-            --bg-0: #070514;
-            --bg-1: #0b0a1e;
-            --panel: rgba(20, 16, 40, 0.72);
-            --panel-border: rgba(255, 255, 255, 0.10);
-
-            --text-0: #eef2ff;
-            --text-1: #c7d2fe;
-            --muted: #9aa4c7;
-
-            --accent: #a855f7;      /* purple */
-            --accent-2: #22d3ee;    /* cyan */
-            --accent-3: #fb7185;    /* rose */
-
-            --danger: #f43f5e;
+        :root {
+            --bg-primary: #070514;
+            --bg-secondary: #0b0a1e;
+            --panel-bg: rgba(11, 10, 30, 0.8);
+            --panel-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #a855f7;
+            --accent-cyan: #22d3ee;
+            --accent-pink: #fb7185;
+            --text-base: #eef2ff;
+            --text-secondary: #c7d2fe;
+            --text-muted: #9aa4c7;
+            --curseforge: #f16436;
+            --telegram: #0088cc;
+            --youtube: #ff0000;
+            --rutube: #1a1a1a;
+            --boosty: #f97316;
         }
+
+        @theme {
+            --color-primary: #070514;
+            --color-secondary: #0b0a1e;
+            --color-accent-purple: #a855f7;
+            --color-accent-cyan: #22d3ee;
+            --color-accent-pink: #fb7185;
+            --color-text-base: #eef2ff;
+            --color-text-secondary: #c7d2fe;
+            --color-text-muted: #9aa4c7;
+            --color-curseforge: #f16436;
+            --color-telegram: #0088cc;
+            --color-youtube: #ff0000;
+            --font-russo: 'Russo One', sans-serif;
+            --font-inter: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-0);
-            color: var(--text-0);
-            scroll-behavior: smooth;
+            background-color: var(--bg-primary);
+            color: var(--text-base);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        h1, h2, h3, .brand-font {
-            font-family: 'Russo One', sans-serif;
+
+        body.menu-open { overflow: hidden; }
+        .font-russo { font-family: 'Russo One', sans-serif; }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--panel-border);
         }
-        .gear-spin {
-            animation: spin 10s linear infinite;
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
-        @keyframes spin {
+
+        .noise-bg {
+            position: fixed;
+            inset: 0;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            z-index: 0;
+        }
+
+        .particles-bg {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(168, 85, 247, 0.4);
+            border-radius: 50%;
+            animation: float-particle 20s infinite linear;
+        }
+
+        .particle:nth-child(odd) { background: rgba(34, 211, 238, 0.3); }
+        .particle:nth-child(3n) {
+            background: rgba(251, 113, 133, 0.3);
+            width: 3px;
+            height: 3px;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .vignette-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(7, 5, 20, 0.4) 100%);
+            z-index: 0;
+        }
+
+        .glow-spot {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: glow-pulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow-pulse {
+            0% { opacity: 0.1; transform: scale(1); }
+            100% { opacity: 0.2; transform: scale(1.1); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ========== GEAR ANIMATION - BULLETPROOF ========== */
+        @keyframes gear-rotate-anim {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
-        /* Darker, more mysterious glass */
-        .glass-panel {
-            background: var(--panel);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--panel-border);
+        .gear-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
         }
 
-        /* Active nav (override previous amber vibe) */
-        .nav-link.active {
-            color: var(--accent);
-            background: rgba(168, 85, 247, 0.14);
+        .gear-icon {
+            width: 40px;
+            height: 40px;
+            animation: gear-rotate-anim 4s linear infinite;
+            will-change: transform;
+        }
+        /* ================================================== */
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
 
-        /* Selection colors */
-        ::selection {
-            background: rgba(168, 85, 247, 0.45);
-            color: white;
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+            transition: width 0.3s ease;
         }
 
-        /* Back to top */
-        .back-to-top {
-            opacity: 0;
-            visibility: hidden;
+        .nav-link:hover, .nav-link.active { color: var(--text-base); }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+        .mobile-nav-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 0.5rem;
             transition: all 0.3s ease;
         }
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
+
+        .mobile-nav-link:hover, .mobile-nav-link.active {
+            color: var(--text-base);
+            background: rgba(168, 85, 247, 0.1);
+            border-left: 3px solid var(--accent-purple);
         }
 
-        @media (max-width: 768px) {
-            .social-link {
-                min-height: 48px;
-            }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
         }
 
-        /* Language switcher */
-        .lang-btn {
-            transition: all 0.2s ease;
-        }
-        .lang-btn.active {
-            background: rgba(168, 85, 247, 0.18);
-            color: var(--accent);
-            border-color: rgba(168, 85, 247, 0.45);
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(168, 85, 247, 0.4);
         }
 
-        /* CurseForge icon smoothing */
-        .cf-icon {
-            shape-rendering: geometricPrecision;
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-base);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
         }
-        .cf-icon path {
-            vector-effect: non-scaling-stroke;
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(168, 85, 247, 0.5);
         }
 
-        /* Make existing "amber" utilities feel mysterious without rewriting HTML */
-        .text-amber-500, .text-amber-400, .text-amber-200 { color: var(--accent) !important; }
-        .bg-amber-600, .bg-amber-700 { background-color: rgba(168, 85, 247, 0.92) !important; }
-        .hover\:bg-amber-700:hover { background-color: rgba(147, 51, 234, 0.95) !important; }
-        .bg-amber-500\/10 { background-color: rgba(168, 85, 247, 0.12) !important; }
-        .border-amber-500\/20 { border-color: rgba(168, 85, 247, 0.28) !important; }
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
 
-        /* blue utilities -> cyan accent */
-        .bg-blue-600, .bg-blue-700 { background-color: rgba(34, 211, 238, 0.20) !important; }
-        .hover\:bg-blue-700:hover { background-color: rgba(34, 211, 238, 0.28) !important; }
-        .text-blue-400 { color: rgba(34, 211, 238, 0.95) !important; }
-        .hover\:text-blue-300:hover { color: rgba(103, 232, 249, 0.95) !important; }
-        .border-blue-500\/20 { border-color: rgba(34, 211, 238, 0.25) !important; }
+        .btn-curseforge { background: rgba(241, 100, 54, 0.1); color: var(--curseforge); }
+        .btn-curseforge:hover { background: rgba(241, 100, 54, 0.2); transform: translateY(-2px); }
 
-        /* orange warning -> rose */
-        .text-orange-500, .text-orange-200 { color: rgba(251, 113, 133, 0.95) !important; }
-        .bg-orange-900\/30 { background-color: rgba(190, 18, 60, 0.18) !important; }
-        .border-orange-500\/50 { border-color: rgba(251, 113, 133, 0.35) !important; }
-        .bg-orange-600\/20 { background-color: rgba(251, 113, 133, 0.12) !important; }
-        .text-orange-100\/70 { color: rgba(244, 63, 94, 0.60) !important; }
+        .btn-telegram { background: rgba(0, 136, 204, 0.1); color: var(--telegram); }
+        .btn-telegram:hover { background: rgba(0, 136, 204, 0.2); transform: translateY(-2px); }
 
-        /* Extra overrides to unify the whole site into the "mysterious" palette */
-        .bg-amber-500 { background-color: rgba(168, 85, 247, 0.90) !important; }
-        .border-amber-500\/30 { border-color: rgba(168, 85, 247, 0.34) !important; }
-        .border-amber-500\/50 { border-color: rgba(168, 85, 247, 0.44) !important; }
-        .shadow-amber-600\/20 { --tw-shadow-color: rgba(168, 85, 247, 0.22) !important; }
-        .shadow-amber-600\/30 { --tw-shadow-color: rgba(168, 85, 247, 0.28) !important; }
+        .team-card {
+            padding: 1.5rem;
+            border-radius: 1rem;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--panel-border);
+            transition: all 0.3s ease;
+        }
 
-        /* Selection utility overrides (Tailwind adds higher-specificity rules) */
-        .selection\:bg-amber-500 ::selection { background: rgba(168, 85, 247, 0.45) !important; }
-        .selection\:text-white ::selection { color: #ffffff !important; }
+        .team-card:hover { transform: translateY(-4px); }
+        .team-card-purple { border-color: rgba(168, 85, 247, 0.2); }
+        .team-card-purple:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2);
+        }
 
-        /* Slate backgrounds -> darker, mystical */
-        .bg-slate-800 { background-color: rgba(16, 16, 40, 0.70) !important; }
-        .bg-slate-900 { background-color: rgba(11, 10, 30, 0.92) !important; }
-        .bg-slate-900\/50 { background-color: rgba(11, 10, 30, 0.60) !important; }
-        .bg-slate-950 { background-color: rgba(5, 5, 16, 0.96) !important; }
+        .team-card-cyan { border-color: rgba(34, 211, 238, 0.2); }
+        .team-card-cyan:hover {
+            border-color: rgba(34, 211, 238, 0.5);
+            box-shadow: 0 8px 32px rgba(34, 211, 238, 0.2);
+        }
 
-        /* Greys -> violet-muted */
-        .text-gray-400 { color: var(--muted) !important; }
-        .text-gray-300 { color: rgba(199, 210, 254, 0.92) !important; }
-        .text-gray-500 { color: rgba(148, 163, 184, 0.65) !important; }
-        .text-slate-500 { color: rgba(148, 163, 184, 0.65) !important; }
-        .text-slate-400 { color: rgba(148, 163, 184, 0.75) !important; }
+        .process-timeline {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
 
-        /* Borders / hover surfaces */
-        .border-gray-600 { border-color: rgba(165, 180, 252, 0.25) !important; }
-        .hover\:bg-gray-800:hover { background-color: rgba(129, 140, 248, 0.08) !important; }
+        @media (min-width: 768px) {
+            .process-timeline { flex-direction: row; justify-content: center; gap: 1.5rem; }
+        }
 
-        /* Group hover for brand */
-        .group:hover .group-hover\:text-amber-400 { color: rgba(216, 180, 254, 0.95) !important; }
+        .process-step {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--panel-border);
+            border-radius: 1rem;
+            min-width: 160px;
+            transition: all 0.3s ease;
+        }
 
-        /* Prevent background scroll when overlays opened */
-        body.no-scroll {
+        .process-step:hover { transform: translateY(-4px); border-color: rgba(168, 85, 247, 0.3); }
+
+        .process-icon-img { margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; }
+        .process-icon-img img { border-radius: 0.75rem; }
+
+        .process-arrow { display: flex; align-items: center; justify-content: center; transform: rotate(90deg); }
+        @media (min-width: 768px) { .process-arrow { transform: rotate(0deg); } }
+
+        .beta-warning {
+            padding: 1.5rem;
+            background: rgba(250, 204, 21, 0.05);
+            border: 1px solid rgba(250, 204, 21, 0.2);
+            border-radius: 1rem;
+        }
+
+        .download-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--panel-border);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover { transform: translateY(-4px); border-color: rgba(168, 85, 247, 0.3); }
+
+        .download-card-icon-img { margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; }
+        .download-card-icon-img img { border-radius: 0.75rem; }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover { color: var(--text-base); background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); }
+
+        .social-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--panel-border);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-card:hover { transform: translateY(-4px); }
+
+        .social-card-curseforge { border-color: rgba(241, 100, 54, 0.2); }
+        .social-card-curseforge:hover { border-color: rgba(241, 100, 54, 0.5); box-shadow: 0 8px 32px rgba(241, 100, 54, 0.2); }
+
+        .social-card-telegram { border-color: rgba(0, 136, 204, 0.2); }
+        .social-card-telegram:hover { border-color: rgba(0, 136, 204, 0.5); box-shadow: 0 8px 32px rgba(0, 136, 204, 0.2); }
+
+        .social-icon { border-radius: 0.75rem; flex-shrink: 0; }
+
+        .author-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.25rem;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--panel-border);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .author-link:hover { transform: translateY(-4px); }
+
+        .author-link-youtube { border-color: rgba(255, 0, 0, 0.2); }
+        .author-link-youtube:hover { border-color: rgba(255, 0, 0, 0.5); box-shadow: 0 8px 32px rgba(255, 0, 0, 0.2); }
+
+        .author-link-rutube { border-color: rgba(0, 136, 204, 0.2); }
+        .author-link-rutube:hover { border-color: rgba(0, 136, 204, 0.5); box-shadow: 0 8px 32px rgba(0, 136, 204, 0.2); }
+
+        .author-link-boosty { border-color: rgba(249, 115, 22, 0.2); }
+        .author-link-boosty:hover { border-color: rgba(249, 115, 22, 0.5); box-shadow: 0 8px 32px rgba(249, 115, 22, 0.2); }
+
+        .author-link-telegram { border-color: rgba(0, 136, 204, 0.2); }
+        .author-link-telegram:hover { border-color: rgba(0, 136, 204, 0.5); box-shadow: 0 8px 32px rgba(0, 136, 204, 0.2); }
+
+        #back-to-top.visible { opacity: 1; visibility: visible; }
+
+        #download-modal.active { display: block; }
+        .modal-overlay { opacity: 0; transition: opacity 0.3s ease; }
+        .modal-content { opacity: 0; transform: scale(0.9) translateY(20px); transition: all 0.3s ease; }
+        #download-modal.active .modal-overlay { opacity: 1; }
+        #download-modal.active .modal-content { opacity: 1; transform: scale(1) translateY(0); }
+
+        a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-purple); outline-offset: 2px; }
+        ::selection { background: rgba(168, 85, 247, 0.3); color: white; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(168, 85, 247, 0.5); }
+
+        #mobile-menu {
+            max-height: 0;
             overflow: hidden;
+            transition: max-height 0.3s ease;
         }
 
-        /* Reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            html:focus-within { scroll-behavior: auto; }
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-            .gear-spin {
-                animation: none !important;
-            }
+        #mobile-menu.active {
+            display: block;
+            max-height: 520px;
         }
+
+        @media (max-width: 640px) {
+            .btn-primary, .btn-secondary { padding: 0.75rem 1.5rem; font-size: 0.875rem; }
+            .team-card, .download-card, .social-card { padding: 1.25rem; }
+            .process-step { min-width: 100%; max-width: 280px; }
+        }
+
+        img.error { display: none; }
     </style>
 </head>
-<body class="antialiased selection:bg-amber-500 selection:text-white">
+<body class="bg-primary text-text-base antialiased">
 
-    <!-- Mobile Backdrop (for menu) -->
-    <div id="mobile-backdrop" class="fixed inset-0 z-40 hidden bg-black/60 backdrop-blur-sm lg:hidden" onclick="closeMobileMenu()" aria-hidden="true"></div>
+    <!-- Decorative Background -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="glow-spot absolute top-0 left-1/4 w-96 h-96 bg-accent-purple/30"></div>
+        <div class="glow-spot absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-cyan/20" style="animation-delay: -3s;"></div>
+        <div class="glow-spot absolute top-1/2 left-0 w-72 h-72 bg-accent-pink/15" style="animation-delay: -5s;"></div>
+        <div class="glow-spot absolute top-1/3 right-0 w-64 h-64 bg-accent-purple/10" style="animation-delay: -2s;"></div>
+        <div class="grid-bg absolute inset-0"></div>
+    </div>
+
+    <div class="noise-bg"></div>
+    <div class="particles-bg" id="particles-container"></div>
+    <div class="vignette-bg"></div>
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 glass-panel border-b border-white/10 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="#" class="flex items-center gap-2 group" aria-label="Create: Uncharted Home">
-                    <!-- Gear Icon -->
-                    <svg class="w-8 h-8 text-amber-500 gear-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                    <span class="text-lg sm:text-xl brand-font text-white tracking-wider group-hover:text-amber-400 transition">CREATE: UNCHARTED</span>
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo with SPINNING GEAR -->
+                <a href="#hero" class="flex items-center gap-3 group" aria-label="Create: Uncharted Home">
+                    <div class="gear-container" aria-hidden="true">
+                        <svg class="gear-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Gear body with teeth -->
+                            <path fill="#ffffff" d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/>
+                        </svg>
+                    </div>
+                    <span class="font-russo text-lg md:text-xl text-white group-hover:text-accent-purple transition-colors">
+                        CREATE: UNCHARTED
+                    </span>
                 </a>
 
-                <!-- Desktop Menu -->
-                <div class="hidden lg:flex items-center gap-1">
-                    <a href="#about" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="about">
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center gap-6" aria-label="Primary">
+                    <a href="#about" class="nav-link" data-section="about">
                         <span data-lang="ru">О Сборке</span>
                         <span data-lang="en" class="hidden">About</span>
                     </a>
-                    <a href="#team" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="team">
+                    <a href="#team" class="nav-link" data-section="team">
                         <span data-lang="ru">Команда</span>
                         <span data-lang="en" class="hidden">Team</span>
                     </a>
-                    <a href="#socials" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="socials">
+                    <a href="#resources" class="nav-link" data-section="resources">
                         <span data-lang="ru">Ресурсы</span>
                         <span data-lang="en" class="hidden">Resources</span>
                     </a>
-                    <a href="#development" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="development">
+                    <a href="#process" class="nav-link" data-section="process">
                         <span data-lang="ru">Процесс</span>
                         <span data-lang="en" class="hidden">Process</span>
                     </a>
-                    <a href="#downloads" class="nav-link text-gray-300 hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition" data-section="downloads">
+                    <a href="#download" class="nav-link" data-section="download">
+                        <span data-lang="ru">Скачать</span>
+                        <span data-lang="en" class="hidden">Download</span>
+                    </a>
+                </div>
+
+                <!-- Right Side Actions -->
+                <div class="hidden lg:flex items-center gap-3">
+                    <a href="https://curseforge.com" target="_blank" rel="noopener" class="btn-icon btn-curseforge" aria-label="CurseForge">
+                        <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                        <span class="text-[color:var(--curseforge)] font-bold text-xs hidden">CF</span>
+                    </a>
+                    <a href="https://t.me/createuncharted" target="_blank" rel="noopener" class="btn-icon btn-telegram" aria-label="Telegram">
+                        <img src="assets/icon-telegram.png" alt="Telegram" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                        <span class="text-[color:var(--telegram)] font-bold text-xs hidden">TG</span>
+                    </a>
+                    <button id="lang-switcher" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-sm font-medium" aria-label="Switch language">
+                        <span class="text-accent-cyan">RU</span>
+                        <span class="text-text-muted">/</span>
+                        <span class="text-text-muted">EN</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 text-text-base hover:text-accent-purple transition-colors" aria-label="Открыть меню" aria-expanded="false">
+                    <img id="mobile-menu-icon" src="assets/icon-burger.svg" alt="" class="w-6 h-6" aria-hidden="true">
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden" aria-label="Mobile navigation">
+            <div class="container mx-auto px-4 py-4 border-t border-white/5">
+                <div class="flex flex-col gap-3">
+                    <a href="#about" class="mobile-nav-link" data-section="about">
+                        <span data-lang="ru">О Сборке</span>
+                        <span data-lang="en" class="hidden">About</span>
+                    </a>
+                    <a href="#team" class="mobile-nav-link" data-section="team">
+                        <span data-lang="ru">Команда</span>
+                        <span data-lang="en" class="hidden">Team</span>
+                    </a>
+                    <a href="#resources" class="mobile-nav-link" data-section="resources">
+                        <span data-lang="ru">Ресурсы</span>
+                        <span data-lang="en" class="hidden">Resources</span>
+                    </a>
+                    <a href="#process" class="mobile-nav-link" data-section="process">
+                        <span data-lang="ru">Процесс</span>
+                        <span data-lang="en" class="hidden">Process</span>
+                    </a>
+                    <a href="#download" class="mobile-nav-link" data-section="download">
                         <span data-lang="ru">Скачать</span>
                         <span data-lang="en" class="hidden">Download</span>
                     </a>
 
-                    <div class="w-px h-6 bg-white/10 mx-2"></div>
-
-                    <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-[#f16436] px-3 py-2 rounded-md text-sm font-medium transition flex items-center gap-1.5">
-                        <!-- CurseForge Anvil + Flame Icon (refined) -->
-                        <svg class="cf-icon w-[22px] h-[22px]" viewBox="0 0 24 24" aria-hidden="true">
-                            <!-- Flame -->
-                            <path d="M12 2.25c1.55 1.9 2.35 3.35 2.35 4.6 0 1.55-1.14 2.7-2.35 2.7s-2.35-1.15-2.35-2.7c0-1.25.8-2.7 2.35-4.6Z" fill="currentColor" opacity=".9"/>
-                            <path d="M12 4c.9 1.2 1.35 2.15 1.35 3.05 0 .88-.62 1.55-1.35 1.55s-1.35-.67-1.35-1.55c0-.9.45-1.85 1.35-3.05Z" fill="white" opacity=".25"/>
-                            <!-- Anvil (fill + outline for crisp look) -->
-                            <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="currentColor" opacity=".18"/>
-                            <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9.3 13h5.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
-                        </svg>
-                        CurseForge
-                    </a>
-
-                    <a href="https://t.me/create_uncharted" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium transition flex items-center gap-2">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                        </svg>
-                        Telegram
-                    </a>
-
-                    <!-- Language Switcher -->
-                    <div class="flex items-center ml-3 gap-1 border border-white/10 rounded-full p-0.5">
-                        <button type="button" onclick="setLanguage('ru')" class="lang-btn active px-2.5 py-1 rounded-full text-xs font-medium" aria-label="Switch to Russian">RU</button>
-                        <button type="button" onclick="setLanguage('en')" class="lang-btn px-2.5 py-1 rounded-full text-xs font-medium text-gray-400 hover:text-white" aria-label="Switch to English">EN</button>
+                    <div class="flex items-center gap-3 pt-3 border-t border-white/10">
+                        <a href="https://curseforge.com" target="_blank" rel="noopener" class="btn-icon btn-curseforge" aria-label="CurseForge">
+                            <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <span class="text-[color:var(--curseforge)] font-bold text-xs hidden">CF</span>
+                        </a>
+                        <a href="https://t.me/createuncharted" target="_blank" rel="noopener" class="btn-icon btn-telegram" aria-label="Telegram">
+                            <img src="assets/icon-telegram.png" alt="Telegram" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <span class="text-[color:var(--telegram)] font-bold text-xs hidden">TG</span>
+                        </a>
+                        <button id="lang-switcher-mobile" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-sm font-medium" aria-label="Switch language">
+                            <span class="text-accent-cyan">RU</span>
+                            <span class="text-text-muted">/</span>
+                            <span class="text-text-muted">EN</span>
+                        </button>
                     </div>
-
-                    <span class="text-[10px] font-mono text-gray-500 border border-white/10 rounded px-2 py-1 select-none ml-2">v0.2.4.3</span>
                 </div>
-
-                <!-- Mobile menu button -->
-                <div class="flex items-center gap-2 lg:hidden">
-                    <!-- Mobile Language Switcher -->
-                    <div class="flex items-center gap-1 border border-white/10 rounded-full p-0.5">
-                        <button type="button" onclick="setLanguage('ru')" class="lang-btn active px-2 py-0.5 rounded-full text-xs font-medium">RU</button>
-                        <button type="button" onclick="setLanguage('en')" class="lang-btn px-2 py-0.5 rounded-full text-xs font-medium text-gray-400">EN</button>
-                    </div>
-                    <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none transition" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
-                        <svg id="menu-icon-open" class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg id="menu-icon-close" class="h-6 w-6 hidden" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-xl border-b border-white/10">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#about" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="about">
-                    <span data-lang="ru">О Сборке</span>
-                    <span data-lang="en" class="hidden">About</span>
-                </a>
-                <a href="#team" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="team">
-                    <span data-lang="ru">Команда Разработки</span>
-                    <span data-lang="en" class="hidden">Development Team</span>
-                </a>
-                <a href="#socials" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="socials">
-                    <span data-lang="ru">Официальные ресурсы</span>
-                    <span data-lang="en" class="hidden">Official Resources</span>
-                </a>
-                <a href="#development" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="development">
-                    <span data-lang="ru">Процесс разработки</span>
-                    <span data-lang="en" class="hidden">Development Process</span>
-                </a>
-                <a href="#downloads" class="nav-link text-gray-300 hover:text-amber-400 block px-3 py-3 rounded-md text-base font-medium transition" onclick="closeMobileMenu();" data-section="downloads">
-                    <span data-lang="ru">Скачать</span>
-                    <span data-lang="en" class="hidden">Download</span>
-                </a>
-                <div class="border-t border-white/5 my-2"></div>
-                <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" rel="noopener noreferrer" class="text-[#f16436] hover:text-[#ff7b50] block px-3 py-3 rounded-md text-base font-medium transition flex items-center gap-2">
-                    <svg class="cf-icon w-[22px] h-[22px] shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 2.25c1.55 1.9 2.35 3.35 2.35 4.6 0 1.55-1.14 2.7-2.35 2.7s-2.35-1.15-2.35-2.7c0-1.25.8-2.7 2.35-4.6Z" fill="currentColor" opacity=".9"/>
-                        <path d="M12 4c.9 1.2 1.35 2.15 1.35 3.05 0 .88-.62 1.55-1.35 1.55s-1.35-.67-1.35-1.55c0-.9.45-1.85 1.35-3.05Z" fill="white" opacity=".25"/>
-                        <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="currentColor" opacity=".18"/>
-                        <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9.3 13h5.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
-                    </svg>
-                    CurseForge
-                </a>
-                <a href="https://t.me/create_uncharted" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 block px-3 py-3 rounded-md text-base font-medium transition flex items-center gap-2">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                    </svg>
-                    Telegram
-                </a>
-                <div class="px-3 py-2 mt-2 border-t border-white/5">
-                    <span class="text-[10px] font-mono text-gray-500 block text-center">v0.2.4.3</span>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Back to Top Button -->
-    <button id="back-to-top" onclick="scrollToTop()" class="back-to-top fixed bottom-6 right-6 z-40 p-3 bg-amber-600 hover:bg-amber-700 text-white rounded-full shadow-lg shadow-amber-600/30 transition-all duration-300 hover:scale-110" aria-label="Back to top">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-        </svg>
-    </button>
-
-    <!-- Hero Section -->
-    <header id="hero" class="relative pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-full z-0">
-            <div class="absolute top-[-12%] left-[-12%] w-[44%] h-[44%] bg-fuchsia-500/15 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-[8%] right-[-6%] w-[34%] h-[34%] bg-cyan-400/12 rounded-full blur-3xl"></div>
-            <div class="absolute inset-0 bg-[linear-gradient(to_right,#9aa4c70f_1px,transparent_1px),linear-gradient(to_bottom,#9aa4c70f_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(800px_circle_at_50%_25%,rgba(168,85,247,0.10),transparent_55%)]"></div>
-        </div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span class="inline-block py-1 px-3 rounded-full bg-amber-500/10 text-amber-500 text-sm font-semibold mb-6 border border-amber-500/20">
-                <span data-lang="ru">Версия 0.2 (Beta | Without Cosmetic, Customs & Quests)</span>
-                <span data-lang="en" class="hidden">Version 0.2 (Beta | Without Cosmetic, Customs & Quests)</span>
-            </span>
-            <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300">
-                    <span data-lang="ru">Узнай о себе то, что никогда... и не знал?</span>
-                    <span data-lang="en" class="hidden">Discover something about yourself you never… even knew?</span>
-                </span>
-            </h1>
-            <p class="mt-4 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 px-4">
-                <span data-lang="ru">Познавай мир, в котором ты должен создать то, что ты мог и знать, но сейчас и понятия не имеешь, что это такое!</span>
-                <span data-lang="en" class="hidden">Explore a world where you must build something you could have known… yet right now you have no idea what it even is.</span>
-            </p>
-            <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row justify-center gap-4 px-4">
-                <a href="#downloads" class="px-6 py-3 sm:px-8 border border-transparent text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 md:py-4 md:text-lg md:px-10 transition shadow-lg shadow-amber-600/20">
-                    <span data-lang="ru">Скачать Сборку</span>
-                    <span data-lang="en" class="hidden">Download Modpack</span>
-                </a>
-                <a href="#about" class="px-6 py-3 sm:px-8 border border-gray-600 text-base font-medium rounded-md text-gray-300 hover:bg-gray-800 md:py-4 md:text-lg md:px-10 transition">
-                    <span data-lang="ru">Узнать больше</span>
-                    <span data-lang="en" class="hidden">Learn More</span>
-                </a>
             </div>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="py-16 sm:py-20 bg-slate-900/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 sm:mb-16">
-                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
-                    <span data-lang="ru">О Сборке</span>
-                    <span data-lang="en" class="hidden">About the Modpack</span>
-                </h2>
-                <div class="w-24 h-1 bg-amber-500 mx-auto rounded-full"></div>
-            </div>
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden" aria-hidden="true"></div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <div class="glass-panel p-6 sm:p-8 rounded-2xl">
-                    <h3 class="text-xl sm:text-2xl font-bold text-amber-400 mb-4">
-                        <span data-lang="ru">Сюжет и Тайны</span>
-                        <span data-lang="en" class="hidden">Story and Secrets</span>
-                    </h3>
-                    <p class="text-gray-300 mb-6 leading-relaxed text-sm sm:text-base">
-                        <span data-lang="ru">Create: Uncharted - это сюжет, который подарит вам необыкновенные эмоции. Сборка построена вокруг мода <span class="text-white font-semibold">Create</span>!</span>
-                        <span data-lang="en" class="hidden">Create: Uncharted is a story-driven journey built to give you unforgettable emotions. The modpack is built around the <span class="text-white font-semibold">Create</span> mod!</span>
-                    </p>
-                    <ul class="space-y-3 text-gray-400 text-sm sm:text-base">
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span data-lang="ru">Сложные механизмы и автоматизация</span>
-                            <span data-lang="en" class="hidden">Complex mechanisms and automation</span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span data-lang="ru">Сюжет и квесты (FTB Quests): продвигайся по веткам и открывай новые этапы</span>
-                            <span data-lang="en" class="hidden">Story & quests (FTB Quests): progress through chapters and unlock new stages</span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span data-lang="ru">Уникальная генерация мира и новые данжи</span>
-                            <span data-lang="en" class="hidden">Unique world generation and new dungeons</span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span data-lang="ru">Оптимизация для комфортной игры на 1.20.1</span>
-                            <span data-lang="en" class="hidden">Optimized for comfortable gameplay on 1.20.1</span>
-                        </li>
-                    </ul>
-
-                    <div class="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-4">
-                        <a id="mod-list-download" href="assets/mod-list.txt" download="Create-Uncharted-Mod-List.txt" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-sm text-gray-300 hover:text-white transition border border-white/10 group">
-                            <svg class="w-4 h-4 opacity-70 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            <span data-lang="ru">Список модов (TXT)</span>
-                            <span data-lang="en" class="hidden">Mod List (TXT)</span>
-                        </a>
-                        <a href="https://www.curseforge.com/minecraft/mc-mods/create" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-sm text-indigo-300 hover:text-indigo-200 transition border border-indigo-500/20 group">
-                            <svg class="w-4 h-4 opacity-70 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                            <span data-lang="ru">Дань уважения: Create Mod</span>
-                            <span data-lang="en" class="hidden">Tribute: Create Mod</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- World screenshot (static, set via code/repo) -->
-                <figure class="relative h-full min-h-[250px] sm:min-h-[300px] rounded-2xl overflow-hidden border border-white/10 bg-slate-800">
-                    <!--
-                        HOW TO SET YOUR SCREENSHOT:
-                        1) Add an image to the repo, for example: /assets/world-screenshot.jpg
-                        2) Set the src below to that path.
-                        Example: src="assets/world-screenshot.jpg"
-                    -->
-                    <img id="world-shot-static" src="" alt="" class="absolute inset-0 w-full h-full object-cover" />
-
-                    <!-- Fallback (shown if src is empty or image not found) -->
-                    <div id="world-shot-static-fallback" class="absolute inset-0 hidden items-center justify-center">
-                        <div class="text-center p-6">
-                            <svg class="w-16 h-16 sm:w-20 sm:h-20 mx-auto text-slate-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            <p class="text-slate-400 italic text-sm sm:text-base">
-                                <span data-lang="ru">Скриншот мира появится здесь</span>
-                                <span data-lang="en" class="hidden">World screenshot will appear here</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div id="world-shot-static-overlay" class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent hidden"></div>
-                </figure>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section id="team" class="py-12 sm:py-16 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10 sm:mb-12">
-                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
-                    <span data-lang="ru">Команда Разработки</span>
-                    <span data-lang="en" class="hidden">Development Team</span>
-                </h2>
-                <p class="text-gray-400">
-                    <span data-lang="ru">Люди, стоящие за созданием Create: Uncharted</span>
-                    <span data-lang="en" class="hidden">The people behind Create: Uncharted</span>
+    <main class="relative">
+        <!-- HERO -->
+        <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 pb-16 overflow-hidden">
+            <div class="container mx-auto px-4 text-center relative z-10">
+                <h1 class="font-russo text-4xl md:text-5xl lg:text-7xl mb-6 leading-tight" tabindex="-1" data-page-heading>
+                    <span class="gradient-text" data-lang="ru">Узнай о себе то, что никогда...</span>
+                    <span class="gradient-text hidden" data-lang="en">Discover what you never...</span>
+                    <br>
+                    <span class="text-white" data-lang="ru">и не знал?</span>
+                    <span class="text-white hidden" data-lang="en">even knew?</span>
+                </h1>
+                <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8" data-lang="ru">
+                    Сюжетная сборка Minecraft на основе мода Create для версии 1.21.1.
+                    Погрузись в загадочный мир механизмов, квестов и неразгаданных тайн.
                 </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
-
-                <!-- SHAD11T -->
-                <div class="glass-panel p-6 sm:p-8 rounded-2xl border-t-4 border-cyan-500 relative group hover:-translate-y-1 transition duration-300">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
-                        <svg class="w-20 h-20 sm:w-24 sm:h-24 text-cyan-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.25c-5.385 5.965-8.25 9.67-8.25 13.005 0 4.554 3.696 8.25 8.25 8.25s8.25-3.696 8.25-8.25C20.25 11.92 17.385 8.215 12 2.25z"/></svg>
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-1">SHAD11T</h3>
-                    <span class="inline-block bg-cyan-500/20 text-cyan-400 text-xs font-bold px-2 py-1 rounded mb-4">
-                        <span data-lang="ru">СОЗДАТЕЛЬ ПРОЕКТА</span>
-                        <span data-lang="en" class="hidden">PROJECT CREATOR</span>
-                    </span>
-
-                    <ul class="space-y-3 text-gray-300 text-sm sm:text-base">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-cyan-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span data-lang="ru">Сборка и настройка</span>
-                            <span data-lang="en" class="hidden">Assembly and configuration</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-blue-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                            <span>
-                                <span data-lang="ru">Кастомные крафты и предметы</span>
-                                <span data-lang="en" class="hidden">Custom crafts and items</span>
-                                <br><span class="text-xs text-gray-500 font-mono">via KubeJS</span>
-                            </span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
-                            <span>
-                                <span data-lang="ru">Перевод модов</span>
-                                <span data-lang="en" class="hidden">Mod translations</span>
-                                <span class="text-xs text-gray-500"> (Gemini)</span>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- AstroBlade -->
-                <div class="glass-panel p-6 sm:p-8 rounded-2xl border-t-4 border-indigo-500 relative group hover:-translate-y-1 transition duration-300">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
-                        <svg class="w-20 h-20 sm:w-24 sm:h-24 text-indigo-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-1">AstroBlade</h3>
-                    <span class="inline-block bg-indigo-500/20 text-indigo-400 text-xs font-bold px-2 py-1 rounded mb-4">
-                        <span data-lang="ru">ИДЕЙНЫЙ ВДОХНОВИТЕЛЬ</span>
-                        <span data-lang="en" class="hidden">CREATIVE VISIONARY</span>
-                    </span>
-
-                    <ul class="space-y-3 text-gray-300 text-sm sm:text-base">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                            <span data-lang="ru">Автор идеи сборки</span>
-                            <span data-lang="en" class="hidden">Modpack idea author</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-purple-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
-                            <span data-lang="ru">Автор музыки</span>
-                            <span data-lang="en" class="hidden">Music composer</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
-                            <span>
-                                <span data-lang="ru">Перевод модов</span>
-                                <span data-lang="en" class="hidden">Mod translations</span>
-                                <span class="text-xs text-gray-500"> (Gemini)</span>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Development Process -->
-    <section id="development" class="py-16 sm:py-20 bg-slate-900/50 border-y border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 sm:mb-16">
-                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
-                    <span data-lang="ru">Процесс разработки</span>
-                    <span data-lang="en" class="hidden">Development Process</span>
-                </h2>
-                <p class="text-gray-400 max-w-3xl mx-auto text-sm sm:text-base">
-                    <span data-lang="ru">Короткая цепочка этапов, через которые проходит сборка.</span>
-                    <span data-lang="en" class="hidden">A short chain of milestones the modpack goes through.</span>
+                <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 hidden" data-lang="en">
+                    Story-driven Minecraft modpack based on Create mod for version 1.21.1.
+                    Dive into a mysterious world of mechanisms, quests, and unsolved mysteries.
                 </p>
-                <div class="w-24 h-1 bg-amber-500 mx-auto rounded-full mt-4"></div>
-            </div>
-
-            <div class="glass-panel rounded-2xl border border-white/10 p-6 sm:p-8">
-                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m2 9H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
-                        </div>
-                        <div class="leading-tight">
-                            <div class="text-white font-semibold">
-                                <span data-lang="ru">Собираем моды для сборки</span>
-                                <span data-lang="en" class="hidden">Collecting mods for the modpack</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="hidden lg:flex items-center text-slate-500" aria-hidden="true">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                            <span class="text-xs font-mono text-slate-200">0.1</span>
-                        </div>
-                        <div class="leading-tight">
-                            <div class="text-white font-semibold">0.1 (Beta | Without Cosmetic, Customs & Quests)</div>
-                        </div>
-                    </div>
-
-                    <div class="hidden lg:flex items-center text-slate-500" aria-hidden="true">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                            </svg>
-                        </div>
-                        <div class="leading-tight">
-                            <div class="text-white font-semibold">
-                                <span data-lang="ru">Добавляем новые моды</span>
-                                <span data-lang="en" class="hidden">Adding new mods</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="hidden lg:flex items-center text-slate-500" aria-hidden="true">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
-                            <span class="text-xs font-mono text-amber-200">0.2</span>
-                        </div>
-                        <div class="leading-tight">
-                            <div class="text-amber-200 font-semibold">0.2 (Beta | Without Cosmetic, Customs & Quests)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-6 pt-5 border-t border-white/10 text-xs sm:text-sm text-gray-400">
-                    <span data-lang="ru">«Собираем моды для сборки» —&gt; «0.1 (Beta | Without Cosmetic, Customs & Quests)» —&gt; «Добавляем новые моды» —&gt; «0.2 (Beta | Without Cosmetic, Customs & Quests)»</span>
-                    <span data-lang="en" class="hidden">“Collecting mods for the modpack” → “0.1 (Beta | Without Cosmetic, Customs & Quests)” → “Adding new mods” → “0.2 (Beta | Without Cosmetic, Customs & Quests)”</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Status & Downloads -->
-    <section id="downloads" class="py-16 sm:py-20 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-            <!-- Warning Banner -->
-            <div class="bg-orange-900/30 border border-orange-500/50 rounded-lg p-4 sm:p-6 mb-10 sm:mb-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <div class="p-3 bg-orange-600/20 rounded-full shrink-0 self-center sm:self-auto">
-                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                </div>
-                <div class="text-center sm:text-left">
-                    <h3 class="text-base sm:text-lg font-bold text-orange-200">
-                        <span data-lang="ru">Внимание: Beta | Without Cosmetic, Customs & Quests (v0.2)</span>
-                        <span data-lang="en" class="hidden">Warning: Beta | Without Cosmetic, Customs & Quests (v0.2)</span>
-                    </h3>
-                    <p class="text-orange-100/70 text-xs sm:text-sm">
-                        <span data-lang="ru">Сборка в данный момент находится в активной разработке и считается нестабильной. Возможны баги, краши и изменения в балансе.</span>
-                        <span data-lang="en" class="hidden">The modpack is currently in active development and is considered unstable. Bugs, crashes, and balance changes are possible.</span>
-                        <span class="font-semibold text-white block mt-1">
-                            <span data-lang="ru">Скачивание временно приостановлено для технических работ.</span>
-                            <span data-lang="en" class="hidden">Downloads are temporarily suspended for technical maintenance.</span>
-                        </span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="text-center mb-10 sm:mb-12">
-                <h2 class="text-2xl sm:text-3xl font-bold text-white">
-                    <span data-lang="ru">Выберите вашу платформу</span>
-                    <span data-lang="en" class="hidden">Choose Your Platform</span>
-                </h2>
-                <p class="text-gray-400 mt-2 text-sm sm:text-base">
-                    <span data-lang="ru">Файлы загрузки для всех популярных лаунчеров</span>
-                    <span data-lang="en" class="hidden">Download files for all popular launchers</span>
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-
-                <!-- Card 1: CurseForge -->
-                <div class="glass-panel p-6 rounded-xl hover:border-amber-500/50 transition duration-300 flex flex-col h-full">
-                    <div class="mb-4">
-                        <span class="bg-orange-600 text-xs font-bold px-2 py-1 rounded text-white">ZIP</span>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">
-                        <span data-lang="ru">Формат CurseForge</span>
-                        <span data-lang="en" class="hidden">CurseForge Format</span>
-                    </h3>
-                    <p class="text-sm text-gray-400 mb-6 flex-grow">
-                        <span data-lang="ru">Оптимально для CurseForge Launcher, Prism Launcher и других совместимых лаунчеров.</span>
-                        <span data-lang="en" class="hidden">Optimal for CurseForge Launcher, Prism Launcher, and other compatible launchers.</span>
-                    </p>
-                    <button type="button" onclick="downloadBlocked('Modpack.zip (CF)')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        <span data-lang="ru">Скачать .zip</span>
-                        <span data-lang="en" class="hidden">Download .zip</span>
-                    </button>
-                </div>
-
-                <!-- Card 2: Modrinth -->
-                <div class="glass-panel p-6 rounded-xl hover:border-green-500/50 transition duration-300 flex flex-col h-full">
-                    <div class="mb-4">
-                        <span class="bg-green-600 text-xs font-bold px-2 py-1 rounded text-white">MRPACK</span>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">
-                        <span data-lang="ru">Формат Modrinth</span>
-                        <span data-lang="en" class="hidden">Modrinth Format</span>
-                    </h3>
-                    <p class="text-sm text-gray-400 mb-6 flex-grow">
-                        <span data-lang="ru">Формат для Modrinth Launcher, Prism Launcher, MultiMC. Удобная установка зависимостей.</span>
-                        <span data-lang="en" class="hidden">Format for Modrinth Launcher, Prism Launcher, MultiMC. Easy dependency installation.</span>
-                    </p>
-                    <button type="button" onclick="downloadBlocked('Modpack.mrpack')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        <span data-lang="ru">Скачать .mrpack</span>
-                        <span data-lang="en" class="hidden">Download .mrpack</span>
-                    </button>
-                </div>
-
-                <!-- Card 3: Manual/Pirate -->
-                <div class="glass-panel p-6 rounded-xl hover:border-blue-500/50 transition duration-300 flex flex-col h-full sm:col-span-2 lg:col-span-1">
-                    <div class="mb-4">
-                        <span class="bg-blue-600 text-xs font-bold px-2 py-1 rounded text-white">FOLDER</span>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold text-white mb-2">
-                        <span data-lang="ru">Ручная установка</span>
-                        <span data-lang="en" class="hidden">Manual Install</span>
-                    </h3>
-                    <p class="text-sm text-gray-400 mb-6 flex-grow">
-                        <span data-lang="ru">Полная папка .minecraft в архиве. Просто распакуйте в директорию игры. Подходит для TLauncher и других.</span>
-                        <span data-lang="en" class="hidden">Complete .minecraft folder in archive. Just extract to game directory. Suitable for TLauncher and others.</span>
-                    </p>
-                    <button type="button" onclick="downloadBlocked('Modpack.zip (Manual)')" class="w-full py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-semibold transition flex items-center justify-center gap-2 cursor-not-allowed opacity-75">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        <span data-lang="ru">Скачать Full .zip</span>
-                        <span data-lang="en" class="hidden">Download Full .zip</span>
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Socials & Author Section -->
-    <section id="socials" class="py-12 sm:py-16 bg-slate-900 border-t border-white/5 relative overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
-            <div class="absolute bottom-0 left-10 w-72 h-72 bg-fuchsia-500/10 rounded-full blur-3xl"></div>
-            <div class="absolute top-10 right-10 w-72 h-72 bg-cyan-400/10 rounded-full blur-3xl"></div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-            <!-- Section 1: Official Project Links -->
-            <div class="mb-12 sm:mb-16 text-center">
-                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">
-                    <span data-lang="ru">Официальные ресурсы сборки</span>
-                    <span data-lang="en" class="hidden">Official Modpack Resources</span>
-                </h2>
-                <p class="text-gray-400 mb-8 max-w-2xl mx-auto text-sm sm:text-base">
-                    <span data-lang="ru">Скачивание, обновления, новости команды и вики</span>
-                    <span data-lang="en" class="hidden">Downloads, updates, team news and wiki</span>
-                </p>
-
-                <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
-                    <!-- CurseForge (Project) -->
-                    <a href="https://www.curseforge.com/minecraft/modpacks/create-uncharted" target="_blank" rel="noopener noreferrer" class="social-link flex flex-col items-center gap-3 p-4 sm:p-6 bg-[#f16436]/5 border border-[#f16436]/20 rounded-xl hover:bg-[#f16436]/10 hover:border-[#f16436] hover:shadow-[0_0_20px_rgba(241,100,54,0.3)] text-[#f16436] transition-all duration-300 group min-w-[140px] sm:min-w-[160px]">
-                        <!-- CurseForge Anvil + Flame Icon (refined) -->
-                        <svg class="cf-icon w-10 h-10 sm:w-12 sm:h-12" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2.25c1.55 1.9 2.35 3.35 2.35 4.6 0 1.55-1.14 2.7-2.35 2.7s-2.35-1.15-2.35-2.7c0-1.25.8-2.7 2.35-4.6Z" fill="currentColor" opacity=".9"/>
-                            <path d="M12 4c.9 1.2 1.35 2.15 1.35 3.05 0 .88-.62 1.55-1.35 1.55s-1.35-.67-1.35-1.55c0-.9.45-1.85 1.35-3.05Z" fill="white" opacity=".25"/>
-                            <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="currentColor" opacity=".18"/>
-                            <path d="M6.2 8.6h7.6l.8-1.7h3.2L19 8.6h2.1V11H19.7l-1 2H15.6v2.1H17.4V18H6.6v-2.9H8.4V13H5.3l-1-2H3V8.6h3.2Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9.3 13h5.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#download" class="btn-primary" data-section="download">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                         </svg>
-                        <div class="text-center">
-                            <span class="block font-bold text-base sm:text-lg">CurseForge</span>
-                            <span class="text-xs opacity-70">
-                                <span data-lang="ru">Страница проекта</span>
-                                <span data-lang="en" class="hidden">Project Page</span>
-                            </span>
-                        </div>
+                        <span data-lang="ru">Скачать Сборку</span>
+                        <span data-lang="en" class="hidden">Download Modpack</span>
                     </a>
-
-                    <!-- Modpack TG (Team) -->
-                    <a href="https://t.me/create_uncharted" target="_blank" rel="noopener noreferrer" class="social-link flex flex-col items-center gap-3 p-4 sm:p-6 bg-blue-500/5 border border-blue-500/20 rounded-xl hover:bg-blue-500/10 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] text-blue-400 transition-all duration-300 group min-w-[140px] sm:min-w-[160px]">
-                        <svg class="w-10 h-10 sm:w-12 sm:h-12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                        </svg>
-                        <div class="text-center">
-                            <span class="block font-bold text-base sm:text-lg">Telegram</span>
-                            <span class="text-xs opacity-70">
-                                <span data-lang="ru">Официальный канал</span>
-                                <span data-lang="en" class="hidden">Official Channel</span>
-                            </span>
-                        </div>
+                    <a href="#about" class="btn-secondary" data-section="about">
+                        <span data-lang="ru">Узнать больше</span>
+                        <span data-lang="en" class="hidden">Learn More</span>
                     </a>
                 </div>
             </div>
+        </section>
 
-            <!-- Section 2: Author (SHAD11T) -->
-            <div class="text-center border-t border-white/10 pt-10 sm:pt-12">
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-                    <span data-lang="ru">Автор: SHAD11T</span>
-                    <span data-lang="en" class="hidden">Author: SHAD11T</span>
-                </h2>
-                <p class="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">
-                    <span data-lang="ru">Мой личный блог, стримы и поддержка</span>
-                    <span data-lang="en" class="hidden">My personal blog, streams and support</span>
-                </p>
-
-                <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
-                    <!-- YouTube -->
-                    <a href="https://youtube.com/@shad11t_the_shadow?si=i6xQax1Ysf-hHzbI" target="_blank" rel="noopener noreferrer" class="social-link flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-red-600/10 border border-red-600/20 rounded-full hover:bg-red-600 hover:text-white text-red-500 transition-all duration-300 group">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                        <span class="font-medium text-sm sm:text-base">YouTube</span>
-                    </a>
-
-                    <!-- Rutube -->
-                    <a href="https://rutube.ru/channel/70698627" target="_blank" rel="noopener noreferrer" class="social-link flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600/10 border border-blue-600/20 rounded-full hover:bg-blue-700 hover:text-white text-blue-500 transition-all duration-300 group">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-2 16.5v-9l7 4.5-7 4.5z"/>
-                        </svg>
-                        <span class="font-medium text-sm sm:text-base">Rutube</span>
-                    </a>
-
-                    <!-- Boosty -->
-                    <a href="https://boosty.to/shad11ttheshadow" target="_blank" rel="noopener noreferrer" class="social-link flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-orange-500/10 border border-orange-500/20 rounded-full hover:bg-orange-600 hover:text-white text-orange-500 transition-all duration-300 group">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                        </svg>
-                        <span class="font-medium text-sm sm:text-base">Boosty</span>
-                    </a>
-
-                    <!-- Personal TG -->
-                    <a href="https://t.me/SHAD11T" target="_blank" rel="noopener noreferrer" class="social-link flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-sky-500/10 border border-sky-500/20 rounded-full hover:bg-sky-500 hover:text-white text-sky-400 transition-all duration-300 group">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                        </svg>
-                        <span class="font-medium text-sm sm:text-base">SHAD11T</span>
-                    </a>
+        <!-- ABOUT -->
+        <section id="about" class="py-20 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                        <span data-lang="ru">О Сборке</span>
+                        <span data-lang="en" class="hidden">About the Modpack</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-accent-purple to-accent-cyan mx-auto rounded-full"></div>
                 </div>
-            </div>
 
-        </div>
-    </section>
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p class="text-text-secondary text-lg mb-6 leading-relaxed" data-lang="ru">
+                            <strong class="text-white">Create: Uncharted</strong> — это уникальная сюжетная сборка,
+                            построенная вокруг легендарного мода Create. Здесь механизмы становятся ключом к разгадке
+                            древних тайн, а каждый шаг приближает тебя к ответам на вопросы, которые ты даже не думал задавать.
+                        </p>
+                        <p class="text-text-secondary text-lg mb-6 leading-relaxed hidden" data-lang="en">
+                            <strong class="text-white">Create: Uncharted</strong> is a unique story-driven modpack
+                            built around the legendary Create mod. Here, mechanisms become the key to solving
+                            ancient mysteries, and every step brings you closer to answers to questions you didn't even think to ask.
+                        </p>
 
-    <!-- Footer -->
-    <footer class="bg-slate-950 py-6 sm:py-8 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-center md:text-left">
-                <span class="brand-font text-lg text-white opacity-80 block">CREATE: UNCHARTED</span>
-                <a href="https://goshadows.github.io" target="_blank" rel="noopener noreferrer" class="text-xs text-slate-500 hover:text-amber-500 transition mt-1 flex items-center gap-1 justify-center md:justify-start">
-                    <span>Site by</span>
-                    <span class="font-bold">GoShadowS Team</span>
-                </a>
-            </div>
-            <div class="text-gray-500 text-xs sm:text-sm text-center md:text-right">
-                <p>&copy; 2025-2026 <span data-lang="ru">Все права защищены.</span><span data-lang="en" class="hidden">All rights reserved.</span></p>
-                <p class="text-xs mt-1 opacity-60">This project is not affiliated with Mojang Studios or the creators of the Create mod.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Custom Modal for Blocked Downloads -->
-    <div id="download-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-100" onclick="closeModal()" aria-hidden="true"></div>
-
-        <div class="fixed inset-0 z-10 w-screen overflow-y-auto p-4">
-            <div class="flex min-h-full items-center justify-center">
-                <div class="relative transform overflow-hidden rounded-2xl glass-panel border border-amber-500/30 text-left shadow-2xl transition-all w-full max-w-lg">
-                    <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
-                            <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-amber-500/20 sm:mx-0 sm:h-10 sm:w-10">
-                                <svg class="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-accent-purple flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <path d="M22 4L12 14.01l-3-3"/>
                                 </svg>
-                            </div>
-                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
-                                <h3 class="text-lg sm:text-xl font-bold leading-6 text-white" id="modal-title">
-                                    <span data-lang="ru">Загрузка временно недоступна</span>
-                                    <span data-lang="en" class="hidden">Download Temporarily Unavailable</span>
-                                </h3>
-                                <div class="mt-4">
-                                    <p class="text-sm text-gray-300" id="modal-message"></p>
+                                <span class="text-text-secondary" data-lang="ru">Сложные механизмы и автоматизация с модом Create</span>
+                                <span class="text-text-secondary hidden" data-lang="en">Complex mechanisms and automation with Create mod</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-accent-purple flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <path d="M22 4L12 14.01l-3-3"/>
+                                </svg>
+                                <span class="text-text-secondary" data-lang="ru">Увлекательный сюжет и система квестов (FTB Quests)</span>
+                                <span class="text-text-secondary hidden" data-lang="en">Engaging storyline and quest system (FTB Quests)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-accent-purple flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <path d="M22 4L12 14.01l-3-3"/>
+                                </svg>
+                                <span class="text-text-secondary" data-lang="ru">Уникальная генерация мира с новыми биомами</span>
+                                <span class="text-text-secondary hidden" data-lang="en">Unique world generation with new biomes</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-accent-purple flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                    <path d="M22 4L12 14.01l-3-3"/>
+                                </svg>
+                                <span class="text-text-secondary" data-lang="ru">Оптимизация для стабильной работы на 1.21.1</span>
+                                <span class="text-text-secondary hidden" data-lang="en">Optimization for stable performance on 1.21.1</span>
+                            </li>
+                        </ul>
+
+                        <button id="download-modlist" class="btn-secondary" type="button">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                                <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                            </svg>
+                            <span data-lang="ru">Скачать список модов</span>
+                            <span data-lang="en" class="hidden">Download mod list</span>
+                        </button>
+                    </div>
+
+                    <div class="relative">
+                        <div class="glass-panel p-2 rounded-2xl overflow-hidden">
+                            <img id="world-screenshot" src="assets/world-screenshot.jpg" alt="Скриншот мира Create: Uncharted" class="w-full h-auto rounded-xl" loading="lazy">
+                            <div id="screenshot-fallback" class="hidden aspect-video bg-gradient-to-br from-accent-purple/20 to-accent-cyan/20 rounded-xl flex items-center justify-center">
+                                <div class="text-center p-8">
+                                    <svg class="w-16 h-16 text-accent-purple mx-auto mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                                        <path d="M21 15l-5-5L5 21"/>
+                                    </svg>
+                                    <p class="text-text-muted" data-lang="ru">Скриншот скоро появится</p>
+                                    <p class="text-text-muted hidden" data-lang="en">Screenshot coming soon</p>
                                 </div>
                             </div>
                         </div>
+                        <div class="absolute -inset-4 bg-gradient-to-r from-accent-purple/20 to-accent-cyan/20 rounded-3xl blur-2xl -z-10"></div>
                     </div>
-                    <div class="bg-black/20 px-4 py-3 flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:px-6">
-                        <button type="button" onclick="closeModal()" class="w-full sm:w-auto inline-flex justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-300 shadow-sm ring-1 ring-inset ring-white/10 hover:bg-white/20 transition">
+                </div>
+            </div>
+        </section>
+
+        <!-- TEAM -->
+        <section id="team" class="py-20 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                        <span data-lang="ru">Команда</span>
+                        <span data-lang="en" class="hidden">Team</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-accent-purple to-accent-cyan mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="team-card team-card-purple">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-accent-purple to-accent-pink flex items-center justify-center text-2xl font-russo">S</div>
+                            <div>
+                                <h3 class="font-russo text-xl text-white">SHAD11T</h3>
+                                <p class="text-accent-purple" data-lang="ru">Создатель проекта</p>
+                                <p class="text-accent-purple hidden" data-lang="en">Project Creator</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-2 text-text-secondary">
+                                <span class="w-4 h-4 rounded-full bg-accent-purple/30 border border-white/10"></span>
+                                <span data-lang="ru">Сборка и настройка модов</span>
+                                <span data-lang="en" class="hidden">Mod assembly and configuration</span>
+                            </li>
+                            <li class="flex items-center gap-2 text-text-secondary">
+                                <span class="w-4 h-4 rounded-full bg-accent-purple/30 border border-white/10"></span>
+                                <span data-lang="ru">Разработка квестов</span>
+                                <span data-lang="en" class="hidden">Quest development</span>
+                            </li>
+                            <li class="flex items-center gap-2 text-text-secondary">
+                                <span class="w-4 h-4 rounded-full bg-accent-purple/30 border border-white/10"></span>
+                                <span data-lang="ru">Оптимизация и тестирование</span>
+                                <span data-lang="en" class="hidden">Optimization and testing</span>
+                            </li>
+                            <li class="flex items-center gap-2 text-text-secondary">
+                                <span class="w-4 h-4 rounded-full bg-accent-purple/30 border border-white/10"></span>
+                                <span data-lang="ru">Создание сайта</span>
+                                <span data-lang="en" class="hidden">Website development</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="team-card team-card-cyan">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-accent-cyan to-blue-500 flex items-center justify-center text-2xl font-russo">A</div>
+                            <div>
+                                <h3 class="font-russo text-xl text-white">AstroBlade</h3>
+                                <p class="text-accent-cyan" data-lang="ru">Идейный вдохновитель</p>
+                                <p class="text-accent-cyan hidden" data-lang="en">Creative Director</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-2 text-text-secondary">
+                                <span class="w-4 h-4 rounded-full bg-accent-cyan/30 border border-white/10"></span>
+                                <span data-lang="ru">Концепция и идеи сюжета</span>
+                                <span data-lang="en" class="hidden">Concept and story ideas</span>
+                            </li>
+                            <li class="flex items-center gap-2 text-text-secondary">
+                                <span class="w-4 h-4 rounded-full bg-accent-cyan/30 border border-white/10"></span>
+                                <span data-lang="ru">Подбор модов</span>
+                                <span data-lang="en" class="hidden">Mod selection</span>
+                            </li>
+                            <li class="flex items-center gap-2 text-text-secondary">
+                                <span class="w-4 h-4 rounded-full bg-accent-cyan/30 border border-white/10"></span>
+                                <span data-lang="ru">Тестирование геймплея</span>
+                                <span data-lang="en" class="hidden">Gameplay testing</span>
+                            </li>
+                            <li class="flex items-center gap-2 text-text-secondary">
+                                <span class="w-4 h-4 rounded-full bg-accent-cyan/30 border border-white/10"></span>
+                                <span data-lang="ru">Обратная связь с сообществом</span>
+                                <span data-lang="en" class="hidden">Community feedback</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESOURCES -->
+        <section id="resources" class="py-20 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                        <span data-lang="ru">Ресурсы и автор</span>
+                        <span data-lang="en" class="hidden">Resources & Author</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-accent-purple to-accent-cyan mx-auto rounded-full"></div>
+                </div>
+
+                <div class="mb-16">
+                    <h3 class="font-russo text-xl text-center mb-8 text-text-secondary">
+                        <span data-lang="ru">Официальные ресурсы</span>
+                        <span data-lang="en" class="hidden">Official Resources</span>
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                        <a href="https://curseforge.com" target="_blank" rel="noopener" class="social-card social-card-curseforge">
+                            <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-12 h-12 object-contain social-icon" onerror="this.outerHTML='<div class=\'w-12 h-12 rounded-xl bg-[color:var(--curseforge)]/20 flex items-center justify-center text-[color:var(--curseforge)] font-russo\'>CF</div>'">
+                            <div>
+                                <h4 class="font-russo text-lg text-white">CurseForge</h4>
+                                <p class="text-text-muted text-sm" data-lang="ru">Страница модпака</p>
+                                <p class="text-text-muted text-sm hidden" data-lang="en">Modpack page</p>
+                            </div>
+                            <span class="text-text-muted ml-auto">↗</span>
+                        </a>
+
+                        <a href="https://t.me/createuncharted" target="_blank" rel="noopener" class="social-card social-card-telegram">
+                            <img src="assets/icon-telegram.png" alt="Telegram" class="w-12 h-12 object-contain social-icon" onerror="this.outerHTML='<div class=\'w-12 h-12 rounded-xl bg-[color:var(--telegram)]/20 flex items-center justify-center text-[color:var(--telegram)] font-russo\'>TG</div>'">
+                            <div>
+                                <h4 class="font-russo text-lg text-white">Telegram</h4>
+                                <p class="text-text-muted text-sm" data-lang="ru">Новости и обновления</p>
+                                <p class="text-text-muted text-sm hidden" data-lang="en">News and updates</p>
+                            </div>
+                            <span class="text-text-muted ml-auto">↗</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-russo text-xl text-center mb-8 text-text-secondary">
+                        <span data-lang="ru">Ссылки автора SHAD11T</span>
+                        <span data-lang="en" class="hidden">SHAD11T's Links</span>
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                        <a href="https://youtube.com" target="_blank" rel="noopener" class="author-link author-link-youtube">
+                            <img src="assets/icon-youtube.png" alt="YouTube" class="w-8 h-8 object-contain" onerror="this.outerHTML='<div class=\'w-8 h-8 rounded bg-red-500/20 flex items-center justify-center text-red-400 text-xs font-bold\'>YT</div>'">
+                            <span class="text-sm font-medium">YouTube</span>
+                        </a>
+
+                        <a href="https://rutube.ru" target="_blank" rel="noopener" class="author-link author-link-rutube">
+                            <img src="assets/icon-rutube.png" alt="Rutube" class="w-8 h-8 object-contain" onerror="this.outerHTML='<div class=\'w-8 h-8 rounded bg-[color:var(--telegram)]/20 flex items-center justify-center text-[color:var(--telegram)] text-xs font-bold\'>RT</div>'">
+                            <span class="text-sm font-medium">Rutube</span>
+                        </a>
+
+                        <a href="https://boosty.to" target="_blank" rel="noopener" class="author-link author-link-boosty">
+                            <img src="assets/icon-boosty.png" alt="Boosty" class="w-8 h-8 object-contain" onerror="this.outerHTML='<div class=\'w-8 h-8 rounded bg-orange-500/20 flex items-center justify-center text-orange-400 text-xs font-bold\'>B</div>'">
+                            <span class="text-sm font-medium">Boosty</span>
+                        </a>
+
+                        <a href="https://t.me/shad11t" target="_blank" rel="noopener" class="author-link author-link-telegram">
+                            <img src="assets/icon-telegram.png" alt="Telegram" class="w-8 h-8 object-contain" onerror="this.outerHTML='<div class=\'w-8 h-8 rounded bg-[color:var(--telegram)]/20 flex items-center justify-center text-[color:var(--telegram)] text-xs font-bold\'>TG</div>'">
+                            <span class="text-sm font-medium">Telegram</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS -->
+        <section id="process" class="py-20 relative overflow-hidden">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                        <span data-lang="ru">Процесс разработки</span>
+                        <span data-lang="en" class="hidden">Development Process</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-accent-purple to-accent-cyan mx-auto rounded-full"></div>
+                </div>
+
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <div class="process-icon-img">
+                            <img src="assets/process-step1.png" alt="Собираем моды" class="w-12 h-12 object-contain" onerror="this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-xl bg-gradient-to-br from-accent-purple to-accent-pink flex items-center justify-center text-white font-russo\'>1</div>'">
+                        </div>
+                        <h3 class="font-russo text-lg text-white mb-1" data-lang="ru">Собираем моды</h3>
+                        <h3 class="font-russo text-lg text-white mb-1 hidden" data-lang="en">Collecting Mods</h3>
+                        <p class="text-text-muted text-sm" data-lang="ru">Подбор и тестирование</p>
+                        <p class="text-text-muted text-sm hidden" data-lang="en">Selection and testing</p>
+                    </div>
+
+                    <div class="process-arrow" aria-hidden="true">
+                        <svg class="w-8 h-8 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="process-icon-img">
+                            <img src="assets/process-step2.png" alt="Версия 0.5" class="w-12 h-12 object-contain" onerror="this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-xl bg-gradient-to-br from-accent-cyan to-blue-500 flex items-center justify-center text-white font-russo\'>2</div>'">
+                        </div>
+                        <h3 class="font-russo text-lg text-white mb-1" data-lang="ru">Версия 0.5</h3>
+                        <h3 class="font-russo text-lg text-white mb-1 hidden" data-lang="en">Version 0.5</h3>
+                        <p class="text-text-muted text-sm" data-lang="ru">Скоро выйдет</p>
+                        <p class="text-text-muted text-sm hidden" data-lang="en">Coming soon</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DOWNLOAD -->
+        <section id="download" class="py-20 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="font-russo text-3xl md:text-4xl mb-4" tabindex="-1" data-page-heading>
+                        <span data-lang="ru">Скачать</span>
+                        <span data-lang="en" class="hidden">Download</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-accent-purple to-accent-cyan mx-auto rounded-full"></div>
+                </div>
+
+                <div class="max-w-3xl mx-auto mb-12">
+                    <div class="beta-warning">
+                        <div class="flex items-start gap-4">
+                            <svg class="w-8 h-8 text-yellow-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            <div>
+                                <h3 class="font-russo text-lg text-yellow-400 mb-2" data-lang="ru">Бета-версия</h3>
+                                <h3 class="font-russo text-lg text-yellow-400 mb-2 hidden" data-lang="en">Beta Version</h3>
+                                <p class="text-text-secondary" data-lang="ru">
+                                    Сборка находится в стадии активной разработки. Возможны баги и изменения.
+                                    Рекомендуем следить за обновлениями в нашем Telegram-канале.
+                                </p>
+                                <p class="text-text-secondary hidden" data-lang="en">
+                                    The modpack is under active development. Bugs and changes are possible.
+                                    We recommend following updates in our Telegram channel.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="download-card">
+                        <div class="download-card-icon-img">
+                            <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-14 h-14 object-contain" onerror="this.parentElement.innerHTML='<div class=\'w-14 h-14 rounded-xl bg-[color:var(--curseforge)]/20 flex items-center justify-center text-[color:var(--curseforge)] font-russo text-xl\'>CF</div>'">
+                        </div>
+                        <h3 class="font-russo text-xl text-white mb-2">CurseForge</h3>
+                        <p class="text-text-muted text-sm mb-4" data-lang="ru">Формат .zip для CurseForge App</p>
+                        <p class="text-text-muted text-sm mb-4 hidden" data-lang="en">.zip format for CurseForge App</p>
+                        <button class="download-btn" data-download="curseforge" type="button">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                            </svg>
+                            <span data-lang="ru">Скачать .zip</span>
+                            <span data-lang="en" class="hidden">Download .zip</span>
+                        </button>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="download-card-icon-img">
+                            <img src="assets/icon-modrinth.png" alt="Modrinth" class="w-14 h-14 object-contain" onerror="this.parentElement.innerHTML='<div class=\'w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center text-green-400 font-russo text-xl\'>MR</div>'">
+                        </div>
+                        <h3 class="font-russo text-xl text-white mb-2">Modrinth</h3>
+                        <p class="text-text-muted text-sm mb-4" data-lang="ru">Формат .mrpack для Modrinth</p>
+                        <p class="text-text-muted text-sm mb-4 hidden" data-lang="en">.mrpack format for Modrinth</p>
+                        <button class="download-btn" data-download="modrinth" type="button">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                            </svg>
+                            <span data-lang="ru">Скачать .mrpack</span>
+                            <span data-lang="en" class="hidden">Download .mrpack</span>
+                        </button>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="download-card-icon-img">
+                            <img src="assets/icon-manual.png" alt="Manual Install" class="w-14 h-14 object-contain" onerror="this.parentElement.innerHTML='<div class=\'w-14 h-14 rounded-xl bg-accent-purple/20 flex items-center justify-center text-accent-purple font-russo text-xl\'>ZIP</div>'">
+                        </div>
+                        <h3 class="font-russo text-xl text-white mb-2" data-lang="ru">Ручная установка</h3>
+                        <h3 class="font-russo text-xl text-white mb-2 hidden" data-lang="en">Manual Install</h3>
+                        <p class="text-text-muted text-sm mb-4" data-lang="ru">Архив с папкой .minecraft</p>
+                        <p class="text-text-muted text-sm mb-4 hidden" data-lang="en">.minecraft folder archive</p>
+                        <button class="download-btn" data-download="manual" type="button">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                            </svg>
+                            <span data-lang="ru">Скачать .zip</span>
+                            <span data-lang="en" class="hidden">Download .zip</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-8 border-t border-white/5">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-text-muted text-sm mb-2">
+                © 2026 Create: Uncharted.
+                <span data-lang="ru">Все права защищены.</span>
+                <span data-lang="en" class="hidden">All rights reserved.</span>
+            </p>
+            <p class="text-text-muted text-xs" data-lang="ru">
+                Не является официальным продуктом Mojang или Microsoft. Minecraft — торговая марка Mojang Studios.
+            </p>
+            <p class="text-text-muted text-xs hidden" data-lang="en">
+                Not an official Mojang or Microsoft product. Minecraft is a trademark of Mojang Studios.
+            </p>
+        </div>
+    </footer>
+
+    <button id="back-to-top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-accent-purple text-white shadow-lg shadow-accent-purple/30 opacity-0 invisible transition-all duration-300 hover:bg-accent-purple/80 hover:scale-110 z-40" aria-label="Back to top">
+        <svg class="w-6 h-6 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <div id="download-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-overlay absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+        <div class="modal-container flex items-center justify-center min-h-screen p-4">
+            <div class="modal-content glass-panel rounded-2xl p-6 md:p-8 max-w-md w-full relative">
+                <button class="modal-close absolute top-4 right-4 text-text-muted hover:text-white transition-colors" aria-label="Close modal">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[color:var(--curseforge)]/15 flex items-center justify-center">
+                        <img src="assets/icon-curseforge.png" alt="CurseForge" class="w-8 h-8 object-contain" onerror="this.style.display='none'">
+                    </div>
+                    <h3 id="modal-title" class="font-russo text-xl text-white mb-3">
+                        <span data-lang="ru">Бета: доступно только на CurseForge</span>
+                        <span data-lang="en" class="hidden">Beta: available on CurseForge only</span>
+                    </h3>
+                    <p class="text-text-secondary mb-6">
+                        <span data-lang="ru">Сборка пока доступна только на CurseForge по причине бета-статуса. Скачивание с сайта временно отключено.</span>
+                        <span data-lang="en" class="hidden">The modpack is currently available only on CurseForge due to its beta status. Direct downloads from this site are disabled for now.</span>
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="https://curseforge.com" target="_blank" rel="noopener" class="btn-secondary">
+                            <span data-lang="ru">Открыть CurseForge</span>
+                            <span data-lang="en" class="hidden">Open CurseForge</span>
+                        </a>
+                        <a href="https://t.me/createuncharted" target="_blank" rel="noopener" class="btn-primary">
+                            <span>Telegram</span>
+                        </a>
+                        <button class="modal-close-btn btn-secondary" type="button">
                             <span data-lang="ru">Понятно</span>
                             <span data-lang="en" class="hidden">Got it</span>
                         </button>
-                        <a href="https://t.me/create_uncharted" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition">
-                            <span data-lang="ru">Перейти в Telegram</span>
-                            <span data-lang="en" class="hidden">Go to Telegram</span>
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Script Logic -->
     <script>
-        // Current language
-        let currentLang = localStorage.getItem('lang') || 'ru';
+        (function() {
+            'use strict';
 
-        // Overlay states
-        let isMobileMenuOpen = false;
-        let isModalOpen = false;
-
-        // For modal re-render on language switch
-        let lastBlockedFilename = '';
-
-        function applyScrollLock() {
-            if (isMobileMenuOpen || isModalOpen) {
-                document.body.classList.add('no-scroll');
-            } else {
-                document.body.classList.remove('no-scroll');
-            }
-        }
-
-        // Initialize language + ui on load
-        document.addEventListener('DOMContentLoaded', function() {
-            setLanguage(currentLang, false);
-            updateActiveNavLink();
-            handleScroll();
-            initWorldShotStatic();
-            initModListDownload();
-            normalizeExternalLinks();
-        });
-
-        // Ensure external links are safe even if new ones appear later
-        function normalizeExternalLinks() {
-            document.querySelectorAll('a[target="_blank"]').forEach(a => {
-                const rel = (a.getAttribute('rel') || '').toLowerCase();
-                if (!rel.includes('noopener')) {
-                    a.setAttribute('rel', (rel ? rel + ' ' : '') + 'noopener noreferrer');
-                }
-            });
-        }
-
-        // Language switcher
-        function setLanguage(lang, save = true) {
-            currentLang = lang;
-            if (save) localStorage.setItem('lang', lang);
-
-            // Update all text elements
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                if (el.getAttribute('data-lang') === lang) {
-                    el.classList.remove('hidden');
-                } else {
-                    el.classList.add('hidden');
-                }
-            });
-
-            // Update language buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                if (btn.textContent.trim() === lang.toUpperCase()) {
-                    btn.classList.add('active');
-                    btn.classList.remove('text-gray-400');
-                } else {
-                    btn.classList.remove('active');
-                    btn.classList.add('text-gray-400');
-                }
-            });
-
-            // Update HTML lang attribute
-            document.documentElement.lang = lang;
-
-            // Update page title
-            if (lang === 'en') {
-                document.title = 'Create: Uncharted — Discover something you never even knew?';
-            } else {
-                document.title = 'Create: Uncharted — Узнай о себе то, что никогда... и не знал?';
-            }
-
-            // Update static screenshot alt + fallback
-            updateWorldShotStaticA11y();
-
-            // If modal is open, re-render message to match language
-            if (isModalOpen && lastBlockedFilename) {
-                renderBlockedMessage(lastBlockedFilename);
-            }
-        }
-
-        // Mobile menu
-        function openMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const backdrop = document.getElementById('mobile-backdrop');
-            const iconOpen = document.getElementById('menu-icon-open');
-            const iconClose = document.getElementById('menu-icon-close');
-            const btn = document.getElementById('mobile-menu-btn');
-
-            menu.classList.remove('hidden');
-            backdrop.classList.remove('hidden');
-            iconOpen.classList.add('hidden');
-            iconClose.classList.remove('hidden');
-            btn?.setAttribute('aria-expanded', 'true');
-
-            isMobileMenuOpen = true;
-            applyScrollLock();
-        }
-
-        function closeMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const backdrop = document.getElementById('mobile-backdrop');
-            const iconOpen = document.getElementById('menu-icon-open');
-            const iconClose = document.getElementById('menu-icon-close');
-            const btn = document.getElementById('mobile-menu-btn');
-
-            menu.classList.add('hidden');
-            backdrop.classList.add('hidden');
-            iconOpen.classList.remove('hidden');
-            iconClose.classList.add('hidden');
-            btn?.setAttribute('aria-expanded', 'false');
-
-            isMobileMenuOpen = false;
-            applyScrollLock();
-        }
-
-        function toggleMobileMenu() {
-            if (isMobileMenuOpen) closeMobileMenu();
-            else openMobileMenu();
-        }
-
-        // Download blocked modal
-        function renderBlockedMessage(filename) {
-            const messageEl = document.getElementById('modal-message');
-
-            const textRu = `
-                Сборка <span class="font-bold text-amber-400">Create: Uncharted (v0.2)</span> находится в стадии <span class="font-semibold">Beta | Without Cosmetic, Customs &amp; Quests</span>.
-                <br><br>
-                Скачивание файла <span class="font-mono bg-black/30 px-1 rounded text-orange-300">${filename}</span> временно отключено администратором во избежание критических ошибок.
-                <br><br>
-                Следите за новостями и выходом стабильной версии в нашем канале!
-                <br><br>
-                <span class="text-sm text-gray-400 block border-t border-white/10 pt-3 mt-2">
-                    Если вы прям желаете скачать данную сборку, перейдите на сайт CurseForge и скачайте там сборку, но там нету формата для пиратских лаунчеров и ".mrpack".
-                </span>
-            `;
-
-            const textEn = `
-                Modpack <span class="font-bold text-amber-400">Create: Uncharted (v0.2)</span> is in <span class="font-semibold">Beta | Without Cosmetic, Customs &amp; Quests</span> stage.
-                <br><br>
-                Downloading file <span class="font-mono bg-black/30 px-1 rounded text-orange-300">${filename}</span> is temporarily disabled by the administrator to avoid critical errors.
-                <br><br>
-                Follow our channel for news and stable version release!
-                <br><br>
-                <span class="text-sm text-gray-400 block border-t border-white/10 pt-3 mt-2">
-                    If you really want to download this modpack, go to CurseForge and download it there. There is no format for pirate launchers and no ".mrpack" yet.
-                </span>
-            `;
-
-            messageEl.innerHTML = currentLang === 'en' ? textEn : textRu;
-        }
-
-        function downloadBlocked(filename) {
-            const modal = document.getElementById('download-modal');
-
-            lastBlockedFilename = filename;
-            renderBlockedMessage(filename);
-
-            modal.classList.remove('hidden');
-            isModalOpen = true;
-            applyScrollLock();
-        }
-
-        function closeModal() {
-            document.getElementById('download-modal').classList.add('hidden');
-            isModalOpen = false;
-            applyScrollLock();
-        }
-
-        // Close overlays on ESC key
-        document.addEventListener('keydown', function(event) {
-            if (event.key !== 'Escape') return;
-
-            if (isModalOpen) {
-                closeModal();
-                return;
-            }
-            if (isMobileMenuOpen) {
-                closeMobileMenu();
-            }
-        });
-
-        // Back to top button
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Active navigation link highlighting
-        function updateActiveNavLink() {
-            const sections = document.querySelectorAll('section[id], header[id]');
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            let currentSection = '';
-            const scrollPos = window.scrollY + 100;
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-
-                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const href = link.getAttribute('href');
-                if (href && href.substring(1) === currentSection) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        // Handle scroll events
-        function handleScroll() {
-            const backToTop = document.getElementById('back-to-top');
-
-            if (window.scrollY > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-
-            updateActiveNavLink();
-        }
-
-        // Throttle scroll events
-        let ticking = false;
-        window.addEventListener('scroll', function() {
-            if (!ticking) {
-                window.requestAnimationFrame(function() {
-                    handleScroll();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href === '#') {
-                    e.preventDefault();
-                    scrollToTop();
-                    return;
-                }
-
-                const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    const offsetTop = target.offsetTop - 80;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // World screenshot (static, set via repo/code)
-        function initWorldShotStatic() {
-            const img = document.getElementById('world-shot-static');
-            const fallback = document.getElementById('world-shot-static-fallback');
-            if (!img || !fallback) return;
-
-            const initialSrc = (img.getAttribute('src') || '').trim();
-
-            // If src is provided, try to use it first.
-            if (initialSrc) {
-                const onLoad = () => {
-                    showWorldShotFallback(false);
-                    updateWorldShotStaticA11y();
-                };
-
-                const onError = () => {
-                    // If provided src fails, try common filenames from the repo.
-                    tryLoadWorldShotCandidates(img, getWorldShotCandidates(initialSrc));
-                };
-
-                img.addEventListener('load', onLoad, { once: true });
-                img.addEventListener('error', onError, { once: true });
-
-                // Handle cached images (load event may not fire)
-                if (img.complete) {
-                    if (img.naturalWidth > 0) onLoad();
-                    else onError();
-                }
-
-                updateWorldShotStaticA11y();
-                return;
-            }
-
-            // If src is empty: auto-try common names (so you can just drop the file into /assets)
-            tryLoadWorldShotCandidates(img, getWorldShotCandidates(''));
-        }
-
-        function getWorldShotCandidates(firstChoice) {
-            const list = [];
-            if (firstChoice) list.push(firstChoice);
-
-            // Most common choices (keep order):
-            list.push(
-                'assets/world-screenshot.jpg',
-                'assets/world-screenshot.png',
-                'assets/worldshot.jpg',
-                'assets/worldshot.png',
-                'assets/screenshot.jpg',
-                'assets/screenshot.png',
-                'assets/world.jpg',
-                'assets/world.png',
-                'world-screenshot.jpg',
-                'world-screenshot.png'
-            );
-
-            // De-duplicate while preserving order
-            return Array.from(new Set(list.map(s => (s || '').trim()).filter(Boolean)));
-        }
-
-        function tryLoadWorldShotCandidates(imgEl, candidates) {
-            showWorldShotFallback(true);
-
-            let idx = 0;
-            const tryNext = () => {
-                if (idx >= candidates.length) {
-                    showWorldShotFallback(true);
-                    updateWorldShotStaticA11y();
-                    return;
-                }
-
-                const candidate = candidates[idx++];
-
-                // Preload with a separate Image so we don't flash broken images in the UI
-                const probe = new Image();
-                probe.onload = () => {
-                    imgEl.setAttribute('src', candidate);
-                    showWorldShotFallback(false);
-                    updateWorldShotStaticA11y();
-                };
-                probe.onerror = () => tryNext();
-                probe.src = candidate;
+            const elements = {
+                html: document.documentElement,
+                body: document.body,
+                navbar: document.getElementById('navbar'),
+                mobileMenuBtn: document.getElementById('mobile-menu-btn'),
+                mobileMenuIcon: document.getElementById('mobile-menu-icon'),
+                mobileMenu: document.getElementById('mobile-menu'),
+                mobileMenuOverlay: document.getElementById('mobile-menu-overlay'),
+                langSwitcher: document.getElementById('lang-switcher'),
+                langSwitcherMobile: document.getElementById('lang-switcher-mobile'),
+                backToTop: document.getElementById('back-to-top'),
+                downloadModal: document.getElementById('download-modal'),
+                worldScreenshot: document.getElementById('world-screenshot'),
+                screenshotFallback: document.getElementById('screenshot-fallback'),
+                downloadModlist: document.getElementById('download-modlist')
             };
 
-            tryNext();
-        }
+            const state = {
+                currentLang: localStorage.getItem('preferred-lang') || 'ru',
+                menuOpen: false,
+                modalOpen: false
+            };
 
-        function showWorldShotFallback(show) {
-            const img = document.getElementById('world-shot-static');
-            const fallback = document.getElementById('world-shot-static-fallback');
-            const overlay = document.getElementById('world-shot-static-overlay');
-            if (!img || !fallback) return;
+            const LanguageSystem = {
+                init() {
+                    this.setLanguage(state.currentLang);
+                    this.bindEvents();
+                },
 
-            if (show) {
-                fallback.classList.remove('hidden');
-                fallback.classList.add('flex');
-                img.classList.add('hidden');
-                overlay?.classList.add('hidden');
-            } else {
-                fallback.classList.add('hidden');
-                fallback.classList.remove('flex');
-                img.classList.remove('hidden');
-                overlay?.classList.remove('hidden');
-            }
-        }
+                bindEvents() {
+                    elements.langSwitcher?.addEventListener('click', () => this.toggle());
+                    elements.langSwitcherMobile?.addEventListener('click', () => this.toggle());
+                },
 
-        function updateWorldShotStaticA11y() {
-            const img = document.getElementById('world-shot-static');
-            if (!img) return;
-            const src = (img.getAttribute('src') || '').trim();
-            if (!src) {
-                img.alt = '';
-                return;
-            }
-            img.alt = currentLang === 'en' ? 'World screenshot' : 'Скриншот мира';
-        }
+                toggle() {
+                    this.setLanguage(state.currentLang === 'ru' ? 'en' : 'ru');
+                },
 
-        // Mod list download helper (more reliable than plain "download" on some mobile browsers)
-        function initModListDownload() {
-            const a = document.getElementById('mod-list-download');
-            if (!a) return;
+                setLanguage(lang) {
+                    state.currentLang = lang;
+                    localStorage.setItem('preferred-lang', lang);
+                    elements.html.setAttribute('lang', lang);
 
-            const fileUrl = a.getAttribute('href') || 'assets/mod-list.txt';
-            const fileName = a.getAttribute('download') || 'mod-list.txt';
+                    document.title = lang === 'ru'
+                        ? 'Create: Uncharted — Сюжетная сборка Minecraft'
+                        : 'Create: Uncharted — Story-driven Minecraft Modpack';
 
-            a.addEventListener('click', async (e) => {
-                // Let the browser handle it if fetch is not available
-                if (!('fetch' in window) || !('URL' in window) || !('Blob' in window)) return;
+                    document.querySelectorAll('[data-lang]').forEach(el => {
+                        el.classList.toggle('hidden', el.getAttribute('data-lang') !== lang);
+                    });
 
-                e.preventDefault();
+                    this.updateSwitcherUI();
 
-                try {
-                    const res = await fetch(fileUrl, { cache: 'no-store' });
-                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    if (elements.worldScreenshot) {
+                        elements.worldScreenshot.alt = lang === 'ru'
+                            ? 'Скриншот мира Create: Uncharted'
+                            : 'Create: Uncharted world screenshot';
+                    }
+                },
 
-                    const blob = await res.blob();
-                    const blobUrl = URL.createObjectURL(blob);
+                updateSwitcherUI() {
+                    const paint = (switcher) => {
+                        if (!switcher) return;
+                        const spans = switcher.querySelectorAll('span');
+                        if (spans.length < 3) return;
 
-                    const tmp = document.createElement('a');
-                    tmp.href = blobUrl;
-                    tmp.download = fileName;
-                    tmp.style.display = 'none';
-                    document.body.appendChild(tmp);
-                    tmp.click();
-                    tmp.remove();
+                        const ru = spans[0];
+                        const en = spans[2];
 
-                    // Cleanup
-                    setTimeout(() => URL.revokeObjectURL(blobUrl), 1500);
-                } catch (err) {
-                    // Fallback: open direct link in a new tab + show modal with tips
-                    try {
-                        window.open(fileUrl, '_blank', 'noopener,noreferrer');
-                    } catch (_) {}
+                        if (state.currentLang === 'ru') {
+                            ru.classList.add('text-accent-cyan');
+                            ru.classList.remove('text-text-muted');
+                            en.classList.remove('text-accent-cyan');
+                            en.classList.add('text-text-muted');
+                        } else {
+                            en.classList.add('text-accent-cyan');
+                            en.classList.remove('text-text-muted');
+                            ru.classList.remove('text-accent-cyan');
+                            ru.classList.add('text-text-muted');
+                        }
+                    };
 
-                    lastBlockedFilename = '';
-                    const modal = document.getElementById('download-modal');
-                    const messageEl = document.getElementById('modal-message');
+                    paint(elements.langSwitcher);
+                    paint(elements.langSwitcherMobile);
+                }
+            };
 
-                    const tipRu = `
-                        Не удалось скачать файл списка модов с сайта.<br><br>
-                        Проверьте, что файл реально доступен по адресу:
-                        <span class="font-mono bg-black/30 px-1 rounded text-orange-300">${fileUrl}</span><br><br>
-                        Возможные причины: GitHub Pages ещё не обновился (подождите 1–3 минуты), неверный регистр имени (assets ≠ Assets), или файл лежит не в той папке/ветке.
-                    `;
+            const MobileMenu = {
+                init() {
+                    this.bindEvents();
+                },
 
-                    const tipEn = `
-                        Failed to download the mod list from the site.<br><br>
-                        Make sure the file is accessible at:
-                        <span class="font-mono bg-black/30 px-1 rounded text-orange-300">${fileUrl}</span><br><br>
-                        Possible reasons: GitHub Pages hasn't redeployed yet (wait 1–3 minutes), wrong filename case (assets ≠ Assets), or the file is in a different folder/branch.
-                    `;
+                bindEvents() {
+                    elements.mobileMenuBtn?.addEventListener('click', () => this.toggle());
+                    elements.mobileMenuOverlay?.addEventListener('click', () => this.close());
 
-                    if (messageEl) messageEl.innerHTML = currentLang === 'en' ? tipEn : tipRu;
-                    if (modal) {
-                        modal.classList.remove('hidden');
-                        isModalOpen = true;
-                        applyScrollLock();
+                    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                        link.addEventListener('click', () => this.close());
+                    });
+                },
+
+                toggle() {
+                    state.menuOpen ? this.close() : this.open();
+                },
+
+                open() {
+                    state.menuOpen = true;
+                    elements.mobileMenu?.classList.remove('hidden');
+                    elements.mobileMenu?.classList.add('active');
+                    elements.mobileMenuOverlay?.classList.remove('hidden');
+                    elements.body.classList.add('menu-open');
+                    elements.mobileMenuBtn?.setAttribute('aria-expanded', 'true');
+                    elements.mobileMenuBtn?.setAttribute('aria-label', 'Закрыть меню');
+                    if (elements.mobileMenuIcon) elements.mobileMenuIcon.src = 'assets/icon-close.svg';
+                },
+
+                close() {
+                    state.menuOpen = false;
+                    elements.mobileMenu?.classList.add('hidden');
+                    elements.mobileMenu?.classList.remove('active');
+                    elements.mobileMenuOverlay?.classList.add('hidden');
+                    elements.body.classList.remove('menu-open');
+                    elements.mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+                    elements.mobileMenuBtn?.setAttribute('aria-label', 'Открыть меню');
+                    if (elements.mobileMenuIcon) elements.mobileMenuIcon.src = 'assets/icon-burger.svg';
+                }
+            };
+
+            const Navigation = {
+                sections: [],
+                navLinks: [],
+                mobileNavLinks: [],
+
+                init() {
+                    this.sections = Array.from(document.querySelectorAll('section[id]'));
+                    this.navLinks = Array.from(document.querySelectorAll('.nav-link[data-section]'));
+                    this.mobileNavLinks = Array.from(document.querySelectorAll('.mobile-nav-link[data-section]'));
+
+                    this.bindEvents();
+                    this.updateActiveSection();
+                },
+
+                bindEvents() {
+                    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                        anchor.addEventListener('click', (e) => this.handleClick(e, anchor));
+                    });
+
+                    let ticking = false;
+                    window.addEventListener('scroll', () => {
+                        if (ticking) return;
+                        ticking = true;
+                        window.requestAnimationFrame(() => {
+                            this.updateActiveSection();
+                            ticking = false;
+                        });
+                    }, { passive: true });
+                },
+
+                handleClick(e, anchor) {
+                    const href = anchor.getAttribute('href');
+                    if (!href || href === '#') {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        return;
+                    }
+
+                    const target = document.querySelector(href);
+                    if (!target) return;
+
+                    e.preventDefault();
+                    const navbarHeight = elements.navbar?.offsetHeight || 80;
+                    const y = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                },
+
+                updateActiveSection() {
+                    const scrollPos = window.scrollY + 120;
+                    let current = '';
+
+                    for (const section of this.sections) {
+                        const top = section.offsetTop;
+                        const height = section.offsetHeight;
+                        if (scrollPos >= top && scrollPos < top + height) {
+                            current = section.id;
+                            break;
+                        }
+                    }
+
+                    const paint = (links) => {
+                        links.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('data-section') === current);
+                        });
+                    };
+
+                    paint(this.navLinks);
+                    paint(this.mobileNavLinks);
+                }
+            };
+
+            const BackToTop = {
+                init() {
+                    elements.backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+                    let ticking = false;
+                    window.addEventListener('scroll', () => {
+                        if (ticking) return;
+                        ticking = true;
+                        window.requestAnimationFrame(() => {
+                            this.check();
+                            ticking = false;
+                        });
+                    }, { passive: true });
+
+                    this.check();
+                },
+
+                check() {
+                    if (!elements.backToTop) return;
+                    elements.backToTop.classList.toggle('visible', window.scrollY > 300);
+                }
+            };
+
+            const DownloadModal = {
+                init() {
+                    document.querySelectorAll('[data-download]').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            this.open();
+                        });
+                    });
+
+                    elements.downloadModal?.querySelectorAll('.modal-close, .modal-close-btn').forEach(btn => {
+                        btn.addEventListener('click', () => this.close());
+                    });
+
+                    elements.downloadModal?.querySelector('.modal-overlay')?.addEventListener('click', () => this.close());
+
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') {
+                            if (state.modalOpen) this.close();
+                            if (state.menuOpen) MobileMenu.close();
+                        }
+                    });
+                },
+
+                open() {
+                    if (!elements.downloadModal) return;
+                    state.modalOpen = true;
+                    elements.downloadModal.classList.add('active');
+                    elements.body.style.overflow = 'hidden';
+
+                    const focusable = elements.downloadModal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+                    focusable[0]?.focus();
+                },
+
+                close() {
+                    if (!elements.downloadModal) return;
+                    state.modalOpen = false;
+                    elements.downloadModal.classList.remove('active');
+                    elements.body.style.overflow = '';
+                }
+            };
+
+            const ScreenshotLoader = {
+                paths: [
+                    'assets/world-screenshot.jpg',
+                    'assets/world-screenshot.png',
+                    'assets/world-screenshot.webp',
+                    'assets/screenshot.jpg',
+                    'assets/screenshot.png'
+                ],
+                idx: 0,
+
+                init() {
+                    if (!elements.worldScreenshot) return;
+                    elements.worldScreenshot.addEventListener('error', () => this.tryNext());
+                    elements.worldScreenshot.addEventListener('load', () => this.onLoad());
+
+                    if (elements.worldScreenshot.complete && elements.worldScreenshot.naturalHeight === 0) {
+                        this.tryNext();
+                    }
+                },
+
+                tryNext() {
+                    if (this.idx < this.paths.length) {
+                        elements.worldScreenshot.src = this.paths[this.idx++];
+                    } else {
+                        this.fallback();
+                    }
+                },
+
+                onLoad() {
+                    elements.worldScreenshot.classList.remove('hidden');
+                    elements.screenshotFallback?.classList.add('hidden');
+                },
+
+                fallback() {
+                    elements.worldScreenshot.classList.add('hidden');
+                    elements.screenshotFallback?.classList.remove('hidden');
+                }
+            };
+
+            const ModListDownload = {
+                init() {
+                    elements.downloadModlist?.addEventListener('click', () => this.download());
+                },
+
+                download() {
+                    const link = document.createElement('a');
+                    link.href = 'assets/mod-list.txt';
+                    link.download = 'mod-list.txt';
+
+                    fetch(link.href, { method: 'HEAD' })
+                        .then(res => res.ok ? link.click() : DownloadModal.open())
+                        .catch(() => DownloadModal.open());
+                }
+            };
+
+            const NavbarEffect = {
+                init() {
+                    let ticking = false;
+                    window.addEventListener('scroll', () => {
+                        if (ticking) return;
+                        ticking = true;
+                        window.requestAnimationFrame(() => {
+                            this.update();
+                            ticking = false;
+                        });
+                    }, { passive: true });
+
+                    this.update();
+                },
+
+                update() {
+                    if (!elements.navbar) return;
+                    elements.navbar.style.background = window.scrollY > 50
+                        ? 'rgba(7, 5, 20, 0.95)'
+                        : 'rgba(11, 10, 30, 0.8)';
+                }
+            };
+
+            const ParticlesBackground = {
+                init() {
+                    const container = document.getElementById('particles-container');
+                    if (!container) return;
+
+                    const count = 30;
+
+                    for (let i = 0; i < count; i++) {
+                        const p = document.createElement('div');
+                        p.className = 'particle';
+                        p.style.left = Math.random() * 100 + '%';
+
+                        const delay = Math.random() * 20;
+                        const duration = 15 + Math.random() * 20;
+                        p.style.animationDelay = `-${delay}s`;
+                        p.style.animationDuration = `${duration}s`;
+
+                        const size = 1 + Math.random() * 3;
+                        p.style.width = `${size}px`;
+                        p.style.height = `${size}px`;
+
+                        container.appendChild(p);
                     }
                 }
-            });
-        }
+            };
+
+            function init() {
+                LanguageSystem.init();
+                MobileMenu.init();
+                Navigation.init();
+                BackToTop.init();
+                DownloadModal.init();
+                ScreenshotLoader.init();
+                ModListDownload.init();
+                NavbarEffect.init();
+                ParticlesBackground.init();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
     </script>
 </body>
-    </html>
+</html>
